@@ -112,14 +112,17 @@ export async function notifyWelcome(
   spamSlayerNumber: string
 ): Promise<void> {
   const digits = spamSlayerNumber.replace("+1", "");
-  const body =
-    `Welcome to SpamSlayer! Forward your spam calls to ${spamSlayerNumber} ` +
-    `and I'll handle everything — record the call, build your TCPA case, ` +
-    `and text you when you can file.\n\n` +
-    `Quick setup (AT&T): dial *61*${digits}# to forward unanswered calls.\n` +
-    `Or go to Settings → Phone → Call Forwarding on iPhone.\n\n` +
-    `Reply NAME [your name] to finish setup. Reply HELP anytime.`;
-  await sendSMS(userPhone, body);
+
+  // Message 1: welcome + instructions
+  await sendSMS(userPhone,
+    `Welcome to SpamSlayer! I'll answer your spam calls, record everything, and build your TCPA case.\n\n` +
+    `AT&T: Dial the code in the next message to forward unanswered calls to me.\n` +
+    `iPhone: Settings → Phone → Call Forwarding.\n\n` +
+    `Reply NAME [your name] to finish setup. Reply HELP anytime.`
+  );
+
+  // Message 2: just the forwarding code — easy to copy and dial
+  await sendSMS(userPhone, `*61*${digits}#`);
 }
 
 /** Onboarding prompt for missing info. */
