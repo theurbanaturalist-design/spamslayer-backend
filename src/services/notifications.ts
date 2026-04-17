@@ -48,13 +48,23 @@ export async function notifyCallLogged(
   companyName: string | null,
   callCount: number
 ): Promise<void> {
-  const company = companyName ? ` (${companyName})` : "";
-  const body =
-    `SpamSlayer: Call logged from ${callerNumber}${company}. ` +
-    `That's ${callCount} call${callCount > 1 ? "s" : ""} from this number. ` +
-    (callCount >= 2
-      ? `You have an actionable TCPA case! Reply CASE for details.`
-      : `1 more call = actionable case.`);
+  const company = companyName ?? callerNumber;
+  let body: string;
+
+  if (callCount === 1 && companyName) {
+    // First strike — Dorothy got their info
+    body = `🎯 Swoosh! ${company} left their info. One more call from them and we have a strong case!`;
+  } else if (callCount === 1) {
+    // First call but no info extracted
+    body = `SpamSlayer: Call logged from ${callerNumber}. Dorothy is on it — one more call from this number builds your case.`;
+  } else {
+    body =
+      `SpamSlayer: ${company} called again (${callCount} times now). ` +
+      (callCount >= 2
+        ? `You have an actionable TCPA case! Reply CASES for details.`
+        : `1 more call = actionable case.`);
+  }
+
   await sendSMS(userPhone, body);
 }
 
