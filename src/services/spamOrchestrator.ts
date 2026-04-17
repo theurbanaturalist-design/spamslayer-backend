@@ -13,7 +13,8 @@ import path from "path";
 
 // ── Load persona once at startup ─────────────────────────────────────────
 
-const PERSONA_PATH = path.resolve(__dirname, "../../../persona.json");
+// Resolve relative to project root (where Render runs the process from)
+const PERSONA_PATH = path.resolve(process.cwd(), "persona.json");
 const persona = JSON.parse(fs.readFileSync(PERSONA_PATH, "utf-8"));
 
 const genai = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY ?? "");
@@ -33,7 +34,7 @@ export interface VoiceReply {
 
 // ── DNC warning text (read from phone.json or fallback) ──────────────────
 
-const PHONE_CONFIG_PATH = path.resolve(__dirname, "../../../phone.json");
+const PHONE_CONFIG_PATH = path.resolve(process.cwd(), "phone.json");
 let dncWarning = "This number is registered on the National Do Not Call Registry. This call has been recorded and logged as a potential violation of the Telephone Consumer Protection Act. Please remove this number from your call list.";
 try {
   const phoneConfig = JSON.parse(fs.readFileSync(PHONE_CONFIG_PATH, "utf-8"));
