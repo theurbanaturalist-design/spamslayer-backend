@@ -23,7 +23,7 @@ function getClient() {
 }
 
 function getFromNumber(): string {
-  return process.env.TWILIO_PHONE_NUMBER ?? "";
+  return process.env.NOTIFY_FROM_NUMBER ?? process.env.TWILIO_PHONE_NUMBER ?? "";
 }
 
 async function sendSMS(to: string, body: string): Promise<void> {
