@@ -76,7 +76,28 @@ router.post("/inbound", async (req: Request, res: Response) => {
       UserManager.updateUser(From, { name: args });
       twiml.message(`Got it! Name set to: ${args}`);
 
-      // Prompt for next missing field
+      // Prompt for sex next so the bot matches the user
+      if (!user.sex) {
+        setTimeout(() => Notify.notifyOnboardingPrompt(From, "sex"), 2000);
+      } else if (!user.address) {
+        setTimeout(() => Notify.notifyOnboardingPrompt(From, "address"), 2000);
+      } else if (!user.dncSinceYear) {
+        setTimeout(() => Notify.notifyOnboardingPrompt(From, "dncYear"), 2000);
+      } else {
+        UserManager.updateUser(From, { onboardingComplete: true });
+      }
+      break;
+    }
+
+    case "SEX": {
+      const val = args.toUpperCase().trim();
+      if (!["M", "F"].includes(val)) {
+        twiml.message("Reply: SEX M or SEX F\nThis makes your bot sound like you.");
+        break;
+      }
+      UserManager.updateUser(From, { sex: val as "M" | "F" });
+      twiml.message(`Got it! Your bot will sound ${val === "M" ? "male" : "female"} — just like you.`);
+
       if (!user.address) {
         setTimeout(() => Notify.notifyOnboardingPrompt(From, "address"), 2000);
       } else if (!user.dncSinceYear) {

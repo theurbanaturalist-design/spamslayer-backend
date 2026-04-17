@@ -26,6 +26,7 @@ export interface SpamSlayerUser {
   id: string;
   phone: string;                // user's real phone number (also the lookup key)
   name: string | null;
+  sex: "M" | "F" | null;       // used to match persona voice and pronouns to the user
   address: string | null;
   dncSinceYear: string;
   signupDate: string;
@@ -78,6 +79,7 @@ export function createUser(phone: string): SpamSlayerUser {
     id: generateId(),
     phone,
     name: null,
+    sex: null,
     address: null,
     dncSinceYear: "",
     signupDate: new Date().toISOString().split("T")[0],
@@ -114,13 +116,14 @@ export function getUserByPhone(phone: string): SpamSlayerUser | null {
 
 export function updateUser(
   phone: string,
-  data: Partial<Pick<SpamSlayerUser, "name" | "address" | "dncSinceYear" | "state" | "onboardingComplete">>
+  data: Partial<Pick<SpamSlayerUser, "name" | "sex" | "address" | "dncSinceYear" | "state" | "onboardingComplete">>
 ): SpamSlayerUser | null {
   const db = loadUsers();
   const key = normalizePhone(phone);
   if (!db[key]) return null;
 
   if (data.name !== undefined) db[key].name = data.name;
+  if (data.sex !== undefined) db[key].sex = data.sex;
   if (data.address !== undefined) db[key].address = data.address;
   if (data.dncSinceYear !== undefined) db[key].dncSinceYear = data.dncSinceYear;
   if (data.state !== undefined) db[key].state = data.state;

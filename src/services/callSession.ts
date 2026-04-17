@@ -86,8 +86,26 @@ export function remove(callSid: string): void {
   sessions.delete(callSid);
 }
 
-/** Flatten session into a plain object for JSON storage / case building. */
-export function toLogEntry(callSid: string): Record<string, any> | null {
+/** Typed log entry for JSON storage / case building. */
+export interface LogEntry {
+  callSid: string;
+  callerPhone: string;
+  subscriberPhone: string;
+  subscriberId: string;
+  turns: Array<{ role: "caller" | "sam"; text: string }>;
+  extractedCompany: string | null;
+  extractedCallerName: string | null;
+  extractedPurpose: string | null;
+  warningDelivered: boolean;
+  startTime: string;
+  endTime: string;
+  durationSeconds: number;
+  recordingUrl: string | null;
+  recordingSid: string | null;
+}
+
+/** Flatten session into a typed object for JSON storage / case building. */
+export function toLogEntry(callSid: string): LogEntry | null {
   const s = sessions.get(callSid);
   if (!s) return null;
   return {

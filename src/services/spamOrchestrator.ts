@@ -8,6 +8,7 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as Session from "./callSession";
+import * as UserManager from "./userManager";
 import fs from "fs";
 import path from "path";
 
@@ -43,15 +44,27 @@ try {
 
 // ── Build system prompt ──────────────────────────────────────────────────
 
-function buildSystemPrompt(session: Session.CallSession): string {
+function buildSystemPrompt(session: Session.CallSession, subscriberName: string | null, subscriberSex: "M" | "F" | null): string {
   const turnCount = session.turns.length;
   const hasCompany = !!session.extractedCompany;
   const hasName = !!session.extractedCallerName;
 
-  return `${persona.persona_identity}
+  const firstName = subscriberName?.split(" ")[0] ?? null;
+  const isMale = subscriberSex === "M";
+
+  // Personalise the static persona with the subscriber's actual name and gender
+  const identity = firstName
+    ? `You are ${firstName}, a ${isMale ? "68-year-old retired man" : "67-year-old retired woman"} who answers the phone a bit slowly. This is YOUR real phone number — telemarketers are calling YOU.`
+    : persona.persona_identity;
+
+  const background = firstName
+    ? `Your name is ${firstName}. You're a bit hard of hearing, not very tech-savvy, and you get confused easily but you're friendly and you like to chat. You have a ${isMale ? "dog" : "cat"} and you talk about ${isMale ? "him" : "her"} sometimes. You occasionally trail off or ask people to repeat themselves. You sound completely real — not a robot.`
+    : persona.persona_background;
+
+  return `${identity}
 
 ## Background
-${persona.persona_background}
+${background}
 
 ## Tone & Style
 ${persona.persona_tone}
@@ -105,7 +118,12 @@ export async function handleSpamTurn(
     .map((t) => `${t.role === "caller" ? "Caller" : "Sam"}: ${t.text}`)
     .join("\n");
 
-  const systemPrompt = buildSystemPrompt(session);
+  // Look up subscriber so the persona uses their real name and gender
+  const subscriber = session.subscriberPhone
+    ? UserManager.getUserByPhone(session.subscriberPhone)
+    : null;
+
+  const systemPrompt = buildSystemPrompt(session, subscriber?.name ?? null, subscriber?.sex ?? null);
   const prompt = `${systemPrompt}
 
 ${historyText ? `CONVERSATION SO FAR:\n${historyText}\n` : ""}Caller: ${callerSpeech}

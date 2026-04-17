@@ -17,15 +17,19 @@ import * as Notify from "../services/notifications";
 
 const router = Router();
 const { VoiceResponse } = twilio.twiml;
-const VOICE = "Polly.Joanna" as const;
+
+/** Pick a voice that matches the subscriber's gender. Falls back to female. */
+function getVoice(sex: "M" | "F" | null): string {
+  return sex === "M" ? "Polly.Matthew" : "Polly.Joanna";
+}
 
 // ── Helper: speak + gather next turn ─────────────────────────────────────
 
-function speak(res: Response, text: string, action: string, hangup = false) {
+function speak(res: Response, text: string, action: string, hangup = false, voice = "Polly.Joanna") {
   const twiml = new VoiceResponse();
 
   if (hangup) {
-    twiml.say({ voice: VOICE }, text);
+    twiml.say({ voice }, text);
     twiml.hangup();
   } else {
     const gather = twiml.gather({
@@ -36,9 +40,8 @@ function speak(res: Response, text: string, action: string, hangup = false) {
       speechTimeout: "auto",
       language: "en-US",
     });
-    gather.say({ voice: VOICE }, text);
-    // If caller doesn't speak, try once more
-    twiml.say({ voice: VOICE }, "Hello? Are you still there?");
+    gather.say({ voice }, text);
+    twiml.say({ voice }, "Hello? Are you still there?");
     const gather2 = twiml.gather({
       input: ["speech"],
       action,
@@ -47,8 +50,8 @@ function speak(res: Response, text: string, action: string, hangup = false) {
       speechTimeout: "auto",
       language: "en-US",
     });
-    gather2.say({ voice: VOICE }, "");
-    twiml.say({ voice: VOICE }, "Alright, goodbye.");
+    gather2.say({ voice }, "");
+    twiml.say({ voice }, "Alright, goodbye.");
     twiml.hangup();
   }
 
@@ -77,6 +80,7 @@ router.post("/inbound", (req: Request, res: Response) => {
   const user = ForwardedFrom ? UserManager.getUserByPhone(ForwardedFrom) : null;
   const subscriberId = user?.id ?? "unknown";
   const subscriberPhone = user?.phone ?? (ForwardedFrom ?? "");
+  const voice = getVoice(user?.sex ?? null);
 
   // Create session
   Session.getOrCreate(CallSid, From, subscriberPhone, subscriberId);
@@ -90,13 +94,11 @@ router.post("/inbound", (req: Request, res: Response) => {
     recordingStatusCallbackMethod: "POST",
     recordingStatusCallbackEvent: ["completed"],
     trim: "trim-silence",
-    maxLength: 120,     // 2 minutes max
-    playBeep: false,    // don't beep — Sam is acting natural
-    transcribe: false,  // we handle transcription ourselves
+    maxLength: 120,
+    playBeep: false,
+    transcribe: false,
   });
 
-  // Greet the caller naturally — Sam sounds like a real person
-  // The "Hello?" makes spammers think they reached a real person
   const gather = twiml.gather({
     input: ["speech"],
     action: "/api/phone/respond",
@@ -105,10 +107,9 @@ router.post("/inbound", (req: Request, res: Response) => {
     speechTimeout: "auto",
     language: "en-US",
   });
-  gather.say({ voice: VOICE }, "Hello?");
+  gather.say({ voice }, "Hello?");
 
-  // If silence, try once more
-  twiml.say({ voice: VOICE }, "Hello, who's this?");
+  twiml.say({ voice }, "Hello, who's this?");
   const gather2 = twiml.gather({
     input: ["speech"],
     action: "/api/phone/respond",
@@ -117,7 +118,7 @@ router.post("/inbound", (req: Request, res: Response) => {
     speechTimeout: "auto",
     language: "en-US",
   });
-  gather2.say({ voice: VOICE }, "");
+  gather2.say({ voice }, "");
   twiml.hangup();
 
   res.type("text/xml").send(twiml.toString());
@@ -138,29 +139,28 @@ router.post("/respond", async (req: Request, res: Response) => {
 
   const session = Session.get(CallSid);
   if (!session) {
-    // Orphaned call — create minimal session and greet
     const twiml = new VoiceResponse();
-    twiml.say({ voice: VOICE }, "Sorry, I'm having trouble. Goodbye.");
+    twiml.say({ voice: "Polly.Joanna" }, "Sorry, I'm having trouble. Goodbye.");
     twiml.hangup();
     res.type("text/xml").send(twiml.toString());
     return;
   }
 
+  // Resolve voice from subscriber's gender
+  const subscriber = session.subscriberPhone
+    ? UserManager.getUserByPhone(session.subscriberPhone)
+    : null;
+  const voice = getVoice(subscriber?.sex ?? null);
+
   if (!SpeechResult?.trim()) {
-    speak(res, "Sorry, I didn't catch that. Could you say that again?", "/api/phone/respond");
+    speak(res, "Sorry, I didn't catch that. Could you say that again?", "/api/phone/respond", false, voice);
     return;
   }
 
-  // Log the caller's speech
   Session.addTurn(CallSid, "caller", SpeechResult);
-
-  // Let Sam's AI process the turn
   const reply = await handleSpamTurn(CallSid, SpeechResult);
-
-  // Log Sam's response
   Session.addTurn(CallSid, "sam", reply.speak);
 
-  // If the AI extracted company/caller info, update the session
   if (reply.extracted) {
     Session.updateExtracted(CallSid, {
       extractedCompany: reply.extracted.company ?? session.extractedCompany,
@@ -169,7 +169,7 @@ router.post("/respond", async (req: Request, res: Response) => {
     });
   }
 
-  speak(res, reply.speak, "/api/phone/respond", reply.done ?? false);
+  speak(res, reply.speak, "/api/phone/respond", reply.done ?? false, voice);
 });
 
 // ── POST /api/phone/recording ────────────────────────────────────────────

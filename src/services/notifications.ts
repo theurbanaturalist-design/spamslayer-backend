@@ -142,6 +142,7 @@ export async function notifyOnboardingPrompt(
 ): Promise<void> {
   const prompts: Record<string, string> = {
     name: "SpamSlayer: To generate legal documents, I need your full name. Reply: NAME John Smith",
+    sex: "SpamSlayer: One more — reply SEX M or SEX F so your bot sounds like you when it answers spam calls.",
     address: "SpamSlayer: For your demand letters, I need your mailing address. Reply: ADDRESS 123 Main St, Lafayette LA 70501",
     dncYear: "SpamSlayer: What year did you register on the Do Not Call list? Reply: DNC 2007 (or DNC UNSURE if you're not sure)",
   };
