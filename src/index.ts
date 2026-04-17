@@ -70,6 +70,14 @@ app.get("/api/cases/all", (_req, res) => {
   res.json(offenders);
 });
 
+// Check if a number is a known offender — used by Reed to route calls
+app.get("/api/cases/check", (req, res) => {
+  const phone = (req.query.phone as string) || "";
+  if (!phone) { res.status(400).json({ error: "phone required" }); return; }
+  const offender = CaseBuilder.getOffender(CaseBuilder.normalizePhone(phone));
+  res.json({ known: !!offender, callCount: offender?.callCount ?? 0 });
+});
+
 // Single offender detail
 app.get("/api/cases/offender/:number", (req, res) => {
   const offender = CaseBuilder.getOffender(CaseBuilder.normalizePhone(req.params.number));
