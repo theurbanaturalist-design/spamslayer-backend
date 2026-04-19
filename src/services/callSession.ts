@@ -10,6 +10,8 @@ export interface CallSession {
   callerPhone: string;       // the spammer's number
   subscriberPhone: string;   // our user who forwarded the call
   subscriberId: string;      // user account ID
+  subscriberName: string | null;  // passed from Reed's skill config
+  subscriberSex: "M" | "F" | null; // passed from Reed's skill config
   turns: Array<{ role: "caller" | "sam"; text: string }>;
   extractedCompany: string | null;
   extractedCallerName: string | null;
@@ -26,7 +28,9 @@ export function getOrCreate(
   callSid: string,
   callerPhone: string,
   subscriberPhone: string,
-  subscriberId: string
+  subscriberId: string,
+  subscriberName: string | null = null,
+  subscriberSex: "M" | "F" | null = null
 ): CallSession {
   if (!sessions.has(callSid)) {
     sessions.set(callSid, {
@@ -34,6 +38,8 @@ export function getOrCreate(
       callerPhone,
       subscriberPhone,
       subscriberId,
+      subscriberName,
+      subscriberSex,
       turns: [],
       extractedCompany: null,
       extractedCallerName: null,

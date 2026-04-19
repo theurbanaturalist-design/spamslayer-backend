@@ -8,7 +8,6 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as Session from "./callSession";
-import * as UserManager from "./userManager";
 import fs from "fs";
 import path from "path";
 
@@ -118,12 +117,8 @@ export async function handleSpamTurn(
     .map((t) => `${t.role === "caller" ? "Caller" : "Sam"}: ${t.text}`)
     .join("\n");
 
-  // Look up subscriber so the persona uses their real name and gender
-  const subscriber = session.subscriberPhone
-    ? UserManager.getUserByPhone(session.subscriberPhone)
-    : null;
-
-  const systemPrompt = buildSystemPrompt(session, subscriber?.name ?? null, subscriber?.sex ?? null);
+  // Use name/sex stored in session (set from Reed's skill config via URL params)
+  const systemPrompt = buildSystemPrompt(session, session.subscriberName, session.subscriberSex);
   const prompt = `${systemPrompt}
 
 ${historyText ? `CONVERSATION SO FAR:\n${historyText}\n` : ""}Caller: ${callerSpeech}

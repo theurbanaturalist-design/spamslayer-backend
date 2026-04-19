@@ -72,18 +72,23 @@ router.post("/inbound", (req: Request, res: Response) => {
     ForwardedFrom?: string;  // subscriber's personal number (set by carrier forwarding)
   };
 
-  console.log(`[Phone] Inbound call: ${From} → ${To} (forwarded from: ${ForwardedFrom ?? "unknown"}) (${CallSid})`);
+  // Reed passes subscriber identity as query params when redirecting spam here
+  const subName = req.query.subName ? decodeURIComponent(req.query.subName as string) : null;
+  const subSexRaw = req.query.subSex ? decodeURIComponent(req.query.subSex as string).toUpperCase() : null;
+  const subSex: "M" | "F" | null = subSexRaw === "M" || subSexRaw === "F" ? subSexRaw : null;
 
-  // Shared-number model: ForwardedFrom tells us which subscriber forwarded this call.
-  // If the carrier strips it, we still answer and build spammer data — we just can't
-  // tie it to a specific user until they claim it (or we ask all active subscribers).
-  const user = ForwardedFrom ? UserManager.getUserByPhone(ForwardedFrom) : null;
+  console.log(`[Phone] Inbound call: ${From} → ${To} (forwarded from: ${ForwardedFrom ?? "unknown"}) (${CallSid}) sub=${subName ?? "unknown"} sex=${subSex ?? "?"}`);
+
+  // If Reed passed identity via URL params, prefer those. Otherwise fall back to UserManager.
+  const user = (!subName && ForwardedFrom) ? UserManager.getUserByPhone(ForwardedFrom) : null;
   const subscriberId = user?.id ?? "unknown";
   const subscriberPhone = user?.phone ?? (ForwardedFrom ?? "");
-  const voice = getVoice(user?.sex ?? null);
 
-  // Create session
-  Session.getOrCreate(CallSid, From, subscriberPhone, subscriberId);
+  const resolvedSex = subSex ?? user?.sex ?? null;
+  const voice = getVoice(resolvedSex);
+
+  // Create session — store name/sex so orchestrator doesn't need UserManager lookup
+  Session.getOrCreate(CallSid, From, subscriberPhone, subscriberId, subName, resolvedSex);
 
   // Start recording the entire call
   const twiml = new VoiceResponse();
@@ -146,11 +151,8 @@ router.post("/respond", async (req: Request, res: Response) => {
     return;
   }
 
-  // Resolve voice from subscriber's gender
-  const subscriber = session.subscriberPhone
-    ? UserManager.getUserByPhone(session.subscriberPhone)
-    : null;
-  const voice = getVoice(subscriber?.sex ?? null);
+  // Resolve voice from session (set at inbound from Reed's skill config)
+  const voice = getVoice(session.subscriberSex);
 
   if (!SpeechResult?.trim()) {
     speak(res, "Sorry, I didn't catch that. Could you say that again?", "/api/phone/respond", false, voice);
