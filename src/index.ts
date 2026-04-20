@@ -203,4 +203,16 @@ app.listen(PORT, () => {
   console.log("  Voice webhook: /api/phone/inbound");
   console.log("  SMS webhook:   /api/sms/inbound");
   console.log("═".repeat(55));
+
+  // Keep-alive: ping own health endpoint every 14 min so Render free tier
+  // doesn't spin down (spins down after 15 min of no inbound traffic).
+  const selfUrl = (process.env.BASE_URL ?? process.env.RENDER_EXTERNAL_URL ?? "").replace(/\/$/, "");
+  if (selfUrl) {
+    setInterval(() => {
+      fetch(`${selfUrl}/api/health`)
+        .then(() => console.log("[Heartbeat] ok"))
+        .catch((err: Error) => console.warn("[Heartbeat] failed:", err.message));
+    }, 14 * 60 * 1000);
+    console.log(`  Heartbeat: every 14 min → ${selfUrl}/api/health`);
+  }
 });
