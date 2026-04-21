@@ -177,6 +177,26 @@ app.post("/api/cases/log", (req, res) => {
   });
 });
 
+// Attach a Twilio recording URL to an already-logged spam call.
+// Called from Reed's recording-status webhook after Twilio finishes processing the recording.
+// The call entry was logged at call-end (via /api/cases/log) with recordingUrl=null;
+// this backfills the URL once it becomes available.
+app.post("/api/cases/set-recording", (req, res) => {
+  const { callSid, recordingUrl } = req.body as {
+    callSid?: string;
+    recordingUrl?: string;
+  };
+
+  if (!callSid || !recordingUrl) {
+    res.status(400).json({ error: "callSid and recordingUrl required" });
+    return;
+  }
+
+  const found = CaseBuilder.attachRecording(callSid, recordingUrl);
+  console.log(`[API] /cases/set-recording — callSid=${callSid} found=${found}`);
+  res.json({ ok: true, found });
+});
+
 // User management
 app.get("/api/users", (_req, res) => {
   res.json(UserManager.getActiveUsers());

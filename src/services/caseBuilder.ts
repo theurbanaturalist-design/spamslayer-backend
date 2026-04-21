@@ -464,6 +464,35 @@ export function markOffenderFiled(
   });
 }
 
+/**
+ * Attach a recording URL to an existing call entry identified by callSid.
+ * Called asynchronously when Twilio's recording-status callback arrives —
+ * which happens after the call has already been logged in the case file.
+ *
+ * Searches all offender profiles (including post-filed continuations) for a
+ * call with a matching callSid and sets its recordingUrl.
+ *
+ * Returns true if a matching call was found and updated, false otherwise.
+ */
+export function attachRecording(callSid: string, recordingUrl: string): boolean {
+  if (!callSid || !recordingUrl) return false;
+  return mutateCasesSync((db) => {
+    for (const profile of Object.values(db)) {
+      const call = profile.calls.find((c) => c.callSid === callSid);
+      if (call) {
+        call.recordingUrl = recordingUrl;
+        console.log(
+          `[CaseBuilder] Attached recording to callSid=${callSid} ` +
+          `offender=${profile.normalizedNumber} url=${recordingUrl.slice(0, 80)}`
+        );
+        return true;
+      }
+    }
+    console.warn(`[CaseBuilder] attachRecording: no call found with callSid=${callSid}`);
+    return false;
+  });
+}
+
 // ── Query functions ──────────────────────────────────────────────────────
 
 export function getOffender(normalizedNumber: string): OffenderProfile | null {
