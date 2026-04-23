@@ -2,8 +2,8 @@ services:
   - type: web
     name: spamslayer-backend
     runtime: node
-    buildCommand: npm install
-    startCommand: npx ts-node --transpile-only src/index.ts
+    buildCommand: npm install && npm run build
+    startCommand: node dist/index.js
     healthCheckPath: /api/health
 
     envVars:
