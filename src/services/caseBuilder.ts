@@ -121,10 +121,12 @@ function saveCases(db: CasesDB): void {
   if (sb) {
     sb.from(SUPABASE_TABLE)
       .upsert({ key: SUPABASE_ROW_KEY, data: db, updated_at: new Date().toISOString() })
-      .then(({ error }) => {
-        if (error) console.error("[CaseBuilder] Supabase sync failed:", error.message);
-      })
-      .catch((err: Error) => console.error("[CaseBuilder] Supabase sync error:", err.message));
+      .then(
+        ({ error }) => {
+          if (error) console.error("[CaseBuilder] Supabase sync failed:", error.message);
+        },
+        (err: Error) => console.error("[CaseBuilder] Supabase sync error:", err.message)
+      );
   }
 }
 

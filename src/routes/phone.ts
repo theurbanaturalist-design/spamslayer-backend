@@ -26,10 +26,12 @@ function getVoice(sex: "M" | "F" | null): string {
 // ── Helper: speak + gather next turn ─────────────────────────────────────
 
 function speak(res: Response, text: string, action: string, hangup = false, voice = "Polly.Joanna") {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const v = voice as any;
   const twiml = new VoiceResponse();
 
   if (hangup) {
-    twiml.say({ voice }, text);
+    twiml.say({ voice: v }, text);
     twiml.hangup();
   } else {
     const gather = twiml.gather({
@@ -40,8 +42,8 @@ function speak(res: Response, text: string, action: string, hangup = false, voic
       speechTimeout: "auto",
       language: "en-US",
     });
-    gather.say({ voice }, text);
-    twiml.say({ voice }, "Hello? Are you still there?");
+    gather.say({ voice: v }, text);
+    twiml.say({ voice: v }, "Hello? Are you still there?");
     const gather2 = twiml.gather({
       input: ["speech"],
       action,
@@ -50,8 +52,8 @@ function speak(res: Response, text: string, action: string, hangup = false, voic
       speechTimeout: "auto",
       language: "en-US",
     });
-    gather2.say({ voice }, "");
-    twiml.say({ voice }, "Alright, goodbye.");
+    gather2.say({ voice: v }, "");
+    twiml.say({ voice: v }, "Alright, goodbye.");
     twiml.hangup();
   }
 
@@ -85,7 +87,8 @@ router.post("/inbound", (req: Request, res: Response) => {
   const subscriberPhone = user?.phone ?? (ForwardedFrom ?? "");
 
   const resolvedSex = subSex ?? user?.sex ?? null;
-  const voice = getVoice(resolvedSex);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const voice = getVoice(resolvedSex) as any;
 
   // Create session — store name/sex so orchestrator doesn't need UserManager lookup
   Session.getOrCreate(CallSid, From, subscriberPhone, subscriberId, subName, resolvedSex);
@@ -145,14 +148,16 @@ router.post("/respond", async (req: Request, res: Response) => {
   const session = Session.get(CallSid);
   if (!session) {
     const twiml = new VoiceResponse();
-    twiml.say({ voice: "Polly.Joanna" }, "Sorry, I'm having trouble. Goodbye.");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    twiml.say({ voice: "Polly.Joanna" as any }, "Sorry, I'm having trouble. Goodbye.");
     twiml.hangup();
     res.type("text/xml").send(twiml.toString());
     return;
   }
 
   // Resolve voice from session (set at inbound from Reed's skill config)
-  const voice = getVoice(session.subscriberSex);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const voice = getVoice(session.subscriberSex) as any;
 
   if (!SpeechResult?.trim()) {
     speak(res, "Sorry, I didn't catch that. Could you say that again?", "/api/phone/respond", false, voice);

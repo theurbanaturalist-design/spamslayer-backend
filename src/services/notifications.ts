@@ -138,7 +138,7 @@ export async function notifyWelcome(
 /** Onboarding prompt for missing info. */
 export async function notifyOnboardingPrompt(
   userPhone: string,
-  missingField: "name" | "address" | "dncYear"
+  missingField: "name" | "sex" | "address" | "dncYear"
 ): Promise<void> {
   const prompts: Record<string, string> = {
     name: "SpamSlayer: To generate legal documents, I need your full name. Reply: NAME John Smith",
