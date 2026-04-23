@@ -30,11 +30,6 @@ import smsRouter from "./routes/signup";
 import * as CaseBuilder from "./services/caseBuilder";
 import * as UserManager from "./services/userManager";
 
-// Restore cases from Supabase before accepting requests
-CaseBuilder.initCaseDb().catch((err) =>
-  console.error("[SpamSlayer] initCaseDb failed:", err)
-);
-
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3003", 10);
 
