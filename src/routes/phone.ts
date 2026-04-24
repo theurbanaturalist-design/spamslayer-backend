@@ -38,8 +38,8 @@ function speak(res: Response, text: string, action: string, hangup = false, voic
       input: ["speech"],
       action,
       method: "POST",
-      timeout: 8,
-      speechTimeout: "auto",
+      timeout: 3,
+      speechTimeout: "1",
       language: "en-US",
     });
     gather.say({ voice: v }, text);
@@ -48,8 +48,8 @@ function speak(res: Response, text: string, action: string, hangup = false, voic
       input: ["speech"],
       action,
       method: "POST",
-      timeout: 5,
-      speechTimeout: "auto",
+      timeout: 3,
+      speechTimeout: "1",
       language: "en-US",
     });
     gather2.say({ voice: v }, "");
@@ -111,8 +111,8 @@ router.post("/inbound", (req: Request, res: Response) => {
     input: ["speech"],
     action: "/api/phone/respond",
     method: "POST",
-    timeout: 8,
-    speechTimeout: "auto",
+    timeout: 3,
+    speechTimeout: "1",
     language: "en-US",
   });
   gather.say({ voice }, "Hello?");
@@ -122,8 +122,8 @@ router.post("/inbound", (req: Request, res: Response) => {
     input: ["speech"],
     action: "/api/phone/respond",
     method: "POST",
-    timeout: 5,
-    speechTimeout: "auto",
+    timeout: 3,
+    speechTimeout: "1",
     language: "en-US",
   });
   gather2.say({ voice }, "");
