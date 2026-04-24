@@ -20,12 +20,12 @@ const { VoiceResponse } = twilio.twiml;
 
 /** Pick a voice that matches the subscriber's gender. Falls back to female. */
 function getVoice(sex: "M" | "F" | null): string {
-  return sex === "M" ? "Polly.Matthew" : "Polly.Joanna";
+  return sex === "M" ? "Polly.Matthew-Neural" : "Polly.Joanna-Neural";
 }
 
 // ── Helper: speak + gather next turn ─────────────────────────────────────
 
-function speak(res: Response, text: string, action: string, hangup = false, voice = "Polly.Joanna") {
+function speak(res: Response, text: string, action: string, hangup = false, voice = "Polly.Joanna-Neural") {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const v = voice as any;
   const twiml = new VoiceResponse();
@@ -149,7 +149,7 @@ router.post("/respond", async (req: Request, res: Response) => {
   if (!session) {
     const twiml = new VoiceResponse();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    twiml.say({ voice: "Polly.Joanna" as any }, "Sorry, I'm having trouble. Goodbye.");
+    twiml.say({ voice: "Polly.Joanna-Neural" as any }, "Sorry, I'm having trouble. Goodbye.");
     twiml.hangup();
     res.type("text/xml").send(twiml.toString());
     return;
