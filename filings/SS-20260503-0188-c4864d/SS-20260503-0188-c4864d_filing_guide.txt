@@ -1,0 +1,630 @@
+═══════════════════════════════════════════════════════════════════════
+        SPAMSLAYER FILING GUIDE — YOUR STEP-BY-STEP PLAYBOOK
+═══════════════════════════════════════════════════════════════════════
+
+Case Ref:      SS-20260503-0188-c4864d
+Defendant:     National Auto Protection
+Your Damages:  $1,000
+Court:         Lafayette City Court
+               105 East Convent St
+               Lafayette, LA 70501
+Clerk Phone:   (337) 291-8702
+
+═══════════════════════════════════════════════════════════════════════
+
+IMPORTANT WARNINGS — READ BEFORE FILING
+────────────────────────────────────────
+
+    ⚠ Citation review pending: 89 citation(s) in your filing are known to SpamSlayer but have not yet been personally verified against the government source by a human reviewer. This does not mean the citations are wrong — it means no one on this project has personally confirmed them in writing yet. If this filing will be sworn under oath, have a paralegal or lawyer double-check each citation against eCFR / uscode.house.gov before you sign. See CITATION_AUDIT_REPORT.txt for the full list.
+
+    ⚠ COLLECTABILITY — LOW SCORE (25/100): SpamSlayer's automated heuristics flag this defendant as likely UNCOLLECTABLE based on number prefix, caller-identification capture, and call-pattern persistence. A judgment you cannot collect costs filing fees and time for nothing. BEFORE filing, open the companion document "defendant_research.txt" in this package, complete every step of the MANUAL RESEARCH CHECKLIST (Secretary of State lookup, FCC complaint database, carrier traceback, litigation history, asset check), and read the ALTERNATIVES section. If you cannot identify a real, reachable US entity with assets, the right play is usually to sue the seller up the chain (TCPA seller liability, FCC 2013 DISH Network ruling), file FCC/FTC/state-AG complaints in parallel, or refer the case to a TCPA class-action firm — not to file in small claims against a spoofed number.
+
+    ⚠ CASE STRENGTH WARNING: The SpamSlayer case assessment rates this case as "WEAK" (score: 45/100) and recommends NOT filing yet. Reason: This case needs more work before filing. A weak case wastes your filing fee and court time. Focus on: Call recordings available, Demand letter sent via certified mail, Willful violation (post-demand calls). Build your evidence, then reassess.. Proceeding to generate documents anyway, but review the warnings carefully before filing.
+
+    ⚠ NO RECORDINGS AVAILABLE: None of your calls from this number have recordings attached. Your case relies entirely on call metadata (dates, times, originating number), carrier CDRs, and Twilio logs. Recordings are the strongest evidence in TCPA cases — without them, the defendant may argue the calls weren't solicitations. Your case is still viable but significantly weaker. Try to obtain your carrier Call Detail Records to compensate.
+
+    ⚠ VERIFY DEFENDANT IDENTITY — SPOOFED NUMBERS: Most spam calls use spoofed caller IDs. The phone number +15555550188 may NOT belong to the actual caller. Before filing, verify the defendant's identity through multiple sources: (1) Listen to the recordings — did the caller identify a company name? (2) Search the number on TrueCaller, Whitepages, or the FCC complaint database. (3) Check if the number is a VoIP/disposable number (services like FreeCarrierLookup.com can tell you). If the number appears to be spoofed or disposable, you may be suing the wrong entity. DO NOT file until you can connect the phone number to an actual business entity.
+
+    ⚠ CHECK FOR BURIED CONSENT: Before filing, make sure you never gave consent to receive calls from this company — even indirectly. Data brokers sell "lead lists" with phone numbers attached to Terms of Service agreements you may have clicked years ago on unrelated websites. If the defendant produces a consent form or TOS agreement with your name on it, your case collapses. Search your email for any correspondence from the defendant's company name. If you find ANYTHING, consult an attorney before filing.
+
+═══════════════════════════════════════════════════════════════════════
+
+YOU CAN DO THIS
+───────────────
+
+    If you're feeling nervous about going to court — that's normal.
+    Small claims court is specifically designed for regular people
+    without lawyers. The judge and clerk are used to helping self-
+    represented people. You don't need to memorize legal terms or
+    give a perfect speech. Just bring your evidence, tell the truth,
+    and let the documents do the heavy lifting.
+
+    Here's what you need to know about logistics:
+    → No appointment needed — just walk in during business hours
+      (typically 8:30 AM - 4:30 PM, Mon-Fri — call to confirm)
+    → Dress neatly (business casual is fine — no suit required)
+    → You can bring a friend or family member for support
+    → The whole process usually takes 15-30 minutes
+    → If you can't take off work, ask the clerk about afternoon
+      or alternative scheduling
+    → You will NOT owe the defendant money if you lose — small
+      claims courts don't award costs to defendants in most cases
+    → If you can't afford the filing fee, ask the clerk about a
+      "fee waiver" or "in forma pauperis" application — courts
+      can waive fees for people with limited income
+
+═══════════════════════════════════════════════════════════════════════
+
+IMPORTANT — COURT FORM CHECK
+─────────────────────────────
+
+    Some Louisiana courts use their own pre-printed small claims
+    forms instead of accepting written petitions. BEFORE printing
+    all these documents, call the clerk at (337) 291-8702
+    and ask: "Does Lafayette City Court accept written small claims
+    petitions, or do I need to use the court's own form?" If they
+    require their form, you can use SpamSlayer's petition as your
+    reference — copy the information into the court's form.
+
+BEFORE YOU FILE — CHECKLIST
+───────────────────────────
+
+    [ ] Fill in your personal info in ALL documents if you see
+        brackets like [YOUR NAME]
+    [ ] Verify your DNC registration at https://www.donotcall.gov/verify.html
+        and print/screenshot the confirmation
+    [ ] GET YOUR CARRIER CALL RECORDS — this is your strongest
+        independent evidence. Log into your carrier's website (AT&T,
+        T-Mobile, Verizon, etc.) and download/screenshot your call
+        history showing the spam calls. For formal CDRs, call your
+        carrier and request a Call Detail Record report. See the
+        Exhibit List for detailed instructions.
+    [ ] CRITICAL: Download recordings to your computer NOW — Twilio
+        may auto-delete recordings after 30 days. Do NOT rely on
+        recording URLs being available at trial. Save as MP3/WAV
+        files and back up to USB drive.
+    [ ] Make sure recordings are saved (USB drive — not just URLs)
+    [ ] RECOMMENDED: Send a demand letter first (SpamSlayer can
+        generate one). This strengthens your case AND can trigger
+        treble damages ($1,500/call) if they keep calling.
+    [ ] VERIFY the phone number actually belongs to the defendant —
+        spoofed caller IDs are common. Search the number on
+        TrueCaller or FreeCarrierLookup.com. If it's a VoIP/
+        disposable number, verify the company name from recordings.
+    [ ] Confirm you have NO prior business relationship with National Auto Protection
+        (no purchases, no inquiries, no accounts)
+    [ ] Confirm you never gave them written permission to call you
+    [ ] CRITICAL: Make sure the defendant's LEGAL BUSINESS NAME is
+        in the petition (not just a phone number). Courts cannot
+        enter judgment against "Unknown Entity" — you must identify
+        the company. Search the phone number on TrueCaller,
+        Whitepages, or your state's Secretary of State business
+        registry to find the registered business name.
+    [ ] Sign the Recording Authentication Declaration (Exhibit)
+    [ ] Sign the Verification at the end of the Petition
+
+═══════════════════════════════════════════════════════════════════════
+
+STEP 1: PREPARE YOUR DOCUMENTS
+───────────────────────────────
+
+SpamSlayer generated 3 documents for you:
+
+    a) PETITION — This is your lawsuit. It tells the court what
+       happened and what you're asking for.
+
+    b) EXHIBIT LIST — This is your evidence inventory. It tells
+       the court (and the defendant) exactly what proof you have.
+
+    c) CERTIFICATE OF SERVICE — This proves you gave the defendant
+       a copy of everything. The court requires this.
+
+Print 3 COPIES of everything:
+    → 1 for the court (they keep this)
+    → 1 for the defendant (you serve this)
+    → 1 for you (your records)
+
+═══════════════════════════════════════════════════════════════════════
+
+STEP 2: GO TO THE COURTHOUSE
+─────────────────────────────
+
+Go to:  Lafayette City Court
+        105 East Convent St
+        Lafayette, LA 70501
+
+Tell the clerk:
+    "I'd like to file a small claims petition."
+
+They will:
+    → Take your petition and exhibits
+    → Assign a case number (write this on ALL your copies)
+    → Collect the filing fee (approximately $75.00 —
+      CALL (337) 291-8702 FIRST to confirm the current
+      amount and accepted payment methods)
+    → Give you a court date (usually 2-4 weeks out)
+
+═══════════════════════════════════════════════════════════════════════
+
+STEP 3: SERVE THE DEFENDANT
+────────────────────────────
+
+The defendant must receive a copy of your petition before the
+court date. Louisiana law requires proper service under
+La. R.S. 13:5204 (service of small-claims citation).
+
+FIRST, ASK THE CLERK: "Will the court handle service, or do I
+need to arrange it myself?" Some courts handle service for you.
+
+IF YOU ARRANGE SERVICE YOURSELF — Certified mail is easiest:
+    → Go to the post office
+    → Send copies via Certified Mail with Return Receipt Requested
+    → Cost: about $25.00
+    → Keep the green receipt card — this is your PROOF of service
+    → Fill in the tracking number on your Certificate of Service
+
+NOTE: Small claims service is limited to certified mail or
+personal service (constable/process server). Other methods
+like domiciliary service are NOT available in small claims.
+
+If you don't have their address, see the tips in the Certificate
+of Service document.
+
+═══════════════════════════════════════════════════════════════════════
+
+NOTE: POSSIBLE SETTLEMENT CONFERENCE
+─────────────────────────────────────
+
+    Some Louisiana courts schedule a settlement conference or
+    mediation session before the trial date (this is done by
+    individual court rule, not statute — check your court's
+    local rules and the notice you receive). If the court
+    contacts you about a conference:
+    → Attend — failure to appear may delay or dismiss your case
+    → Bring all your evidence (same as for trial)
+    → The defendant may offer to settle (see Settlement
+      Negotiation guidance in the Courtroom Preparation section)
+    → If no settlement is reached, the case proceeds to trial
+    → If the defendant doesn't show for the conference, ask the
+      judge about entering a default judgment
+
+═══════════════════════════════════════════════════════════════════════
+
+STEP 4: SHOW UP TO COURT
+─────────────────────────
+
+What to bring:
+    → Your copy of everything (petition, exhibits, certificate)
+    → Your phone (to play recordings if needed)
+    → USB drive with recordings (backup)
+    → Carrier call detail records (CDRs) showing the spam calls
+    → Your phone bill showing the calls (if separate from CDRs)
+    → DNC registry printout
+    
+
+What to say (keep it simple):
+    "Your Honor, I'm on the Do Not Call Registry. The defendant
+     called me 2 times between May 3, 2026
+     and May 3, 2026. I have recordings and phone
+     records proving each call. Under the TCPA, I'm entitled to
+     $500 per violation. I'm requesting $1,000."
+
+Then show your evidence when the judge asks.
+
+IMPORTANT: The defendant probably WON'T show up. Most spammers
+ignore small claims suits. If they don't appear, you can get a
+DEFAULT JUDGMENT — but it is NOT automatic. You must:
+    → Show the judge your proof of service (certified mail receipt
+      or constable's return) to prove the defendant was properly
+      notified
+    → Ask the clerk: "How do I request a default judgment?" — some
+      courts require a written Motion for Default Judgment
+    → You may still need to briefly present your evidence (damages
+      amount, basis for the claim) even without the defendant
+    → The judge then enters judgment in your favor
+
+═══════════════════════════════════════════════════════════════════════
+
+WHAT IF THEY FIGHT BACK? — COMMON DEFENSES
+───────────────────────────────────────────
+
+Your petition already addresses these, but here's what to expect:
+
+    1. "WE HAVE A SAFE HARBOR" — They'll claim they scrubbed
+       their list against the DNC registry. Your response:
+       "If they had proper procedures, they wouldn't have called
+       a DNC-registered number 2 times. Ask them to
+       produce their written DNC policy and proof of 31-day
+       registry scrubbing. The burden is on them."
+
+    2. "WE HAD AN ESTABLISHED BUSINESS RELATIONSHIP" — They'll
+       claim you bought something from them or made an inquiry.
+       Your response: "I have never done business with this
+       company. Ask them to produce a receipt, transaction record,
+       or signed agreement. They can't, because none exists."
+
+    3. "YOU CONSENTED TO OUR CALLS" — They'll claim you signed up.
+       Your response: "I never provided written consent to receive
+       calls from this company. Ask them to produce a signed
+       consent form or a recording of verbal consent. The burden
+       of proving consent is on the defendant."
+
+    4. "AN AI ANSWERED, NOT A PERSON — NO HARM" — This is their
+       flashiest argument, but it fails. Your response:
+       "I am the telephone subscriber. The TCPA protects my right
+       to be free from unsolicited calls to my DNC-registered
+       number. The statute says 'a person who has received more
+       than one telephone call' — I received these calls at MY
+       number. How I choose to answer my own phone doesn't give
+       telemarketers permission to call a Do Not Call number.
+       My compliance system is my authorized agent, just like an
+       answering machine or a secretary. The calls consumed my
+       phone line, triggered my infrastructure, and invaded my
+       privacy. See Spokeo v. Robins — TCPA violations are
+       concrete injuries regardless of the answering mechanism."
+
+    5. "WE DIDN'T KNOW WE WERE VIOLATING THE LAW" — Irrelevant.
+       Liability under 47 U.S.C. § 227(c)(5) does not require
+       intent — it's a strict liability statute for the base
+       $500 damages. Intent only matters for treble damages.
+
+    6. "YOUR SYSTEM KEPT US ON THE LINE — ENTRAPMENT" — Nonsense.
+       Your response: "Entrapment is a criminal defense that only
+       applies to government agents. I'm a private citizen. More
+       importantly, the violation occurred the moment you dialed
+       my DNC-registered number — not during the conversation.
+       Whether the call lasted 5 seconds or 5 minutes, the
+       violation is the same. The recording simply captured
+       evidence of a violation that was already in progress."
+
+    7. "THIS IS A PROFESSIONAL PLAINTIFF / LITIGATION FACTORY" —
+       They'll try to paint you as someone who sets up these cases
+       for profit. DEFENSE COUNSEL MAY CITE:
+         • Stoops v. Wells Fargo, 197 F. Supp. 3d 782 (W.D. Pa.
+           2016) — plaintiff bought dozens of cell phones, sat in
+           a rocking chair waiting for spam calls; court held
+           she lacked Article III standing because TCPA's
+           "privacy" interest was not invaded when she wanted
+           the calls.
+         • In re Nomorobo Honeypot Litig. (2026) — held that
+           operators of commercial honeypot lines whose ONLY
+           purpose was to attract and sue spam calls lacked
+           standing.
+       Your response:
+       "Stoops and Nomorobo are distinguishable. (1) This is my
+       personal residential/business cell phone, not a number
+       acquired solely to generate lawsuits. I use it for real
+       communication every day. (2) I registered on the DNC list
+       BECAUSE I don't want spam calls — the record shows my
+       system's only interaction with telemarketers is to warn
+       them off and end the call. (3) The TCPA's privacy
+       interest IS invaded here: these calls tie up my line,
+       trigger notifications on my phone, and consume my time.
+       Congress specifically created the § 227(c)(5) private
+       right of action so residential subscribers like me could
+       enforce the DNC registry. Using a compliance tool to
+       document violations is no different from installing a
+       security camera to record a trespasser — the camera
+       doesn't cause the trespass."
+
+    8. "UNCLEAN HANDS / YOU TRICKED US INTO STAYING ON THE LINE" —
+       They'll argue your system manipulated the conversation.
+       Your response: "The violation happened when you dialed my
+       number, before any conversation took place. My compliance
+       system simply answered the phone — exactly like voicemail
+       or an answering machine would. The conversation that
+       followed is evidence of the violation, not the cause of it.
+       Unclean hands requires that I did something wrong related
+       to the lawsuit — answering my own phone and recording in a
+       one-party consent state is perfectly legal. And my system
+       delivered a DNC warning during the call, giving you notice
+       to stop calling — which you ignored."
+
+    9. "THOSE CALLS WEREN'T FROM US / WE USE SUBCONTRACTORS" —
+       They'll claim a third party made the calls or different
+       phone numbers mean different entities. Your response:
+       "The TCPA says 'by or on behalf of the same entity.' If
+       you hired someone to make these calls, you're still liable.
+       The calls all had the same purpose, the same pitch, and
+       came from numbers traceable to your organization. You can't
+       outsource your way out of TCPA liability. Ask them to
+       produce their calling vendor contracts — that proves they
+       directed the calls."
+
+   10. "THOSE WEREN'T TELEMARKETING CALLS" — They'll claim the
+       calls were surveys, informational, or debt collection (not
+       covered by the DNC provisions). Your response: "Listen to
+       the recordings. The caller was selling [product/service].
+       The TCPA defines 'telephone solicitation' as any call to
+       encourage purchase of goods or services. The content of
+       these calls is commercial solicitation, period. If they
+       claim it was debt collection, ask them to produce the debt
+       — there isn't one, because I've never done business with
+       this company."
+
+   11. "THIS IS A BUSINESS LINE, NOT RESIDENTIAL" — They'll argue
+       your phone is used for business and TCPA DNC rules only
+       protect residential numbers. Your response: "My number is
+       my personal residential telephone number. I may occasionally
+       use my phone for incidental purposes, but it is registered
+       to my home address and is my primary residential line. The
+       DNC Registry does not distinguish between phones that are
+       sometimes used for personal business and dedicated business
+       lines."
+
+   12. "WE'RE REMOVING THIS TO FEDERAL COURT" — They'll try to
+       move the case out of small claims into federal court (where
+       you'd need a lawyer). This is rare but legally possible
+       because the TCPA is a federal statute. A defendant can file
+       a notice of removal under 28 U.S.C. § 1441(a) (federal
+       question jurisdiction) — the $75,000 diversity threshold
+       does NOT apply here because the TCPA claim arises under
+       federal law. However, most defendants won't bother because:
+       (a) it costs them more in attorney fees than the claim is
+       worth, (b) they face the same unfavorable TCPA law in
+       federal court, and (c) the judge may look unfavorably on a
+       corporation trying to bully a pro se consumer out of small
+       claims. IF the defendant does remove: you must file a
+       "Motion to Remand" within 30 DAYS (28 U.S.C. § 1447(c))
+       arguing that state courts have concurrent jurisdiction
+       under Mims v. Arrow Financial, 565 U.S. 368 (2012), and
+       that Congress expressly authorized suit in state court
+       under 47 U.S.C. § 227(c)(5). IMPORTANT: If the case is
+       removed to federal court, CONSULT AN ATTORNEY — federal
+       court procedures are significantly more complex than small
+       claims and you may need legal representation.
+
+═══════════════════════════════════════════════════════════════════════
+
+COURTROOM PREPARATION — WHAT YOU NEED TO KNOW
+──────────────────────────────────────────────
+
+HOW TO AUTHENTICATE YOUR RECORDINGS IN COURT:
+    A written declaration alone may not be enough. The judge will
+    likely want you to TESTIFY about the recordings. Here's your
+    script:
+
+    Judge: "How do I know these recordings are real?"
+
+    You: "Your Honor, I am the telephone subscriber for the number
+    that was called. I authorized my telephone compliance system —
+    which works like an answering machine — to answer and record
+    incoming calls on my behalf. The recordings were automatically
+    captured at the time each call was received and stored on the
+    Twilio telecommunications platform. Twilio is a publicly traded
+    company that independently logs every call. I have personally
+    reviewed each recording and I confirm they accurately represent
+    the calls as received at my number. I have not edited or altered
+    any recording. I also have cryptographic hash signatures that
+    prove the recordings have not been tampered with since capture."
+
+    If the judge asks about the hash signatures, here's how to
+    explain it in plain English:
+
+    "Your Honor, a SHA-256 hash is like a digital fingerprint. When
+    each recording was first captured, my system computed a unique
+    fingerprint — a long string of letters and numbers — from the
+    exact contents of the audio file. If anyone changed even one
+    second of the recording, the fingerprint would be completely
+    different. It's the same technology the federal government uses
+    for securing classified documents. I've included the original
+    fingerprints in my evidence so the court can verify the
+    recordings haven't been altered."
+
+WHAT IF SERVICE FAILS (UNCLAIMED MAIL):
+    If your certified mail comes back unclaimed or undeliverable:
+
+    1. DON'T PANIC — this is common with spammers who use mail
+       drops or P.O. boxes.
+    2. Go back to the clerk and explain: "My certified mail was
+       returned unclaimed. What alternative service methods are
+       available?"
+    3. Options include:
+       → Personal service via constable or process server (they
+         can serve at the business address during business hours)
+       → Service on the registered agent (look up the company in
+         the Secretary of State business registry — every LLC and
+         corporation MUST have a registered agent for service)
+       → Service by publication as a last resort under
+         La. C.C.P. Art. 1263 (the clerk will explain the process)
+    4. KEEP the returned envelope — it's evidence of your diligent
+       attempt to serve.
+
+IF DEFENDANT FILES A MOTION TO DISMISS:
+    Don't panic — this is a standard delay tactic. Common grounds
+    and your responses:
+
+    "Lack of standing" → "I am the residential telephone subscriber.
+    My phone bill proves it. I registered on the DNC list. I received
+    these calls. I have standing under 47 U.S.C. § 227(c)(5)."
+
+    "Improper service" → "I served via [certified mail / constable]
+    as required by La. R.S. 13:5204. Here is my proof of service."
+
+    "Failure to state a claim" → "My petition alleges: (1) I am on
+    the DNC registry, (2) defendant called me 2 times,
+    (3) within a 12-month period, (4) without my consent. Those are
+    the four elements of a § 227(c)(5) claim."
+
+    "Wrong court / jurisdiction" → "Defendant called a Louisiana
+    phone number. That's sufficient minimum contact under La. R.S.
+    13:3201(a). See also Burger King v. Rudzewicz."
+
+CONSIDER SENDING A DEMAND LETTER FIRST:
+    If you send a demand letter before filing (SpamSlayer can
+    generate one) and the defendant keeps calling AFTER receiving
+    it, their violations become "willful" — tripling your damages
+    from $500 to $1,500 per call. This can dramatically increase
+    your recovery.
+
+SETTLEMENT NEGOTIATION:
+    The defendant (or their lawyer) may contact you to settle
+    before court. Here's how to handle it:
+
+    → You are NOT obligated to settle — it's your choice.
+    → A reasonable settlement is typically 50-80% of your claimed
+      damages. Don't accept less than 40% unless there are real
+      weaknesses in your case.
+    → If they offer to settle, get it in WRITING before you agree
+      to anything.
+    → Ask the clerk: "If I settle, how do I dismiss my case?"
+      Usually it's a one-page "Voluntary Dismissal" form.
+    → NEVER sign a settlement that includes a "confidentiality"
+      or "non-disparagement" clause without understanding it.
+    → If they lowball you, just say: "I'll see you in court."
+      Most spammers settle once they realize you're serious.
+
+PREPARING YOUR EXHIBITS:
+    Before court day, make sure you have PHYSICAL copies of
+    everything. Judges cannot click URLs or play files from
+    your laptop without preparation:
+
+    → Print all documents and exhibits on paper
+    → Copy recordings to a USB drive (bring 2 copies — one for
+      the judge, one for you)
+    → Print the call log table from your exhibit list
+    → Print your phone bill with the spam calls highlighted
+    → Print the DNC registry verification screenshot
+    → Bring your phone as a backup way to play recordings
+    → Label everything clearly: "Exhibit A", "Exhibit B", etc.
+    → Use tabs or colored stickers so you can find exhibits fast
+    → Print the evidence integrity certificate (the page with
+      the long code numbers — it proves recordings weren't tampered
+      with; you probably won't need it but bring it just in case)
+
+═══════════════════════════════════════════════════════════════════════
+
+STEP 5: COLLECT YOUR MONEY
+───────────────────────────
+
+If you win (and you very likely will):
+
+    a) The court issues a judgment in your favor.
+
+    b) Appeals: Under La. R.S. 13:5211, parties waive the right
+       to appeal from a small claims judgment. However, under
+       La. R.S. 13:5206 either party can TRANSFER the case to
+       the regular civil docket of the City Court within the
+       time set by court rule (Lafayette: written notice within
+       10 days plus a $75 advanced cost deposit) — doing so
+       preserves appeal rights from the regular-docket judgment.
+       Most spammers do not bother. If the defendant transfers,
+       the case is re-tried on the regular civil docket (same
+       evidence, same arguments). If YOU lose and want to
+       preserve appeal rights, ask the clerk IMMEDIATELY about
+       the transfer procedure and deadline — don't wait, the
+       window is short.
+
+    c) If they don't pay, you can:
+       → Ask the clerk about filing a Motion for Execution of
+         Judgment — the clerk will explain the simplified
+         collection procedures available for small claims
+       → Options may include wage garnishment, bank account
+         seizure, or liens on property
+       → The clerk handles most of the paperwork for you
+
+═══════════════════════════════════════════════════════════════════════
+
+KEY LEGAL REFERENCES (for your confidence)
+──────────────────────────────────────────
+
+    Federal:
+    → 47 U.S.C. § 227(c)(5) — Private right of action, $500-$1,500
+    → 47 U.S.C. § 227(b)(1)(B) — Robocall/ATDS prohibition
+    → 47 C.F.R. § 64.1200(c) — DNC Registry regulations
+    → 47 C.F.R. § 64.1200(c)(2) — Safe harbor (defendant's burden)
+    → 47 C.F.R. § 64.1200(f)(12) — Telephone solicitation definition
+    → 18 U.S.C. § 2511(2)(d) — Federal one-party recording consent
+    → Mims v. Arrow Financial, 565 U.S. 368 (2012) — State court OK
+    → Spokeo v. Robins, 578 U.S. 330 (2016) — Concrete injury
+    → TransUnion v. Ramirez, 594 U.S. 413 (2021) — Standing
+    → Facebook v. Duguid, 141 S. Ct. 1163 (2021) — ATDS definition
+    → McLaughlin Chiropractic v. McKesson, 606 U.S. ___ (2025) —
+       Hobbs Act does NOT bind district courts to FCC TCPA orders;
+       courts may independently interpret "consent," "ATDS," and
+       "prior express consent" without automatic FCC deference.
+       (Practical effect: if a defendant cites an FCC order as
+       binding, argue the court can reach its own conclusion.)
+    → Stoops v. Wells Fargo, 197 F. Supp. 3d 782 (W.D. Pa. 2016) —
+       Adverse on "professional plaintiff" standing; see
+       "Litigation factory" defense response above to distinguish.
+    → Insurance Marketing Coalition Ltd. v. FCC, 127 F.4th 303
+       (11th Cir. 2025) — VACATED the FCC's 2023 "one-to-one
+       consent" rule that would have required separate consent
+       for each seller on a lead-generation form. After this
+       decision, a defendant may try to argue that looser,
+       "bundled" consent captured by a lead broker satisfies the
+       TCPA. Response: (i) vacatur does not authorize calls to
+       DNC-registered numbers under § 227(c); (ii) the defendant
+       still bears the burden of producing actual signed,
+       specific consent tied to Plaintiff's number; (iii) an
+       opaque lead-broker trail does not overcome Plaintiff's
+       DNC registration; (iv) written consent obtained by fraud
+       or without disclosure of the specific caller is not valid
+       "prior express written consent" under § 227(a)(10).
+
+    Louisiana:
+    → La. R.S. 45:844.14 — State DNC protections
+    → La. R.S. 15:1303 (one-party consent) — Recording is legal
+    → La. R.S. 13:3201(a) — Long-arm statute (personal jurisdiction)
+    → La. R.S. 13:5200 et seq. — Small claims procedure
+    → La. R.S. 13:5202 — Small claims subject-matter jurisdiction
+    → La. R.S. 13:5204 — Service of small-claims citation
+    → La. R.S. 13:5206 — Transfer to regular civil docket
+    → La. R.S. 13:5211 — Waiver of appeal rights
+    → La. C.C.P. Art. 4843 — City Court amount-in-dispute jurisdiction
+
+═══════════════════════════════════════════════════════════════════════
+
+STATUTE OF LIMITATIONS REMINDER
+────────────────────────────────
+
+IMPORTANT: The TCPA's statute of limitations is a federal question.
+The dominant rule post-Mims v. Arrow Financial (2012) is the
+4-year federal catch-all at 28 U.S.C. § 1658(a), which applies
+to any federal cause of action created after December 1, 1990
+and for which no other limitations period is specified — that
+fits the TCPA's private right of action. A minority of older
+decisions borrowed shorter state SOLs (as low as 1–2 years),
+and Louisiana courts have not uniformly resolved the question.
+FILE AS SOON AS POSSIBLE so no SOL theory can be used against
+you.
+
+Using the most generous 4-year deadline: your earliest call was
+on May 3, 2026. You must file before May 3, 2030 under the 4-year standard. But under a 2-year standard, your
+deadline would be May 3, 2028. Don't wait — file now.
+
+═══════════════════════════════════════════════════════════════════════
+
+TIPS FOR SUCCESS
+────────────────
+
+    DO:
+    → Be calm, polite, and organized in court
+    → Let the evidence speak — recordings are very powerful
+    → Refer to the law by section number (judges appreciate this)
+    → Bring extra copies of everything
+    → Arrive early and observe how the court operates
+
+    DON'T:
+    → Don't get emotional or angry
+    → Don't exaggerate the number of calls
+    → Don't claim anything you can't prove
+    → Don't worry if you're not a lawyer — small claims is designed
+      for regular people to represent themselves
+    → Don't forget to bring your DNC registry printout — this is
+      the foundation of your entire case
+
+═══════════════════════════════════════════════════════════════════════
+
+QUESTIONS? NEED HELP?
+─────────────────────
+
+    → Court clerk: (337) 291-8702 (they're very helpful)
+    → FCC complaints: https://consumercomplaints.fcc.gov
+    → FTC DNC: https://www.donotcall.gov
+    → TCPA full text: https://www.law.cornell.edu/uscode/text/47/227
+
+    SpamSlayer built your case. Now go win it.
+
+═══════════════════════════════════════════════════════════════════════

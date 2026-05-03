@@ -1,0 +1,81 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+FCC CONSUMER COMPLAINT — UNWANTED CALLS / TCPA VIOLATION
+Submit at: https://consumercomplaints.fcc.gov/hc/en-us/requests/new
+Form category: "Phone" → "Unwanted Calls" → "Robocalls" (select what matches your evidence)
+
+─── CONSUMER / RECIPIENT ─────────────────────────────────────────────
+
+  Name:                Jane Demo [DEMO PLAINTIFF]
+  Email:               demo@example.invalid
+  Phone called:        +1 (337) 555-0100
+  Address:             123 Demo Lane, Lafayette, LA 70501
+  Line type (self-reported):  residential
+  DNC-registered since:       June 15, 2020 (2032 days before first offending call)
+
+─── OFFENDING CALLER ─────────────────────────────────────────────────
+
+  Displayed caller ID: +1 (555) 555-0199
+  Total calls:         6
+  First call:          January 7, 2026
+  Most recent call:    April 9, 2026
+  Recordings on file:  yes — URLs available on request
+
+  The caller identified themselves as or on behalf of: "Preferred Auto Protection [DEMO]". I have not independently verified this identification.
+
+─── APPLICABLE TCPA / FCC RULES ──────────────────────────────────────
+
+I am reporting violations of one or more of the following provisions:
+
+  • 47 U.S.C. § 227(b)(1)(B) — prerecorded voice calls to a
+    residential telephone without prior express consent.
+  • 47 U.S.C. § 227(c)(5) — calls to a number on the National Do
+    Not Call Registry more than 31 days after registration.
+  • 47 C.F.R. § 64.1200(a)(1)(i) — calls before 8 AM or after 9 PM
+    local time (1 such call(s) on record).
+
+─── CALL LOG (partial — full log available on request) ──────────────
+
+  1. January 7, 2026 at 10:42 — recording available
+  2. January 19, 2026 at 14:08 — recording available
+  3. February 3, 2026 at 07:15 — recording available
+  4. February 21, 2026 at 11:30 — recording available
+  5. March 14, 2026 at 09:55 — recording available
+  6. April 9, 2026 at 15:22 — recording available
+
+─── RELIEF REQUESTED ─────────────────────────────────────────────────
+
+I request that the FCC:
+  1. Investigate the originating carrier of these calls and, if the
+     carrier cannot attest to the caller's identity under STIR/SHAKEN,
+     pursue enforcement under 47 C.F.R. § 64.6305.
+  2. Add this number to the Commission's robocall-enforcement queue.
+  3. Share this complaint with the Industry Traceback Group if a
+     traceback has not already been initiated.
+
+I am not requesting individual compensation from the FCC; I am
+reporting this pattern so the Commission can act against the
+originating provider.
+
+─── DECLARATION ──────────────────────────────────────────────────────
+
+The facts above are true to the best of my knowledge and are derived
+from call records and recordings in my possession.
+
+  Jane Demo [DEMO PLAINTIFF]
+  April 18, 2026

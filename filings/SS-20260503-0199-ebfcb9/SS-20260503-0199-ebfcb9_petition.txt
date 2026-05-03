@@ -1,0 +1,517 @@
+═══════════════════════════════════════════════════════════════════════
+                         LAFAYETTE CITY COURT
+                    LAFAYETTE PARISH, LA
+═══════════════════════════════════════════════════════════════════════
+
+Court File No: ________________  (Assigned by Clerk)
+
+Jane Demo [DEMO PLAINTIFF],                                    )
+     Plaintiff,                                        )
+                                                       )     SMALL CLAIMS
+vs.                                                    )     PETITION
+                                                       )
+Preferred Auto Protection [DEMO],                                            )     Internal Ref: SS-20260503-0199-ebfcb9
+     Defendant.                                        )
+                                                       )
+
+═══════════════════════════════════════════════════════════════════════
+
+PETITION FOR DAMAGES UNDER THE TELEPHONE CONSUMER PROTECTION ACT
+
+Comes now Plaintiff, Jane Demo [DEMO PLAINTIFF], in proper person, who
+respectfully represents to this Honorable Court as follows:
+
+                              I. PARTIES
+
+1.  Plaintiff, Jane Demo [DEMO PLAINTIFF], is a natural person residing at
+    123 Demo Lane, Lafayette, LA
+    70501, and is the residential telephone subscriber of
+    telephone number +13375550100. Plaintiff had the right to
+    expect no unsolicited calls in violation of the TCPA.
+
+2.  Defendant is Preferred Auto Protection [DEMO], an entity that placed or caused to be
+    placed unsolicited telephone calls to Plaintiff's telephone number.
+    Defendant's physical address for service of process is:
+    ___________________________________________________________
+    (Plaintiff to insert address per "Before You File" instructions;
+    for a corporation or LLC, the petition must be served on Defendant's
+    registered agent — see the Filing Guide and Certificate of Service
+    for lookup steps, La. R.S. 12:308 and Secretary of State registry).
+    The originating telephone number used to place calls at issue was
+    (555) 555-0199.
+    Names used by callers during the calls (true identity not
+    verified and subject to discovery): Mike, Jessica.
+
+3.  All calls at issue originated from or were made on behalf of
+    Defendant, a single entity. Defendant placed
+    6 calls to Plaintiff's number between January 7, 2026 and April 9, 2026, with two or more calls
+    occurring within a single 12-month period as required by
+    47 U.S.C. § 227(c)(5).
+
+                          II. JURISDICTION
+
+4.  This Court has subject matter jurisdiction over this action.
+    The amount in controversy does not exceed $5,000,
+    within this Court's jurisdictional limit under La. R.S. 13:5200 et seq.
+    State courts of general jurisdiction have concurrent jurisdiction
+    over private TCPA claims. See Mims v. Arrow Financial Services,
+    LLC, 565 U.S. 368 (2012) (holding that federal and state courts
+    have concurrent jurisdiction over private actions under the TCPA).
+    The TCPA expressly authorizes suit "in an appropriate court of
+    [the] State," 47 U.S.C. § 227(c)(5), which includes this Court
+    as a court of competent jurisdiction for civil claims within its
+    monetary limit.
+
+5.  This Court has personal jurisdiction over Defendant. Defendant
+    purposefully directed telemarketing calls into the State of
+    Louisiana by placing 6 telephone calls to
+    Plaintiff's Louisiana telephone number. By initiating
+    commercial solicitations to a Louisiana area code,
+    Defendant transacted business in Louisiana within the
+    meaning of La. R.S. 13:3201(a) (Louisiana long-arm statute).
+    Plaintiff's cause of action arises directly from Defendant's
+    contacts with Louisiana — the calls themselves. This
+    satisfies the specific personal jurisdiction requirements of due
+    process: purposeful availment (Defendant deliberately called a
+    Louisiana number), relatedness (the claim arises from
+    those calls), and reasonableness (Defendant bears the burden of
+    showing jurisdiction is unreasonable, and a telemarketer who
+    calls into a state cannot fairly claim surprise at being sued
+    there). See La. R.S. 13:3201(a); Burger King Corp. v. Rudzewicz,
+    471 U.S. 462 (1985).
+
+                         III. FACTS
+
+6.  Plaintiff's telephone number, +13375550100, has been
+    registered on the National Do Not Call Registry maintained by the
+    Federal Trade Commission since 2020-06-15, which
+    predates all calls at issue in this action. Exhibit A, the DNC
+    Registry verification printout, confirms the registration date.
+    All of Defendant's calls occurred after Plaintiff's registration,
+    and Defendant was required to honor Plaintiff's DNC registration
+    within 31 days of its effective date. See 47 C.F.R. § 64.1200(c)(2).
+
+7.  Despite this registration, Defendant placed 6
+    unsolicited telephone calls to Plaintiff's number between
+    January 7, 2026 and April 9, 2026.
+    Each call constitutes a separate violation:
+
+        1. On January 7, 2026 at approximately 10:42 (recorded) [robocall]
+        2. On January 19, 2026 at approximately 14:08 (recorded) [robocall]
+        3. On February 3, 2026 at approximately 07:15 (recorded) [robocall]
+        4. On February 21, 2026 at approximately 11:30 (recorded) [robocall]
+        5. On March 14, 2026 at approximately 09:55 (recorded) [robocall]
+        6. On April 9, 2026 at approximately 15:22 (recorded) [robocall]
+
+8.  Plaintiff utilizes an automated telephone compliance system
+    ("SpamSlayer") to answer and document unsolicited calls on
+    Plaintiff's behalf. This system operates as Plaintiff's authorized
+    agent for the limited purpose of answering incoming calls,
+    recording the interaction, and collecting identifying information
+    about the caller — functionally identical to an answering machine,
+    voicemail system, or human secretary. Plaintiff is and remains the
+    residential telephone subscriber and the real party in interest
+    with standing to bring this action. The TCPA protects Plaintiff's
+    right as a subscriber to be free from unsolicited calls to a
+    DNC-registered number — not merely the right to personally answer
+    each call. See 47 U.S.C. § 227(c)(5) (protecting "a person who
+    has received more than one telephone call"); the calls were
+    "received" at Plaintiff's number regardless of the answering
+    mechanism. Plaintiff's subscriber status is independently
+    verifiable through carrier records and billing statements.
+
+9.  Plaintiff's telephone number is used primarily for
+    residential and personal purposes, qualifying Plaintiff as a
+    "residential telephone subscriber" under the TCPA and its
+    implementing regulations. The FCC has recognized that a line
+    used for primarily personal or residential purposes remains
+    entitled to DNC protection even where the subscriber also
+    makes or receives incidental business-related calls from the
+    same number. See In re Rules and Regulations Implementing the
+    Telephone Consumer Protection Act of 1991, 68 Fed. Reg. 44144,
+    44177 (July 25, 2003) (adopting a "totality of the
+    circumstances" / primary-use test for residential status
+    of mixed-use lines).
+
+10.  Each of the 6 calls at issue was
+    recorded under La. R.S. 15:1303,
+    a one-party consent jurisdiction, and 18 U.S.C. § 2511(2)(d),
+    which permits recording by any party to a telephone conversation.
+    Plaintiff, as the subscriber and a party to each call through
+    Plaintiff's authorized agent, provided the requisite one-party
+    consent under both state and federal law. Additionally,
+    Plaintiff's compliance system verbally notified Defendant's
+    caller during each call that the call was being recorded and
+    that Plaintiff's number is on the Do Not Call Registry,
+    providing Defendant with actual notice and an opportunity to
+    disconnect. The recordings were made contemporaneously with
+    each call and, to the best of Plaintiff's knowledge, have not
+    been edited, spliced, or altered since capture. Full recordings,
+    metadata, cryptographic integrity hashes (SHA-256), and
+    transcripts are preserved and attached as exhibits.
+
+11.  The use of an automated compliance system does not diminish
+    Plaintiff's claims. Plaintiff, as a residential telephone
+    subscriber, suffered the following concrete and particularized
+    injuries from each of Defendant's unlawful calls:
+        (a) Invasion of Plaintiff's legally protected privacy interest
+            in being free from unwanted commercial solicitations to a
+            DNC-registered residential telephone number — each call
+            intruded upon Plaintiff's private residential space and
+            peace, regardless of the answering mechanism, just as a
+            trespass harms the landowner whether or not the landowner
+            is physically present when the trespasser enters;
+        (b) Occupation and consumption of Plaintiff's telephone line
+            and telecommunications infrastructure during each call,
+            rendering the line unavailable for legitimate personal
+            calls during the violation;
+        (c) Consumption of Plaintiff's telecommunications resources
+            each time Defendant's call rang through, including the
+            depletion of Plaintiff's finite monthly minutes, battery
+            and device wear, and the diversion of Plaintiff's
+            attention from legitimate use of the line; Plaintiff also
+            incurs additional documented third-party telecommunications
+            costs (platform, storage, and bandwidth charges) to
+            preserve the evidentiary record of each unlawful call;
+        (d) Violation of Plaintiff's statutory right under 47 U.S.C.
+            § 227(c) to be free from calls in violation of DNC
+            regulations — a right Congress specifically created to
+            protect residential subscribers like Plaintiff, exercised
+            when Plaintiff affirmatively registered on the DNC list.
+    These injuries bear a close relationship to the harms
+    traditionally recognized as providing a basis for a lawsuit in
+    American courts. Specifically: (a) maps to intrusion upon
+    seclusion (Restatement (Second) of Torts § 652B); (b) maps to
+    trespass to chattels — Defendant's call commandeered Plaintiff's
+    telecommunications infrastructure without authorization, just
+    as unauthorized use of a computer network constitutes trespass
+    to chattels (see CompuServe Inc. v. Cyber Promotions, Inc.,
+    962 F. Supp. 1015 (S.D. Ohio 1997)); (c) constitutes actual
+    out-of-pocket economic harm; and (d) is the precise harm
+    Congress identified and created § 227(c) to prevent.
+    See Spokeo, Inc. v. Robins, 578 U.S. 330 (2016) (a plaintiff
+    must show "concrete" injury, but intangible injuries including
+    statutory violations can qualify); TransUnion LLC v. Ramirez,
+    594 U.S. 413 (2021) (plaintiffs must demonstrate concrete harm
+    with a close relationship to a traditionally recognized harm).
+    Plaintiff's injuries satisfy both the Spokeo concreteness test
+    and the TransUnion "close relationship" test through multiple
+    independent channels: physical infrastructure harm (line
+    occupation, system costs), privacy invasion (intrusion upon
+    seclusion of a DNC-registered subscriber), and violation of a
+    congressionally created right that Plaintiff affirmatively
+    exercised by registering on the DNC list. The harm accrues to
+    Plaintiff as the subscriber and owner of the telephone line,
+    not to whichever device or agent happens to answer — just as
+    a trespass harms the property owner regardless of whether the
+    owner is physically present when the trespasser enters, and
+    unauthorized network access harms the network owner regardless
+    of whether automated security systems detected the intrusion.
+
+12.  Plaintiff's use of a compliance system to document violations
+    does not constitute litigation manufacturing — it is the
+    prudent preservation of evidence of violations that Defendant
+    chose to commit. The violation occurred when Defendant dialed
+    Plaintiff's DNC-registered number, not when the call was
+    answered or recorded. Plaintiff registered on the National Do
+    Not Call Registry for its protective purpose, to stop unwanted
+    calls; the evidentiary record of Defendant's calls was created
+    only because Defendant persisted in making calls that Plaintiff
+    had affirmatively refused.
+
+13.  The out-of-court statements of the caller(s) captured in the
+    recordings and transcripts attached hereto are offered against
+    Defendant and are therefore NOT HEARSAY under Fed. R. Evid.
+    801(d)(2)(D) and La. Code of Evidence Art. 801(D)(3)(b) as
+    statements by a person authorized by Defendant to make a
+    statement concerning the subject, or by Defendant's agent or
+    employee acting within the scope of that relationship. In the
+    alternative, the statements are admissible as party-opponent
+    admissions under Fed. R. Evid. 801(d)(2)(A)/(B)/(C) and
+    La. C.E. Art. 801(D)(3)(a) as Defendant's own statement (in a
+    representative capacity) to the extent the caller spoke on
+    Defendant's behalf, or as statements Defendant adopted by
+    conducting the solicitations described. The recordings themselves
+    are further admissible as business records kept in the regular
+    course of the Twilio telecommunications platform's activities
+    under Fed. R. Evid. 803(6) and La. Code of Evidence Art. 803(6),
+    and are self-authenticating as to machine-generated data and
+    digital hashes under Fed. R. Evid. 902(13)–(14). To the extent any
+    statement in the recordings is offered for a non-truth purpose —
+    to prove that the call occurred, that a pitch was delivered, or
+    that a solicitation was made — it is by definition not hearsay
+    under Fed. R. Evid. 801(c).
+
+14.  Defendant's calls were for the purpose of: Auto warranty extension solicitation (robocall campaign).
+    As evidenced by the recordings and transcripts attached hereto,
+    these calls constitute "telephone solicitations" as defined in
+    47 C.F.R. § 64.1200(f)(12), falling squarely within the DNC
+    Registry protections of 47 U.S.C. § 227(c). The calls were not
+    made for emergency purposes, charitable solicitation, or any
+    other exempt purpose under 47 C.F.R. § 64.1200(c)(2).
+
+15. Plaintiff has no knowledge or record of ever providing prior
+    express written consent to receive telephone calls from Defendant.
+    To the best of Plaintiff's knowledge, after reasonable inquiry
+    into Plaintiff's records, Plaintiff has not: (a) completed any
+    form, application, or agreement with Defendant; (b) inquired
+    about Defendant's products or services; (c) provided Plaintiff's
+    telephone number to Defendant or knowingly authorized any third
+    party to share it with Defendant; or (d) taken any action that
+    could reasonably be construed as inviting contact from Defendant.
+    Plaintiff is not aware of any transaction, lead form, or
+    relationship with Defendant that would have supplied the
+    required prior express consent. The burden of proving prior
+    express consent rests with Defendant, and to the extent Defendant
+    alleges consent, Plaintiff will challenge its validity and
+    specificity. See 47 C.F.R. § 64.1200(c).
+
+16. The fact that Plaintiff's compliance system engaged in
+    conversation with Defendant's caller does not constitute express
+    or implied consent to receive future calls. Consent under the
+    TCPA requires affirmative prior authorization, not mere
+    participation in an unsolicited call that Defendant initiated
+    without permission. The automated system's interaction with the
+    caller was for the sole purpose of documenting a violation
+    already in progress — it did not and could not retroactively
+    authorize the call or any subsequent calls.
+
+17. Plaintiff has no knowledge or record of any established business
+    relationship ("EBR") with Defendant at any time relevant to this
+    action. After reasonable inquiry into Plaintiff's own records,
+    Plaintiff has not, within 18 months prior to the calls at issue,
+    made any purchase, entered into any transaction, or made any
+    inquiry with Defendant, nor made any inquiry within 3 months
+    prior to the calls. On the facts known to Plaintiff, the EBR
+    exception under 47 C.F.R. § 64.1200(f)(5) does not apply; the
+    burden of establishing an EBR rests with Defendant.
+    To the extent Plaintiff's compliance system asked questions during
+    the call (such as "What company are you with?" or "What are you
+    calling about?"), these were documentary identification questions
+    to preserve evidence — not expressions of interest in Defendant's
+    products or services. An "inquiry" under 47 C.F.R.
+    § 64.1200(f)(5)(iii)(B) requires affirmative expression of
+    interest in purchasing goods or services. Documenting an
+    unsolicited violation is not a commercial inquiry.
+
+18. Plaintiff's use of a compliance system to answer and record
+    calls does not constitute entrapment, unclean hands, or any
+    equitable bar to relief. Entrapment is a criminal defense
+    available only against government agents and is inapplicable to
+    civil TCPA claims between private parties. The doctrine of
+    unclean hands requires misconduct by the plaintiff related to
+    the subject matter of the litigation — Plaintiff engaged in no
+    misconduct by answering and recording calls placed to Plaintiff's
+    own telephone number in a one-party consent jurisdiction. Each
+    violation was complete when Defendant dialed Plaintiff's
+    DNC-registered number; the subsequent conversation and recording
+    are evidence of the violation, not the cause of it.
+
+19. Plaintiff has documented all violations and preserved evidence
+    for this proceeding.
+
+                     IV. CAUSES OF ACTION
+
+         COUNT I: VIOLATION OF 47 U.S.C. § 227(c)(5)
+         (National Do Not Call Registry Violations)
+
+20. The regulations prescribed under 47 U.S.C. § 227(c) include the
+    National Do Not Call Registry provisions at 47 C.F.R. § 64.1200(c),
+    which prohibit telephone solicitations to residential telephone
+    subscribers who have registered their numbers on the National
+    Do Not Call Registry.
+
+21. Defendant violated these regulations by placing
+    6 calls to Plaintiff's registered telephone number within a
+    12-month period.
+
+22. Under 47 U.S.C. § 227(c)(5), a person who has received more than
+    one telephone call within any 12-month period by or on behalf of
+    the same entity in violation of the regulations prescribed under
+    this subsection may bring a private right of action to recover
+    the greater of actual monetary loss or up to $500 in damages for
+    each such violation.
+
+23. Plaintiff elects to recover statutory damages of $500 per
+    violation (or up to $1,500 per violation if willful) in lieu of
+    actual monetary loss, as statutory damages are greater.
+
+24. Plaintiff reserves the right to demonstrate that Defendant's
+    violations were willful or knowing, which would entitle Plaintiff
+    to treble damages of up to $1,500 per violation under
+    47 U.S.C. § 227(c)(5)(B).
+
+25. Defendant has not demonstrated compliance with the safe harbor
+    provisions of 47 C.F.R. § 64.1200(c)(2). Defendant bears the
+    burden of proving it maintained written Do Not Call policies,
+    trained its personnel, and scrubbed its call lists against the
+    National Do Not Call Registry within 31 days prior to the calls
+    at issue. The fact that Defendant called Plaintiff's DNC-registered
+    number 6 times is circumstantial evidence that
+    Defendant failed to maintain adequate DNC compliance procedures.
+
+         COUNT II: VIOLATION OF 47 U.S.C. § 227(b)
+         (Artificial or Prerecorded Voice / Automated Dialing)
+
+26. One or more of Defendant's calls to Plaintiff's telephone number
+    were placed using an artificial or prerecorded voice, as
+    evidenced by (a) the absence of a live human voice at the
+    beginning of the call (no natural pause, breathing, or human
+    greeting delay); (b) the use of prerecorded or synthesized audio
+    content; and/or (c) the pattern and timing of calls consistent
+    with automated delivery rather than manual placement. These
+    observable characteristics are documented in the attached call
+    recordings, transcripts, and/or call-detail records. In the
+    alternative, and to the extent discovery reveals Defendant used
+    equipment meeting the definition of an automatic telephone
+    dialing system ("ATDS") under Facebook, Inc. v. Duguid, 141 S.
+    Ct. 1163 (2021), Plaintiff pleads § 227(b) liability on that
+    alternative theory as well.
+
+27. Under 47 U.S.C. § 227(b)(1)(B), it is unlawful — absent an
+    emergency purpose or prior express consent — to initiate any
+    telephone call to a residential telephone line using an
+    artificial or prerecorded voice to deliver a message without
+    the prior express consent of the called party. Plaintiff's line is a residential telephone line (see
+    primary-use paragraph above) and Plaintiff is not aware of
+    having given Defendant prior express consent to receive such
+    calls.
+
+28. Under Facebook, Inc. v. Duguid, 141 S. Ct. 1163 (2021), an
+    ATDS must have the capacity to use a random or sequential number
+    generator to either store or produce telephone numbers to be
+    called. Duguid narrowed the ATDS definition but did not disturb
+    § 227(b)(1)(B)'s separate prohibition on artificial or prerecorded
+    voice messages to residential lines, which does not require proof
+    of an ATDS. Based on the observable automated characteristics of
+    Defendant's calls and the volume and pattern of calls placed,
+    Plaintiff asserts upon information and belief that Defendant used
+    an artificial or prerecorded voice and/or ATDS equipment meeting
+    this definition. Even if Defendant's equipment does not qualify
+    as an ATDS under Duguid, the use of an artificial or prerecorded
+    voice to a residential line independently violates § 227(b)(1)(B).
+
+29. Under 47 U.S.C. § 227(b)(3), a person who has received a call
+    in violation of § 227(b) or its implementing regulations may bring
+    a private right of action to recover the greater of actual
+    monetary loss or $500 for each such violation, and the Court may
+    treble damages up to $1,500 per violation for willful or knowing
+    violations.
+
+         COUNT III: VIOLATION OF STATE DO-NOT-CALL LAW
+
+30. Defendant additionally violated La. R.S. 45:844.14, the
+    state Do Not Call statute. To the extent this statute provides
+    an independent private right of action, Plaintiff seeks
+    supplemental statutory damages thereunder. In the alternative,
+    this count is stated as derivative of Count I, as Defendant's
+    violation of the federal DNC regulations constitutes concurrent
+    violation of state law, and state courts may award remedies
+    available under both federal and state authority.
+
+                        V. DAMAGES
+
+31. Plaintiff is entitled to statutory damages calculated as:
+    6 calls × $500/violation = $3,000.
+
+32. Plaintiff requests judgment in the amount of $3,000.
+
+33. Plaintiff additionally requests reimbursement of court costs
+    including filing fees and certified mail service charges.
+    Plaintiff currently appears in proper person; Plaintiff reserves
+    the right to retain counsel and to seek any reasonable attorney's
+    fees, costs, and expenses that may be available by statute, rule,
+    or equity at any stage of this proceeding.
+
+                        VI. PRAYER
+
+WHEREFORE, Plaintiff prays that this Honorable Court:
+
+    a) Enter judgment in favor of Plaintiff and against Defendant;
+
+    b) Award Plaintiff statutory damages of $3,000,
+       or such lesser amount as the Court deems just, in any event
+       within this Court's jurisdictional limit, with Plaintiff
+       waiving any excess;
+
+    c) Award Plaintiff court costs including filing fees and
+       service of process fees;
+
+    d) Award such other and further relief as the Court deems just
+       and proper.
+
+Respectfully submitted,
+
+May 3, 2026
+
+
+____________________________________
+Jane Demo [DEMO PLAINTIFF], Plaintiff in Proper Person
+123 Demo Lane
+Lafayette, LA 70501
++13375550100
+demo@example.invalid
+
+
+VERIFICATION
+
+I, Jane Demo [DEMO PLAINTIFF], declare under penalty of perjury under the
+laws of the United States of America (28 U.S.C. § 1746) and under
+the laws of the State of Louisiana that the facts stated
+in this petition are true and correct to the best of my knowledge,
+information, and belief. This petition was prepared with the
+assistance of SpamSlayer, a consumer telephone-compliance software
+tool that I operate on my own telephone line; I have personally
+reviewed each factual allegation in this petition, independently
+of any generated draft text, and each allegation is based on my
+own call records, observations, and personal knowledge.
+
+I have personal knowledge of the following facts: I am the
+subscriber of the telephone number at issue and use the number primarily for residential and personal purposes; I registered
+my number on the National Do Not Call Registry on or about
+2020-06-15; each call at issue was placed
+to my telephone line and was received at my number; to the best
+of my knowledge, information, and belief, and after reasonable
+review of my own records, I have no prior business relationship
+with Defendant and I did not provide prior express written or
+oral consent for Defendant to call me.
+
+I installed and configured a telephone compliance system
+(SpamSlayer) that runs on my telephone line to answer, record,
+and log calls received at my number. The system operates only
+on calls placed to me; it does not place outbound calls and
+does not solicit calls.
+
+Regarding the call recordings and transcripts attached as
+exhibits: I have had a full opportunity to review each recording
+and transcript, and I have personally reviewed representative
+samples drawn from the set. The recordings were automatically
+captured by my compliance system at the time of each call and
+stored on the Twilio telecommunications platform, a third-party
+service provider. To the best of my knowledge, I have not
+altered any recording since capture, and the recordings
+accurately represent the calls as received at my telephone
+number. The recordings are authenticated through SHA-256
+cryptographic hashes generated at the time of capture, and
+each recording's integrity can be independently verified from
+the accompanying Integrity Certificate (Exhibit).
+
+Executed on __________________, 20____, at
+Lafayette, LA.
+
+
+____________________________________
+Jane Demo [DEMO PLAINTIFF]
+
+
+CERTIFICATION OF PRO SE STATUS
+
+I, Jane Demo [DEMO PLAINTIFF], certify that I am representing myself in
+this matter without the assistance of an attorney (in proper
+person) and that I understand my obligations as a self-represented
+litigant in small claims court.
+
+
+____________________________________
+Jane Demo [DEMO PLAINTIFF]
+Date: __________________

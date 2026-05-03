@@ -1,0 +1,267 @@
+═══════════════════════════════════════════════════════════════════════
+                  TCPA CASE — STAGES GUIDE
+              What to expect at each step of the road
+═══════════════════════════════════════════════════════════════════════
+Case:              Acme Roofing LLC (+15555550101)
+Damages claimed:   $1,000
+Court:             Lafayette City Court
+Generated:         2026-05-03T14:29:08.702Z
+
+This document walks you through the realistic timeline of a TCPA small-
+claims case from spam call to (hopefully) collected judgment. Read it
+before you file so nothing surprises you.
+
+The honest baseline: roughly 40-55% of pro-se TCPA small-claims filings
+either survive the motion to dismiss or get a default judgment. Roughly
+5-10% actually collect any money. The bottleneck isn't winning — it's
+collecting from a defendant that's often a spoofed-VoIP shell.
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 1 — EVIDENCE GATHERING (you are here, days 0-30)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+SpamSlayer has logged enough calls to make this case actionable (>= 2
+calls in 12 months, per § 227(c)(5)). The bot has captured recordings,
+transcripts, and metadata. Now you need to ADD third-party corroborating
+evidence so the case isn't just "Marcus says these calls happened."
+
+WHAT TO DO:
+Work the EVIDENCE_CHECKLIST.txt that's in this folder. Top-to-bottom.
+The checklist is ordered by leverage — ITG traceback first (free, ~5min,
+strongest external evidence), then carrier portal screenshots, then
+parallel-enforcement complaints (FCC + state AG).
+
+WHAT YOU'RE UP AGAINST:
+- Time: spam-call evidence has a half-life. ITG traceback success drops
+  sharply after the call is older than ~14 days.
+- Spoofing: the caller ID may not belong to the actual caller. Your
+  Sonar research and ITG traceback will tell you if the number is
+  spoofed and if so, who actually made the call.
+- The defendant might already be dissolved, shell, or offshore. The
+  collectability score in defendant_research.txt is your honest read.
+
+WHAT TO DECIDE AT THIS STAGE:
+After you've gathered evidence and read the defendant research, you have
+a fork in the road:
+  (a) Strong evidence + collectible defendant → proceed to Stage 2.
+  (b) Weak evidence OR uncollectable defendant → DON'T file the petition.
+      Instead, double down on parallel-enforcement complaints (FCC, state
+      AG, FTC, BBB, ITG). The defendant's carrier may suspend their
+      service even without a court judgment.
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 2 — DEMAND LETTER (days 7-37)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+You send a formal demand letter via certified mail. This puts the
+defendant on notice and starts the 30-day clock. Calls that come AFTER
+the letter is delivered are "willful" under § 227(c)(5)(A) — damages
+treble from $500 to $1,500 per call.
+
+WHAT TO DO:
+1. Generate the letter (POST /api/cases/demand-letter).
+2. Print, sign, mail Certified Mail with Return Receipt Requested
+   (~$8.50 at USPS).
+3. Send to the defendant's registered agent address (lookup via state
+   SoS or OpenCorporates). If the defendant is unknown / spoofed, skip
+   to Stage 3 — without an address, you can't formally demand.
+4. When the green card returns (~2 weeks), file it. That's Exhibit B.
+5. Wait 30 days. During that time, track any new calls — those are now
+   willful and worth 3x damages.
+
+WHAT YOU'RE UP AGAINST:
+- Defendant might respond with a settlement offer. That's actually a
+  good outcome — typical pro-se TCPA settlements range from $250 to
+  $2,500 depending on call count and clarity of evidence. If they offer,
+  evaluate against the cost of going to court.
+- Defendant might respond with a denial or counter-claim ("we have proof
+  of your consent"). Read carefully — they'll usually point to a TOS
+  click on a website. If you ever filled out a form on a related site,
+  consult an attorney before pushing further.
+- Most defendants ignore the letter entirely. That's also fine — silence
+  is what triggers proceeding to filing.
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 3 — FILING THE PETITION (days 30-45)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+You walk into the Lafayette City Court clerk's office with the petition packet
+this system generated. You pay the filing fee, the clerk stamps + dockets
+your case, and you walk out with a case number.
+
+WHAT TO DO:
+1. Print the entire filing package — petition, exhibit list, certificate
+   of service, filing guide, plus all your collected exhibits (Twilio
+   recordings on a USB stick or printed transcripts, AT&T usage screen-
+   shots, ITG traceback letter, FCC complaint receipt, demand letter +
+   green card). Make 3 sets: court copy, defendant copy, your copy.
+2. Sign the petition's verification block. Read it carefully — you're
+   swearing under penalty of perjury that the facts are true.
+3. Walk to the clerk. Pay filing fee (~$75 in Lafayette City Court).
+4. The clerk gives you a case number, a stamped copy, and instructions
+   for serving the defendant.
+
+WHAT YOU'RE UP AGAINST:
+- The clerk may push back on a TCPA case ("are you sure you're in the
+  right court?"). Lafayette City Court has subject-matter jurisdiction
+  over civil claims up to $50,000 (La. C.C.P. Art. 4843) including
+  TCPA. You're in the right place.
+- The judge may not be familiar with TCPA. Your filing guide has a
+  one-page "court briefing" you can hand the clerk to forward to the
+  judge. Don't be defensive about being pro se — small-claims judges
+  see pro se filers every day.
+- Federal removal: if your damages claim exceeds the federal jurisdiction
+  threshold OR the defendant is a national company, they MAY remove the
+  case to federal court. The filing guide explains how to handle that
+  (you can usually move to remand back to state court).
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 4 — SERVICE OF PROCESS (days 45-60)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+The defendant has to be formally notified that you've sued them. This
+is service of process. In Louisiana small claims, service is usually
+performed by the sheriff or a process server, NOT by you personally.
+
+WHAT TO DO:
+1. The clerk will tell you whether the court issues service automatically
+   or whether you need to arrange it. In Lafayette City Court, the
+   sheriff's office handles service for a fee (~$30-50).
+2. Provide the defendant's address — registered agent for service for
+   corporate defendants. State SoS database has this (free).
+3. Wait for the proof-of-service return. Without proof of service, the
+   case can't proceed.
+
+WHAT YOU'RE UP AGAINST:
+- Spoofed-caller-ID defendants are often unservable. If the registered
+  agent doesn't exist, no one to serve. The case stalls. This is the
+  single biggest reason TCPA small-claims cases die.
+- Defendants who CAN be served sometimes refuse to accept. The sheriff
+  re-attempts; eventually the court can authorize service by publication
+  (in a newspaper) or by mail to the registered agent.
+- Defendants located out of state require long-arm service — the petition
+  invokes La. R.S. 13:3201; check the filing guide for the long-arm
+  procedure if your defendant is out of state.
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 5 — DEFENDANT RESPONSE (days 60-90)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+The defendant has a fixed window (typically 10-30 days from service in
+LA city court) to file an answer or motion. Three branches from here:
+
+BRANCH A — DEFENDANT NEVER RESPONDS (most common, ~60-70% of cases):
+  You file a motion for default judgment after the answer deadline. The
+  judge reviews the petition + your evidence and (if the petition is
+  well-pleaded and evidence is on file) signs a default judgment
+  awarding you the damages claimed.
+  TIMELINE: ~30 days from default motion to signed judgment.
+
+BRANCH B — DEFENDANT FILES AN ANSWER + GOES TO HEARING (~20-30% of cases):
+  The court schedules a hearing. You appear in person; defendant appears
+  in person or by counsel. You present your evidence; defendant cross-
+  examines. Most TCPA small-claims hearings last 30-60 minutes.
+  TIMELINE: hearing within 30-60 days of answer.
+
+BRANCH C — DEFENDANT FILES A MOTION TO DISMISS (~5-10% of cases):
+  Common arguments: lack of standing (post-TransUnion), professional
+  plaintiff (Stoops/Nomorobo), no concrete injury, federal preemption.
+  The petition pre-empts most of these in writing — you'll respond
+  pro se with a brief opposition. The judge rules on the motion (often
+  without a hearing).
+  TIMELINE: ~30-45 days from MTD filing to ruling.
+
+WHAT YOU'RE UP AGAINST:
+- If the defendant has counsel, they'll be experienced TCPA defense
+  lawyers. Their playbook is well-known: argue lack of standing, argue
+  prior consent, argue safe harbor under 47 CFR 64.1200(c)(2). Your
+  petition is pre-armed against each — read the petition before the
+  hearing so you can quote specific paragraph numbers.
+- Bring printed copies of ALL evidence to the hearing. Even though it's
+  on file, the judge often wants paper handed up.
+- Dress neatly. Stand when the judge enters. Address the judge as
+  "Your Honor". Speak only when invited.
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 6 — JUDGMENT (day 90-120)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+Whether by default or after hearing, the court issues a written judgment.
+That judgment IS your win — but it's just a piece of paper. Collecting
+on it is a separate stage entirely.
+
+WHAT TO DO:
+1. Get a certified copy of the judgment from the clerk (~$5).
+2. If the defendant is in Louisiana, you can record the judgment in the
+   parish where they have assets — that creates a judgment lien.
+3. If they don't pay voluntarily, you proceed to Stage 7 (collection).
+
+WHAT YOU'RE UP AGAINST:
+- If the judgment is for less than the defendant owes, you can't go back
+  for more. Make sure you claimed your full damages in the petition.
+- Judgments expire (usually 10 years in LA, can be revived). You don't
+  need to act immediately, but don't sit on it forever.
+
+═══════════════════════════════════════════════════════════════════════
+  STAGE 7 — COLLECTION (open-ended; the hardest stage)
+═══════════════════════════════════════════════════════════════════════
+
+WHAT'S HAPPENING:
+You have a judgment but no money. You now need to find the defendant's
+assets and either persuade them to pay, garnish their wages/accounts, or
+seize property.
+
+WHAT TO DO (in order of effort):
+1. Send a polite demand for payment, including a copy of the judgment
+   and a deadline (~30 days). Some defendants pay at this stage to avoid
+   collection actions.
+2. If no payment: file a writ of fieri facias (LA equivalent of a
+   garnishment). Targets the defendant's bank accounts. You need to know
+   where they bank — investigate via Sonar / public records / your
+   defendant_research.txt.
+3. Wage garnishment: if the defendant is an individual with W-2 income,
+   you can garnish wages. Corporations don't have wages.
+4. Property seizure: extreme; rare for small-claims judgments.
+5. Sell the judgment to a collection agency (~10-25 cents on the dollar).
+   Sometimes this is the realistic best outcome.
+
+WHAT YOU'RE UP AGAINST (this is where most cases die):
+- Spoofed-VoIP shells have no US assets. Collection is impossible.
+  This is the 90-95% scenario for TCPA defendants.
+- Even findable companies can be judgment-proof (heavily indebted,
+  about to dissolve, offshore parent).
+- Collection actions cost more money. Each writ filing is ~$50-100.
+  Don't throw good money after bad.
+
+═══════════════════════════════════════════════════════════════════════
+  HONEST EXPECTATIONS
+═══════════════════════════════════════════════════════════════════════
+
+For YOUR CASE specifically against Acme Roofing LLC:
+  - Filing fee:           ~$75
+  - Service costs:        ~$30-50
+  - Demand letter cost:   ~$8.50 (USPS)
+  - Time investment:      ~6-10 hours over 90 days
+  - Statutory damages:    $1,000
+  - Realistic collection: depends entirely on defendant identification.
+                          Read defendant_research.txt's collectability
+                          band before you file.
+
+The most realistic positive outcome is a $1,000 default
+judgment that you THEN have to collect. Even uncollected, the judgment
+creates a public record that may slow the spammer's operation (judgment
+liens, credit damage, parallel-enforcement attention).
+
+The most realistic negative outcome is filing fees lost on an uncollect-
+able shell. That's why STAGE 1 (evidence gathering + research) is the
+most important stage — it's where you decide whether to spend the $75.
+
+═══════════════════════════════════════════════════════════════════════
+END OF STAGES GUIDE
+═══════════════════════════════════════════════════════════════════════

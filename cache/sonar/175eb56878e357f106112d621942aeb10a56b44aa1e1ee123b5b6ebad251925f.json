@@ -1,0 +1,63 @@
+{
+  "cachedAt": 1777815327457,
+  "result": {
+    "status": "match",
+    "summary": "# Search Limitation\n\nThe search results do not contain any company registered as \"**Acme Roofing Solutions**.\" The results show multiple distinct entities operating under variations of the \"Acme Roofing\" name across different states:\n\n- **ACME ROOFING LOGISTICS CORP.** (Florida, Document P17000055623, Active as of 2024)[1]\n- **Acme Roofing Inc** (Washington, BBB Accredited)[2]\n- **Acme Roofing Services, Inc.** (California, License #1001790)[3][6]\n- **Acme Roofing Corp** (New York, License verified active)[7]\n- **ACME ROOFING AND SHEET METAL COMPANY, INC.** (West Virginia)[8]\n\nNone of these appear to operate under the specific name \"Acme Roofing Solutions.\" To provide an accurate TCPA defendant profile, I would need search results specifically identifying that entity—its registered name, jurisdiction of incorporation, and regulatory history.\n\n**Next steps:** Verify the exact registered name and state of incorporation from your complaint, demand letter, or caller ID records, then resubmit. Alternatively, provide the phone number(s) used in the alleged TCPA calls; that may help identify the correct defendant entity through FCC or state telemarketing complaint databases.",
+    "citations": [
+      "https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?InquiryType=EntityName&InquiryDirectionType=PreviousRecord&SearchTerm=ACME+SOLUTIONS%2C+LLC&SearchNameOrder=ACMEROOFING+P930000381800&ListNameOrder=ACMEROOFING+H402320&Detail=FL.DOS.Corporations.Shared.Contracts.FilingRecord",
+      "https://www.bbb.org/us/wa/university-place/profile/roofing-contractors/acme-roofing-inc-1296-22540493",
+      "https://www.bbb.org/us/ca/morgan-hill/profile/roofing-contractors/acme-roofing-services-inc-1216-1082860",
+      "https://www.zoominfo.com/c/acme-roofing/358208684",
+      "https://arcbac.org/contractor-members/acme-roofing-company/",
+      "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ca/morgan-hill/acme-roofing-services-inc-1112153",
+      "https://www.buildzoom.com/contractor/acme-roofing-corp",
+      "https://apps.sos.wv.gov/business/corporations/organization.aspx?org=312843"
+    ],
+    "searchResults": [
+      {
+        "title": "Detail by Entity Name - Division of Corporations",
+        "url": "https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?InquiryType=EntityName&InquiryDirectionType=PreviousRecord&SearchTerm=ACME+SOLUTIONS%2C+LLC&SearchNameOrder=ACMEROOFING+P930000381800&ListNameOrder=ACMEROOFING+H402320&Detail=FL.DOS.Corporations.Shared.Contracts.FilingRecord",
+        "date": "2022-04-19"
+      },
+      {
+        "title": "Acme Roofing Inc | BBB Business Profile | Better Business Bureau",
+        "url": "https://www.bbb.org/us/wa/university-place/profile/roofing-contractors/acme-roofing-inc-1296-22540493",
+        "date": "2011-05-09"
+      },
+      {
+        "title": "Acme Roofing Services, Inc. | BBB Business Profile",
+        "url": "https://www.bbb.org/us/ca/morgan-hill/profile/roofing-contractors/acme-roofing-services-inc-1216-1082860",
+        "date": "2020-02-20"
+      },
+      {
+        "title": "Acme Roofing - Overview, News & Similar companies | ZoomInfo.com",
+        "url": "https://www.zoominfo.com/c/acme-roofing/358208684",
+        "date": "2021-03-16"
+      },
+      {
+        "title": "Acme Roofing Company - ARCBAC",
+        "url": "https://arcbac.org/contractor-members/acme-roofing-company/",
+        "date": "2025-02-13"
+      },
+      {
+        "title": "ACME Roofing Services Inc | GAF Residential Roofers",
+        "url": "https://www.gaf.com/en-us/roofing-contractors/residential/usa/ca/morgan-hill/acme-roofing-services-inc-1112153",
+        "date": "2025-08-06"
+      },
+      {
+        "title": "Acme Roofing | Brooklyn NY | Read Reviews + Get a Free Bid",
+        "url": "https://www.buildzoom.com/contractor/acme-roofing-corp",
+        "date": "2023-11-23"
+      },
+      {
+        "title": "WV SOS - Business and Licensing",
+        "url": "https://apps.sos.wv.gov/business/corporations/organization.aspx?org=312843",
+        "date": "2026-01-12"
+      }
+    ],
+    "model": "sonar",
+    "costUsd": 0.00548,
+    "lookedUpAt": "2026-05-03T13:35:27.456Z",
+    "fromCache": false
+  }
+}

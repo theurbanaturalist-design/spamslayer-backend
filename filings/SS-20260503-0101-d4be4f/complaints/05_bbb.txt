@@ -1,0 +1,62 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+BBB (BETTER BUSINESS BUREAU) COMPLAINT
+Submit at: https://www.bbb.org/file-a-complaint
+Business: Acme Roofing LLC
+
+─── COMPLAINT SUMMARY ────────────────────────────────────────────────
+
+Business:          Acme Roofing LLC
+Complaint type:    Advertising / Sales Practices — unwanted telemarketing
+My name:           Marcus Test
+My phone:          +1 (337) 555-0100
+My email:          test@example.invalid
+Caller ID shown:   +1 (555) 555-0101
+Call count:        2
+Date range:        May 3, 2026 – May 3, 2026
+
+─── DESCRIPTION (paste into BBB "describe the problem" field) ───────
+
+Acme Roofing LLC (or a telemarketer representing Acme Roofing LLC) has
+placed unsolicited sales calls to my telephone. I am not a customer
+of Acme Roofing LLC and have not provided prior express written consent
+to receive telemarketing calls.
+
+My number is on the National Do Not Call Registry since June 15, 2020.
+The caller ID displayed on these calls may be spoofed; I am pursuing
+a STIR/SHAKEN traceback through the Industry Traceback Group and
+complaints are pending with the FCC, FTC, and my state Attorney
+General.
+
+─── DESIRED RESOLUTION ───────────────────────────────────────────────
+
+  1. Acme Roofing LLC ceases telemarketing calls to my number immediately
+     and adds my number to its internal DNC list.
+  2. Acme Roofing LLC identifies and terminates any third-party
+     telemarketing vendor responsible for these calls.
+  3. Acme Roofing LLC confirms in writing that my number has been removed
+     from all active campaigns.
+
+I will update the BBB on the business's response.
+
+─── DECLARATION ──────────────────────────────────────────────────────
+
+The facts above are true to the best of my knowledge.
+
+  Marcus Test
+  May 3, 2026

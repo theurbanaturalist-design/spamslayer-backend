@@ -1,0 +1,75 @@
+{
+  "cachedAt": 1777815323007,
+  "result": {
+    "status": "match",
+    "summary": "**National Auto Protection** appears across disparate records without a unified corporate identity: a Texas-domiciled **GS Administrators, Inc.** (vehicle protection products, Houston, TX 77077, 713-580-3000)[1]; a Connecticut entity **National Auto Protection Corp.** (New Britain, CT 06051)[4]; and a website under **NationAll Auto Protection** (nationallautoprotection.com, no registration details provided)[9]. No parent, DBA, or registered agent is consistently identified; related but distinct entities include **Nationwide AutoProtect LLC** (NJ LLC, Mount Laurel, accredited 5/27/2025, Michael Kahlbom President/CEO)[2] and others like National Auto Care (merged into EasyCare)[3]. These may reflect aliases or affiliates in the vehicle protection sector, but sources contradict on exact structure and location.\n\nNo FCC, FTC, or state-AG enforcement actions, TCPA suits, or telemarketing complaints are documented in available records; **Nationwide AutoProtect** shows BBB accreditation with no complaint volume specified[2]. The entity lacks evident regulatory scrutiny or litigation history relevant to telemarketing.\n\n**Collectability verdict: unknown**",
+    "citations": [
+      "https://oci.wi.gov/Documents/Companies/FinTR_202405.PDF",
+      "https://www.bbb.org/us/nj/mount-laurel/profile/auto-warranty-plans/nationwide-autoprotect-0221-90228160",
+      "https://easycare.com/my-easycare/nac-support/",
+      "https://start.cortera.com/company/research/m7o3myq8q/national-auto-protection-corp/",
+      "https://mvppa.org/about/members/",
+      "https://www.nvpwarranty.com",
+      "https://www.nationwideautowarranty.com",
+      "https://www.nationalvehicleprotection.com",
+      "https://nationallautoprotection.com",
+      "https://ntpwarranty.com"
+    ],
+    "searchResults": [
+      {
+        "title": "[PDF] Transaction Register 05/01/2024",
+        "url": "https://oci.wi.gov/Documents/Companies/FinTR_202405.PDF",
+        "date": "2024-05-01"
+      },
+      {
+        "title": "Nationwide AutoProtect | BBB Business Profile",
+        "url": "https://www.bbb.org/us/nj/mount-laurel/profile/auto-warranty-plans/nationwide-autoprotect-0221-90228160",
+        "date": "2025-05-27"
+      },
+      {
+        "title": "National Auto Care Support | File a Claim - EasyCare",
+        "url": "https://easycare.com/my-easycare/nac-support/",
+        "date": "2025-09-26"
+      },
+      {
+        "title": "NATIONAL AUTO PROTECTION CORP New Britain CT, 06051",
+        "url": "https://start.cortera.com/company/research/m7o3myq8q/national-auto-protection-corp/",
+        "date": null
+      },
+      {
+        "title": "Members of the MVPPA",
+        "url": "https://mvppa.org/about/members/",
+        "date": "2025-05-05"
+      },
+      {
+        "title": "NVP Warranty",
+        "url": "https://www.nvpwarranty.com",
+        "date": "2026-04-24"
+      },
+      {
+        "title": "NationWide Auto Warranty",
+        "url": "https://www.nationwideautowarranty.com",
+        "date": "2026-04-01"
+      },
+      {
+        "title": "National Vehicle Protection Services",
+        "url": "https://www.nationalvehicleprotection.com",
+        "date": "2020-01-01"
+      },
+      {
+        "title": "NationAll Auto Protection – We Give You The Peace of Mind Against ...",
+        "url": "https://nationallautoprotection.com",
+        "date": "2022-02-01"
+      },
+      {
+        "title": "National Truck Protection: Home",
+        "url": "https://ntpwarranty.com",
+        "date": "2026-04-28"
+      }
+    ],
+    "model": "sonar",
+    "costUsd": 0.00545,
+    "lookedUpAt": "2026-05-03T13:35:23.006Z",
+    "fromCache": false
+  }
+}

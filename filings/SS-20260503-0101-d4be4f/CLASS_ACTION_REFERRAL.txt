@@ -1,0 +1,61 @@
+Subject: TCPA case referral — Acme Roofing LLC — class potential
+
+Dear TCPA Litigation Team,
+
+I am a residential subscriber whose number is registered on the National Do Not Call Registry. I have been receiving unsolicited telemarketing calls from the operation described below and would like to refer this matter for class-action evaluation.
+
+DEFENDANT CALLER
+  Phone:           +15555550101
+  Stated company:  Acme Roofing LLC
+  Stated names:    Brad
+  Stated purpose:  solar quote
+  Line type:       not yet looked up
+
+VIOLATION SUMMARY
+  Number of calls: 2
+  Date range:      2026-05-03 to 2026-05-03
+  Each call:
+  2026-05-03 14:29  callSid=CAMP_1_001  recording=no
+  2026-05-03 14:29  callSid=CAMP_1_002  recording=no
+
+  All calls placed to a DNC-registered residential number, in violation of
+  47 U.S.C. § 227(c)(5) and 47 C.F.R. § 64.1200(c). Each call was answered
+  by an automated TCPA compliance recording (one-party-consent recording
+  under La. R.S. 15:1303). Recordings, transcripts, and SHA-256 evidence
+  integrity certificates are available on request.
+
+PRIOR FEDERAL LITIGATION HISTORY
+  CourtListener / RECAP search returned unknown federal case(s)
+  involving the named defendant or related entities.
+
+WEB RESEARCH SUMMARY (Perplexity Sonar — verify before relying)
+  (none)
+
+CLASS-CERTIFICATION POTENTIAL
+  This defendant appears to be running a coordinated telemarketing
+  operation based on the call patterns observed. Per ITG traceback
+  practice, multiple downstream consumers are likely affected. The
+  defendant's business model implies a wide pool of potential class
+  members.
+
+PLAINTIFF (REFERRING PARTY)
+  Name:    Marcus Test
+  Address: 100 Test St
+  Phone:   +13375550100
+  Email:   test@example.invalid
+
+I have NOT yet filed a small-claims action — I am referring the case to
+your firm for class-action evaluation first. If your firm is interested
+in pursuing this matter, I am willing to serve as a class representative.
+
+Recordings, transcripts, evidence-integrity certificates, ITG traceback
+correspondence, and FCC complaint receipts available on request.
+
+Sincerely,
+
+Marcus Test
+test@example.invalid
++13375550100
+
+Sent via SpamSlayer (https://github.com/example/spamslayer) — automated
+TCPA evidence-collection + class-referral system.

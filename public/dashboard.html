@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpamSlayer Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.02); border: 1px solid #e5e7eb; }
+    .num { font-variant-numeric: tabular-nums; }
+    .grade-A { background: #d1fae5; color: #065f46; }
+    .grade-B { background: #dbeafe; color: #1e40af; }
+    .grade-C { background: #fef3c7; color: #92400e; }
+    .grade-D { background: #fed7aa; color: #9a3412; }
+    .grade-F { background: #fee2e2; color: #991b1b; }
+    .grade-INCOMPLETE { background: #f3f4f6; color: #4b5563; }
+    .skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: skeleton-pulse 1.4s ease-in-out infinite; border-radius: 6px; }
+    @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen">
+  <div class="max-w-7xl mx-auto p-6 space-y-6">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between flex-wrap gap-2">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">SpamSlayer</h1>
+        <p class="text-sm text-slate-500" id="generated-at">Loading…</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="api-base">API base:</label>
+        <input id="api-base" type="text" value="" placeholder="(same origin)" class="border border-slate-300 rounded px-2 py-1 text-sm w-56" />
+        <button id="reload-btn" class="bg-slate-900 text-white text-sm font-medium px-3 py-1.5 rounded hover:bg-slate-700">Reload</button>
+      </div>
+    </header>
+
+    <!-- Headline numbers -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Ready to file</div>
+        <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-ready">—</div>
+        <div class="text-xs text-slate-500 mt-1">cases past the 2-call threshold</div>
+      </div>
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Total damages on the table</div>
+        <div class="text-3xl font-semibold text-emerald-700 num mt-1" id="hdr-damages">—</div>
+        <div class="text-xs text-slate-500 mt-1">across all unfiled actionable cases</div>
+      </div>
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Bot grade (last 7 days)</div>
+        <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-grade">—</div>
+        <div class="text-xs text-slate-500 mt-1" id="hdr-grade-sub">avg score / band</div>
+      </div>
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Recording coverage</div>
+        <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-recording">—</div>
+        <div class="text-xs text-slate-500 mt-1">% of calls with audio captured</div>
+      </div>
+    </section>
+
+    <!-- POTENTIAL CASES -->
+    <section class="card p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold text-slate-900">Potential cases</h2>
+        <div class="text-xs text-slate-500"><span id="ready-count">0</span> ready · <span id="watching-count">0</span> watching · <span id="filed-count">0</span> filed</div>
+      </div>
+
+      <h3 class="text-sm font-semibold text-rose-700 mt-2 mb-2">🟥 Ready to file</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-200">
+            <tr>
+              <th class="py-2 pr-2">Verdict</th>
+              <th class="py-2 pr-2">Caller</th>
+              <th class="py-2 pr-2">Company</th>
+              <th class="py-2 pr-2 text-right">Calls</th>
+              <th class="py-2 pr-2 text-right">Damages</th>
+              <th class="py-2 pr-2 text-right">Net EV</th>
+              <th class="py-2 pr-2">Line type</th>
+              <th class="py-2 pr-2">Evidence</th>
+              <th class="py-2 pr-2">Last call</th>
+            </tr>
+          </thead>
+          <tbody id="ready-tbody" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+      <div id="checklist-modal" class="hidden fixed inset-0 bg-slate-900/50 z-40 items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+          <div class="sticky top-0 bg-white border-b border-slate-200 p-4 flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-lg" id="checklist-modal-title">Evidence checklist</h3>
+              <p class="text-xs text-slate-500" id="checklist-modal-sub">—</p>
+            </div>
+            <button id="checklist-modal-close" class="text-slate-500 hover:text-slate-900 text-2xl leading-none">×</button>
+          </div>
+          <div class="p-4 space-y-3" id="checklist-modal-body"></div>
+        </div>
+      </div>
+      <div id="verdict-modal" class="hidden fixed inset-0 bg-slate-900/50 z-40 items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div class="sticky top-0 bg-white border-b border-slate-200 p-4 flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-lg" id="verdict-modal-title">Filing decision</h3>
+              <p class="text-xs text-slate-500" id="verdict-modal-sub">—</p>
+            </div>
+            <button id="verdict-modal-close" class="text-slate-500 hover:text-slate-900 text-2xl leading-none">×</button>
+          </div>
+          <div class="p-4" id="verdict-modal-body"></div>
+        </div>
+      </div>
+
+      <h3 class="text-sm font-semibold text-amber-700 mt-6 mb-2">🟧 Watching (1 more call = actionable)</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-200">
+            <tr>
+              <th class="py-2 pr-2">Caller</th>
+              <th class="py-2 pr-2">Company</th>
+              <th class="py-2 pr-2 text-right">Calls so far</th>
+              <th class="py-2 pr-2 text-right">Calls until actionable</th>
+              <th class="py-2 pr-2">Last call</th>
+            </tr>
+          </thead>
+          <tbody id="watching-tbody" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+
+      <h3 class="text-sm font-semibold text-slate-600 mt-6 mb-2">📁 Filed</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-200">
+            <tr>
+              <th class="py-2 pr-2">Caller</th>
+              <th class="py-2 pr-2">Company</th>
+              <th class="py-2 pr-2">Filed at</th>
+              <th class="py-2 pr-2">Case ref</th>
+            </tr>
+          </thead>
+          <tbody id="filed-tbody" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- COORDINATED CAMPAIGNS (cross-case patterns) -->
+    <section class="card p-5" id="patterns-section" style="display:none">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <h2 class="text-lg font-semibold text-slate-900">Coordinated campaigns</h2>
+          <p class="text-sm text-slate-500">When multiple offender numbers run the same script, that's a coordinated operation. FCC and state-AG enforcement bureaus act on these patterns.</p>
+        </div>
+      </div>
+      <div id="patterns-body" class="space-y-3"></div>
+    </section>
+
+    <!-- RESEARCH STATUS -->
+    <section class="card p-5">
+      <h2 class="text-lg font-semibold text-slate-900 mb-1">Research status</h2>
+      <p class="text-sm text-slate-500 mb-4">Per-call lookups happen on the first call from a number. Actionable-case lookups (entity, litigation, web research) fire when a case crosses the 2-call TCPA threshold.</p>
+
+      <h3 class="text-xs uppercase tracking-wide text-slate-500 mb-2">Per-call</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div>
+          <div class="text-xs font-semibold text-slate-700">Twilio Lookup (line type)</div>
+          <div class="mt-2 text-sm">
+            <div><span class="num font-semibold" id="research-lookups-done">—</span> of <span class="num" id="research-offenders-total">—</span> offenders identified</div>
+            <div class="mt-1 text-slate-500 text-xs" id="research-lookups-sub">Pending: 0 — costs $0.005/lookup</div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+              <div id="research-lookups-bar" class="bg-blue-500 h-2 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-semibold text-slate-700">Recording capture</div>
+          <div class="mt-2 text-sm">
+            <div><span class="num font-semibold" id="research-recordings-done">—</span> of <span class="num" id="research-calls-total">—</span> calls have audio</div>
+            <div class="mt-1 text-slate-500 text-xs">Coverage: <span class="num" id="research-recordings-pct">—</span>%</div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+              <div id="research-recordings-bar" class="bg-emerald-500 h-2 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-semibold text-slate-700">Citation registry</div>
+          <div class="mt-2 text-sm">
+            <div><span class="num font-semibold" id="research-cite-verified">—</span> verified · <span class="num" id="research-cite-unverified">—</span> pending review</div>
+            <div class="mt-1 text-slate-500 text-xs" id="research-cite-sub">Open the morning task list to verify the top 15.</div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+              <div id="research-cite-bar" class="bg-violet-500 h-2 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-xs uppercase tracking-wide text-slate-500 mb-2">Actionable-only (fires when a case crosses 2 calls)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <div class="text-xs font-semibold text-slate-700">OpenCorporates entity (optional)</div>
+          <div class="mt-2 text-sm">
+            <div><span class="num font-semibold" id="research-entity-done">—</span> of <span class="num" id="research-actionable-total">—</span> actionable cases identified</div>
+            <div class="mt-1 text-slate-500 text-xs" id="research-entity-sub">~$240/mo entry plan — opt-in via OPENCORPORATES_API_KEY</div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+              <div id="research-entity-bar" class="bg-amber-500 h-2 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-semibold text-slate-700">CourtListener litigation</div>
+          <div class="mt-2 text-sm">
+            <div><span class="num font-semibold" id="research-litigation-done">—</span> of <span class="num" id="research-actionable-total-2">—</span> actionable cases researched</div>
+            <div class="mt-1 text-slate-500 text-xs">Free for non-profits / public tier</div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+              <div id="research-litigation-bar" class="bg-cyan-500 h-2 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-semibold text-slate-700">Perplexity Sonar (deep research)</div>
+          <div class="mt-2 text-sm">
+            <div><span class="num font-semibold" id="research-sonar-done">—</span> of <span class="num" id="research-actionable-total-3">—</span> actionable cases synthesized</div>
+            <div class="mt-1 text-slate-500 text-xs">~$0.005-0.01/lookup · regulatory + news</div>
+            <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+              <div id="research-sonar-bar" class="bg-fuchsia-500 h-2 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOT SELF-IMPROVEMENT -->
+    <section class="card p-5">
+      <h2 class="text-lg font-semibold text-slate-900 mb-1">Bot self-improvement</h2>
+      <p class="text-sm text-slate-500 mb-4">Daily checkup of how Sam is performing on real spam calls. Higher avg score, more A/B grades, fewer hang-ups = better extraction.</p>
+
+      <!-- Period comparison -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="border border-slate-200 rounded-lg p-3">
+          <div class="text-xs uppercase tracking-wide text-slate-500">Today</div>
+          <div class="text-2xl font-semibold num mt-1" id="period-today-score">—</div>
+          <div class="text-xs text-slate-500 mt-1"><span id="period-today-count">0</span> calls graded</div>
+          <div class="mt-3" id="period-today-bands"></div>
+        </div>
+        <div class="border border-slate-200 rounded-lg p-3">
+          <div class="text-xs uppercase tracking-wide text-slate-500">Last 7 days</div>
+          <div class="text-2xl font-semibold num mt-1" id="period-7d-score">—</div>
+          <div class="text-xs text-slate-500 mt-1"><span id="period-7d-count">0</span> calls graded</div>
+          <div class="mt-3" id="period-7d-bands"></div>
+        </div>
+        <div class="border border-slate-200 rounded-lg p-3">
+          <div class="text-xs uppercase tracking-wide text-slate-500">Last 30 days</div>
+          <div class="text-2xl font-semibold num mt-1" id="period-30d-score">—</div>
+          <div class="text-xs text-slate-500 mt-1"><span id="period-30d-count">0</span> calls graded</div>
+          <div class="mt-3" id="period-30d-bands"></div>
+        </div>
+      </div>
+
+      <!-- Trend chart -->
+      <div class="mb-6">
+        <h3 class="text-sm font-semibold text-slate-700 mb-2">Daily average grade (last 14 days)</h3>
+        <div class="h-48"><canvas id="trend-chart"></canvas></div>
+      </div>
+
+      <!-- Extraction success + hang-up risk -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-sm font-semibold text-slate-700 mb-2">Extraction success (last 7 days)</h3>
+          <div class="space-y-2 text-sm" id="extraction-rates"></div>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-slate-700 mb-2">Hang-up risk distribution (last 7 days)</h3>
+          <div class="space-y-2 text-sm" id="hangup-risk"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-400 pt-2 pb-6">
+      SpamSlayer dashboard · auto-refresh every 60s · <a class="underline hover:text-slate-600" href="/api/dashboard/stats" target="_blank">raw JSON</a>
+    </footer>
+  </div>
+
+  <script>
+    // ───────────────────────────────────────────────────────────────────
+    //  State + data fetch
+    // ───────────────────────────────────────────────────────────────────
+    let trendChart = null;
+
+    function apiBase() {
+      return document.getElementById('api-base').value.trim().replace(/\/+$/, '');
+    }
+
+    async function fetchStats() {
+      const url = apiBase() + '/api/dashboard/stats';
+      try {
+        const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return await r.json();
+      } catch (err) {
+        console.error('fetch failed', err);
+        return null;
+      }
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  Renderers
+    // ───────────────────────────────────────────────────────────────────
+    function fmt(n) { if (typeof n !== 'number' || isNaN(n)) return '—'; return n.toLocaleString(); }
+    function dollars(n) { if (typeof n !== 'number' || isNaN(n)) return '—'; return '$' + n.toLocaleString(); }
+    function shortDate(d) { if (!d) return '—'; return d; }
+    function gradeChip(letter, score) {
+      if (!letter) return '—';
+      return `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold grade-${letter}">${letter}${typeof score === 'number' ? ' ' + score : ''}</span>`;
+    }
+    function bandsBar(bands) {
+      const total = Object.values(bands).reduce((a, b) => a + b, 0);
+      if (total === 0) return '<div class="text-xs text-slate-400">No graded calls in this window</div>';
+      const order = ['A','B','C','D','F','INCOMPLETE'];
+      return '<div class="flex h-2 rounded-full overflow-hidden">' +
+        order.map(b => {
+          const pct = (bands[b] || 0) / total * 100;
+          if (pct === 0) return '';
+          const colors = { A:'#10b981', B:'#3b82f6', C:'#f59e0b', D:'#fb923c', F:'#ef4444', INCOMPLETE:'#94a3b8' };
+          return `<div title="${b}: ${bands[b]}" style="width:${pct}%; background:${colors[b]}"></div>`;
+        }).join('') +
+        '</div>' +
+        '<div class="flex flex-wrap gap-x-2 gap-y-1 mt-2 text-xs text-slate-600">' +
+        order.filter(b => bands[b] > 0).map(b => `${b}: ${bands[b]}`).join(' · ') +
+        '</div>';
+    }
+
+    function renderHeader(d) {
+      document.getElementById('generated-at').textContent =
+        'Generated at ' + new Date(d.generatedAt).toLocaleString();
+      document.getElementById('hdr-ready').textContent = fmt(d.potentialCases.summary.readyCount);
+      document.getElementById('hdr-damages').textContent = dollars(d.potentialCases.summary.totalDamagesAvailable);
+      const last7 = d.botSelfImprovement.last7;
+      document.getElementById('hdr-grade').textContent = last7.graded > 0 ? last7.averageScore : '—';
+      document.getElementById('hdr-grade-sub').textContent = last7.graded > 0
+        ? `${last7.graded} call(s) graded · A:${last7.bands.A} B:${last7.bands.B} C:${last7.bands.C} D:${last7.bands.D} F:${last7.bands.F}`
+        : 'no graded calls yet';
+      document.getElementById('hdr-recording').textContent = (d.research.recordingCoverage ?? 0) + '%';
+    }
+
+    function renderPotentialCases(d) {
+      const pc = d.potentialCases;
+      document.getElementById('ready-count').textContent = pc.summary.readyCount;
+      document.getElementById('watching-count').textContent = pc.summary.watchingCount;
+      document.getElementById('filed-count').textContent = pc.summary.filedCount;
+
+      const readyBody = document.getElementById('ready-tbody');
+      readyBody.innerHTML = pc.readyToFile.length === 0
+        ? '<tr><td colspan="9" class="py-6 text-center text-slate-400 text-sm">No actionable cases yet. Spam callers need to call you twice within 12 months.</td></tr>'
+        : pc.readyToFile.map(c => {
+            const cl = c.checklist;
+            const checklistBadge = cl
+              ? (cl.done === cl.total
+                  ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800">✓ ${cl.done}/${cl.total}</span>`
+                  : `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800">${cl.done}/${cl.total}</span>`)
+              : '<span class="text-xs text-slate-400">—</span>';
+            const willfulBadge = c.willful ? '<span class="text-xs font-semibold text-rose-600">YES (3×)</span>' : '';
+            const v = c.verdict;
+            const verdictBadge = !v
+              ? '<span class="text-xs text-slate-400">computing…</span>'
+              : v.verdict === 'GO'
+              ? `<button class="verdict-open inline-flex items-center px-2 py-1 rounded font-semibold text-xs bg-emerald-100 text-emerald-800 hover:bg-emerald-200" data-num="${encodeURIComponent(c.normalizedNumber)}" data-name="${encodeURIComponent(c.companyName ?? c.normalizedNumber)}">✅ GO (${v.confidence}%)</button>`
+              : v.verdict === 'WAIT'
+              ? `<button class="verdict-open inline-flex items-center px-2 py-1 rounded font-semibold text-xs bg-amber-100 text-amber-800 hover:bg-amber-200" data-num="${encodeURIComponent(c.normalizedNumber)}" data-name="${encodeURIComponent(c.companyName ?? c.normalizedNumber)}">⏸ WAIT (${v.confidence}%)</button>`
+              : `<button class="verdict-open inline-flex items-center px-2 py-1 rounded font-semibold text-xs bg-rose-100 text-rose-800 hover:bg-rose-200" data-num="${encodeURIComponent(c.normalizedNumber)}" data-name="${encodeURIComponent(c.companyName ?? c.normalizedNumber)}">🛑 DON'T FILE (${v.confidence}%)</button>`;
+            const netCell = v
+              ? `<span class="text-xs num font-semibold ${v.netUsd >= 0 ? 'text-emerald-700' : 'text-rose-700'}">${v.netUsd >= 0 ? '+' : ''}${dollars(v.netUsd)}</span>`
+              : '<span class="text-xs text-slate-400">—</span>';
+            return `
+              <tr class="hover:bg-slate-50">
+                <td class="py-2 pr-2">${verdictBadge}</td>
+                <td class="py-2 pr-2 font-mono text-xs">${c.normalizedNumber}</td>
+                <td class="py-2 pr-2">${c.companyName ?? '<span class="text-slate-400">unknown</span>'} ${willfulBadge}</td>
+                <td class="py-2 pr-2 text-right num">${c.callCount}</td>
+                <td class="py-2 pr-2 text-right num text-emerald-700 font-semibold">${dollars(c.damagesEstimate)}</td>
+                <td class="py-2 pr-2 text-right">${netCell}</td>
+                <td class="py-2 pr-2"><span class="text-xs ${c.lineType ? 'text-slate-700' : 'text-slate-400'}">${c.lineType ?? 'not looked up'}</span></td>
+                <td class="py-2 pr-2"><button class="checklist-open" data-num="${encodeURIComponent(c.normalizedNumber)}" data-name="${encodeURIComponent(c.companyName ?? c.normalizedNumber)}">${checklistBadge}</button></td>
+                <td class="py-2 pr-2 text-xs text-slate-500">${shortDate(c.lastCallDate)}</td>
+              </tr>`;
+          }).join('');
+
+      // Wire the new checklist buttons
+      document.querySelectorAll('.checklist-open').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const num = decodeURIComponent(btn.dataset.num);
+          const name = decodeURIComponent(btn.dataset.name);
+          openChecklistModal(num, name);
+        });
+      });
+      document.querySelectorAll('.verdict-open').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const num = decodeURIComponent(btn.dataset.num);
+          const name = decodeURIComponent(btn.dataset.name);
+          openVerdictModal(num, name);
+        });
+      });
+
+      const watchingBody = document.getElementById('watching-tbody');
+      watchingBody.innerHTML = pc.watching.length === 0
+        ? '<tr><td colspan="5" class="py-4 text-center text-slate-400 text-sm">No callers being watched.</td></tr>'
+        : pc.watching.map(c => `
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 pr-2 font-mono text-xs">${c.normalizedNumber}</td>
+              <td class="py-2 pr-2">${c.companyName ?? '<span class="text-slate-400">unknown</span>'}</td>
+              <td class="py-2 pr-2 text-right num">${c.callCount}</td>
+              <td class="py-2 pr-2 text-right num font-semibold">${c.callsToActionable}</td>
+              <td class="py-2 pr-2 text-xs text-slate-500">${shortDate(c.lastCallDate)}</td>
+            </tr>`).join('');
+
+      const filedBody = document.getElementById('filed-tbody');
+      filedBody.innerHTML = pc.filed.length === 0
+        ? '<tr><td colspan="4" class="py-4 text-center text-slate-400 text-sm">No cases filed yet.</td></tr>'
+        : pc.filed.map(c => `
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 pr-2 font-mono text-xs">${c.normalizedNumber}</td>
+              <td class="py-2 pr-2">${c.companyName ?? '<span class="text-slate-400">unknown</span>'}</td>
+              <td class="py-2 pr-2 text-xs text-slate-500">${c.filedAt ? new Date(c.filedAt).toLocaleString() : '—'}</td>
+              <td class="py-2 pr-2 text-xs font-mono text-slate-600">${c.filedCaseRef ?? '—'}</td>
+            </tr>`).join('');
+    }
+
+    function renderResearch(d) {
+      const r = d.research;
+      document.getElementById('research-lookups-done').textContent = fmt(r.lineTypeLookupsCompleted);
+      document.getElementById('research-offenders-total').textContent = fmt(r.offendersTotal);
+      document.getElementById('research-lookups-sub').textContent = `Pending: ${r.lineTypeLookupsPending} — costs $0.005/lookup`;
+      const lookupsPct = r.offendersTotal > 0 ? (r.lineTypeLookupsCompleted / r.offendersTotal) * 100 : 0;
+      document.getElementById('research-lookups-bar').style.width = lookupsPct + '%';
+
+      document.getElementById('research-recordings-done').textContent = fmt(r.recordedCalls);
+      document.getElementById('research-calls-total').textContent = fmt(r.callsTotal);
+      document.getElementById('research-recordings-pct').textContent = r.recordingCoverage;
+      document.getElementById('research-recordings-bar').style.width = r.recordingCoverage + '%';
+
+      document.getElementById('research-cite-verified').textContent = fmt(r.citationRegistry.verified);
+      document.getElementById('research-cite-unverified').textContent = fmt(r.citationRegistry.unverified);
+      const citePct = r.citationRegistry.total > 0 ? (r.citationRegistry.verified / r.citationRegistry.total) * 100 : 0;
+      document.getElementById('research-cite-bar').style.width = citePct + '%';
+      const isFresh = r.citationRegistry.verified >= 15;
+      document.getElementById('research-cite-sub').innerHTML = isFresh
+        ? '✅ Top citations human-verified — gate is open for filing.'
+        : `<span class="text-rose-600">${15 - r.citationRegistry.verified} more cite(s) need human verification before the gate opens for clean filings.</span>`;
+
+      // Actionable-only enrichment
+      const actionable = r.actionableTotal || 0;
+      document.getElementById('research-actionable-total').textContent = fmt(actionable);
+      document.getElementById('research-actionable-total-2').textContent = fmt(actionable);
+      document.getElementById('research-actionable-total-3').textContent = fmt(actionable);
+
+      document.getElementById('research-entity-done').textContent = fmt(r.entityResearched);
+      document.getElementById('research-entity-bar').style.width = (actionable > 0 ? (r.entityResearched / actionable * 100) : 0) + '%';
+      // If OpenCorporates is opt-in and Marcus hasn't enabled it, all
+      // actionable cases will show as "skipped" (counted neither in
+      // entityResearched nor entityPending). Surface this so the panel
+      // reads as "n/a" rather than "0% pending forever."
+      if (actionable > 0 && r.entityResearched === 0 && r.entityPending === 0) {
+        document.getElementById('research-entity-sub').innerHTML =
+          '<span class="text-slate-500">Disabled — entity identity is covered by Sonar instead. Set <code>OPENCORPORATES_API_KEY</code> to enable.</span>';
+        document.getElementById('research-entity-bar').style.width = '0%';
+        document.getElementById('research-entity-bar').className = 'bg-slate-300 h-2 rounded-full';
+      }
+
+      document.getElementById('research-litigation-done').textContent = fmt(r.litigationResearched);
+      document.getElementById('research-litigation-bar').style.width = (actionable > 0 ? (r.litigationResearched / actionable * 100) : 0) + '%';
+
+      document.getElementById('research-sonar-done').textContent = fmt(r.sonarResearched);
+      document.getElementById('research-sonar-bar').style.width = (actionable > 0 ? (r.sonarResearched / actionable * 100) : 0) + '%';
+    }
+
+    function renderBotSelfImprovement(d) {
+      const b = d.botSelfImprovement;
+
+      // Period summaries
+      document.getElementById('period-today-score').textContent = b.today.graded > 0 ? b.today.averageScore : '—';
+      document.getElementById('period-today-count').textContent = b.today.graded;
+      document.getElementById('period-today-bands').innerHTML = bandsBar(b.today.bands);
+
+      document.getElementById('period-7d-score').textContent = b.last7.graded > 0 ? b.last7.averageScore : '—';
+      document.getElementById('period-7d-count').textContent = b.last7.graded;
+      document.getElementById('period-7d-bands').innerHTML = bandsBar(b.last7.bands);
+
+      document.getElementById('period-30d-score').textContent = b.last30.graded > 0 ? b.last30.averageScore : '—';
+      document.getElementById('period-30d-count').textContent = b.last30.graded;
+      document.getElementById('period-30d-bands').innerHTML = bandsBar(b.last30.bands);
+
+      // Trend chart
+      const labels = b.dailySeries.map(p => p.date.slice(5)); // MM-DD
+      const scores = b.dailySeries.map(p => p.avgScore || null);
+      if (trendChart) trendChart.destroy();
+      trendChart = new Chart(document.getElementById('trend-chart'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Avg grade score',
+            data: scores,
+            borderColor: '#0f172a',
+            backgroundColor: 'rgba(15,23,42,0.08)',
+            tension: 0.2,
+            spanGaps: true,
+            pointRadius: 3,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, max: 100, ticks: { stepSize: 25 } },
+            x: { grid: { display: false } },
+          },
+        },
+      });
+
+      // Extraction rates (last 7d)
+      const ex = b.last7.extractionRates;
+      document.getElementById('extraction-rates').innerHTML = ['company','name','purpose','recording'].map(field => {
+        const pct = ex[field] || 0;
+        const color = pct >= 80 ? 'bg-emerald-500' : pct >= 50 ? 'bg-amber-500' : 'bg-rose-500';
+        return `
+          <div>
+            <div class="flex justify-between"><span class="capitalize">${field}</span><span class="num text-slate-600">${pct}%</span></div>
+            <div class="w-full bg-slate-200 rounded-full h-1.5 mt-0.5"><div class="${color} h-1.5 rounded-full" style="width:${pct}%"></div></div>
+          </div>`;
+      }).join('');
+
+      // Hang-up risk
+      const h = b.last7.hangUpRisk;
+      document.getElementById('hangup-risk').innerHTML = ['low','medium','high'].map(risk => {
+        const pct = h[risk] || 0;
+        const color = risk === 'low' ? 'bg-emerald-500' : risk === 'medium' ? 'bg-amber-500' : 'bg-rose-500';
+        const label = risk === 'low' ? 'Caller heard the warning' : risk === 'medium' ? 'Engaged but unclear ending' : 'Hung up almost immediately';
+        return `
+          <div>
+            <div class="flex justify-between"><span><span class="capitalize">${risk}</span> · <span class="text-slate-500 text-xs">${label}</span></span><span class="num text-slate-600">${pct}%</span></div>
+            <div class="w-full bg-slate-200 rounded-full h-1.5 mt-0.5"><div class="${color} h-1.5 rounded-full" style="width:${pct}%"></div></div>
+          </div>`;
+      }).join('');
+    }
+
+    async function reload() {
+      const data = await fetchStats();
+      if (!data) {
+        document.getElementById('generated-at').textContent = 'Failed to load — is the backend running on ' + (apiBase() || window.location.origin) + '?';
+        return;
+      }
+      renderHeader(data);
+      renderPotentialCases(data);
+      renderResearch(data);
+      renderBotSelfImprovement(data);
+      renderPatterns();  // fires its own fetch — separate endpoint
+
+      try { localStorage.setItem('spamslayer.apiBase', apiBase()); } catch (e) {}
+    }
+
+    async function renderPatterns() {
+      try {
+        const r = await fetch(apiBase() + '/api/dashboard/patterns');
+        if (!r.ok) return;
+        const { patterns } = await r.json();
+        const section = document.getElementById('patterns-section');
+        const body = document.getElementById('patterns-body');
+        if (!patterns || patterns.length === 0) { section.style.display = 'none'; return; }
+        section.style.display = '';
+        body.innerHTML = patterns.map(p => {
+          const color = p.escalationLevel === 'actionable' ? 'rose' : p.escalationLevel === 'report' ? 'amber' : 'slate';
+          const glyph = p.escalationLevel === 'actionable' ? '🚨' : p.escalationLevel === 'report' ? '⚠️' : '👁';
+          return `
+            <div class="border border-${color}-200 bg-${color}-50/40 rounded-lg p-3">
+              <div class="flex items-center justify-between mb-1">
+                <div class="font-semibold text-${color}-800">${glyph} ${escapeHtml(p.signal)}</div>
+                <div class="text-xs font-semibold text-${color}-700 uppercase">${p.escalationLevel}</div>
+              </div>
+              <div class="text-xs text-slate-600 mb-2">${p.members.length} numbers · total damages claimable: <span class="font-semibold">${dollars(p.totalDamages)}</span></div>
+              <div class="text-xs text-slate-700 space-y-0.5">
+                ${p.members.map(m => `<div class="font-mono">${m.normalizedNumber}  ${escapeHtml(m.companyName ?? '')}  <span class="text-slate-500">(${m.callCount} calls)</span></div>`).join('')}
+              </div>
+              ${p.escalationLevel !== 'watch' ? `<div class="text-xs text-${color}-700 mt-2">→ Worth a single FCC complaint that names ALL these numbers as a coordinated campaign. Pattern complaints get more enforcement attention than individual ones.</div>` : ''}
+            </div>`;
+        }).join('');
+      } catch (err) {
+        console.warn('renderPatterns failed', err);
+      }
+    }
+
+    // Restore api-base on load
+    try {
+      const saved = localStorage.getItem('spamslayer.apiBase');
+      if (saved !== null) document.getElementById('api-base').value = saved;
+    } catch (e) {}
+
+    // ───────────────────────────────────────────────────────────────────
+    //  Checklist modal: per-case evidence prep with toggleable items
+    // ───────────────────────────────────────────────────────────────────
+    async function openChecklistModal(normalizedNumber, displayName) {
+      const modal = document.getElementById('checklist-modal');
+      const title = document.getElementById('checklist-modal-title');
+      const sub = document.getElementById('checklist-modal-sub');
+      const body = document.getElementById('checklist-modal-body');
+      title.textContent = `Evidence checklist: ${displayName}`;
+      sub.textContent = 'Loading…';
+      body.innerHTML = '<div class="skeleton h-32 rounded"></div>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      let cl;
+      try {
+        const r = await fetch(apiBase() + `/api/cases/${encodeURIComponent(normalizedNumber)}/checklist`);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        cl = await r.json();
+      } catch (err) {
+        body.innerHTML = '<div class="text-rose-600 text-sm">Failed to load checklist: ' + err.message + '</div>';
+        return;
+      }
+      sub.textContent = `${cl.items.filter(i => i.completed).length} of ${cl.items.length} done · generated ${new Date(cl.generatedAt).toLocaleString()}`;
+
+      body.innerHTML = cl.items.map((item, i) => `
+        <div class="border ${item.completed ? 'border-emerald-200 bg-emerald-50/50' : 'border-slate-200 bg-white'} rounded-lg p-3">
+          <div class="flex items-start gap-3">
+            <input type="checkbox" class="mt-1 checklist-toggle w-5 h-5" data-id="${item.id}" ${item.completed ? 'checked' : ''} />
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold text-slate-900 ${item.completed ? 'line-through text-slate-500' : ''}">
+                ${i + 1}. ${escapeHtml(item.title)}
+              </div>
+              <p class="text-xs text-slate-600 mt-1">${escapeHtml(item.why)}</p>
+              ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" class="inline-block mt-2 text-xs font-semibold text-blue-700 hover:text-blue-900 underline">Open: ${escapeHtml(truncateUrl(item.url, 70))} →</a>` : ''}
+              ${item.template ? `
+                <details class="mt-2">
+                  <summary class="text-xs text-slate-700 cursor-pointer hover:text-slate-900">Show copy-paste template</summary>
+                  <pre class="bg-slate-50 border border-slate-200 rounded p-2 mt-2 text-xs whitespace-pre-wrap font-mono">${escapeHtml(item.template)}</pre>
+                  <button class="mt-1 text-xs text-blue-700 hover:underline copy-btn" data-text-id="tpl-${item.id}">Copy template to clipboard</button>
+                  <textarea id="tpl-${item.id}" class="hidden">${escapeHtml(item.template)}</textarea>
+                </details>` : ''}
+              ${item.whatToExpect ? `
+                <details class="mt-2">
+                  <summary class="text-xs text-slate-700 cursor-pointer hover:text-slate-900">📚 What to expect</summary>
+                  <pre class="bg-blue-50 border border-blue-200 rounded p-2 mt-2 text-xs whitespace-pre-wrap font-sans">${escapeHtml(item.whatToExpect)}</pre>
+                </details>` : ''}
+              ${item.escalation ? `
+                <details class="mt-2">
+                  <summary class="text-xs text-amber-700 cursor-pointer hover:text-amber-900">⬇ Escalation: ${escapeHtml(item.escalation.title)}</summary>
+                  <div class="mt-2 text-xs text-slate-700">
+                    <div class="font-semibold text-amber-700 mb-1">Use this only if:</div>
+                    <p class="mb-2">${escapeHtml(item.escalation.trigger)}</p>
+                    <pre class="bg-amber-50 border border-amber-200 rounded p-2 whitespace-pre-wrap font-sans">${escapeHtml(item.escalation.instructions)}</pre>
+                    ${item.escalation.template ? `
+                      <details class="mt-2">
+                        <summary class="text-xs cursor-pointer hover:text-slate-900">Show subpoena template</summary>
+                        <pre class="bg-slate-50 border border-slate-200 rounded p-2 mt-2 whitespace-pre-wrap font-mono text-xs">${escapeHtml(item.escalation.template)}</pre>
+                      </details>` : ''}
+                  </div>
+                </details>` : ''}
+              ${item.completed && item.completedAt ? `<div class="text-xs text-emerald-700 mt-2">✓ Completed at ${new Date(item.completedAt).toLocaleString()}</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Wire toggle checkboxes
+      body.querySelectorAll('.checklist-toggle').forEach(cb => {
+        cb.addEventListener('change', async () => {
+          const itemId = cb.dataset.id;
+          try {
+            await fetch(apiBase() + `/api/cases/${encodeURIComponent(normalizedNumber)}/checklist/${itemId}/toggle`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ completed: cb.checked }),
+            });
+            // Re-render to update visual state + reload main dashboard counters
+            openChecklistModal(normalizedNumber, displayName);
+            reload();
+          } catch (err) {
+            console.error('toggle failed', err);
+            cb.checked = !cb.checked; // revert on failure
+          }
+        });
+      });
+
+      // Wire copy buttons
+      body.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const ta = document.getElementById(btn.dataset.textId);
+          if (!ta) return;
+          navigator.clipboard.writeText(ta.value).then(() => {
+            const original = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => (btn.textContent = original), 1500);
+          }).catch(() => alert('Copy failed — select the text manually'));
+        });
+      });
+    }
+
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function truncateUrl(s, max) { return s.length <= max ? s : s.slice(0, max - 1) + '…'; }
+
+    document.getElementById('checklist-modal-close').addEventListener('click', () => {
+      document.getElementById('checklist-modal').classList.add('hidden');
+      document.getElementById('checklist-modal').classList.remove('flex');
+    });
+    document.getElementById('checklist-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'checklist-modal') {
+        document.getElementById('checklist-modal').classList.add('hidden');
+        document.getElementById('checklist-modal').classList.remove('flex');
+      }
+    });
+
+    // ───────────────────────────────────────────────────────────────────
+    //  Verdict modal: full GO/WAIT/DON'T FILE breakdown for a case
+    // ───────────────────────────────────────────────────────────────────
+    async function openVerdictModal(normalizedNumber, displayName) {
+      const modal = document.getElementById('verdict-modal');
+      const title = document.getElementById('verdict-modal-title');
+      const sub = document.getElementById('verdict-modal-sub');
+      const body = document.getElementById('verdict-modal-body');
+      title.textContent = `Filing decision: ${displayName}`;
+      sub.textContent = 'Loading…';
+      body.innerHTML = '<div class="skeleton h-32 rounded"></div>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      let d;
+      try {
+        const r = await fetch(apiBase() + `/api/cases/${encodeURIComponent(normalizedNumber)}/should-file`);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        d = await r.json();
+      } catch (err) {
+        body.innerHTML = '<div class="text-rose-600 text-sm">Failed to load decision: ' + err.message + '</div>';
+        return;
+      }
+
+      const verdictColor = d.verdict === 'GO' ? 'emerald' : d.verdict === 'WAIT' ? 'amber' : 'rose';
+      const verdictGlyph = d.verdict === 'GO' ? '✅' : d.verdict === 'WAIT' ? '⏸' : '🛑';
+      const verdictLabel = d.verdict === 'GO' ? 'GO — file the petition' : d.verdict === 'WAIT' ? 'WAIT — gather more first' : "DON'T FILE — costs > expected return";
+      const netClass = d.expectedValueUsd - d.costEstimateUsd >= 0 ? 'text-emerald-700' : 'text-rose-700';
+
+      sub.textContent = `Confidence ${d.confidence}% · ${new Date().toLocaleString()}`;
+      body.innerHTML = `
+        <div class="bg-${verdictColor}-50 border border-${verdictColor}-200 rounded-lg p-4 mb-4">
+          <div class="text-2xl font-bold text-${verdictColor}-800">${verdictGlyph} ${verdictLabel}</div>
+          <div class="text-sm text-${verdictColor}-700 mt-1">Confidence: ${d.confidence}%</div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 text-sm">
+          <div class="border border-slate-200 rounded p-2"><div class="text-xs text-slate-500">Damages claimed</div><div class="num font-semibold">${dollars(d.statutoryDamagesUsd)}</div></div>
+          <div class="border border-slate-200 rounded p-2"><div class="text-xs text-slate-500">Costs to file</div><div class="num font-semibold text-rose-700">${dollars(d.costEstimateUsd)}</div></div>
+          <div class="border border-slate-200 rounded p-2"><div class="text-xs text-slate-500">Expected return</div><div class="num font-semibold">${dollars(d.expectedValueUsd)}</div></div>
+          <div class="border border-slate-200 rounded p-2"><div class="text-xs text-slate-500">Net EV</div><div class="num font-semibold ${netClass}">${dollars(d.expectedValueUsd - d.costEstimateUsd)}</div></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 text-xs">
+          <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">Case strength</div><div class="font-semibold">${d.breakdown.caseStrengthScore}/100 (${d.breakdown.caseStrengthRating})</div></div>
+          <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">Collectability</div><div class="font-semibold">${d.breakdown.collectabilityBand}${d.breakdown.collectabilityScore !== null ? ' (' + d.breakdown.collectabilityScore + ')' : ''}</div></div>
+          <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">Evidence done</div><div class="font-semibold">${d.breakdown.evidenceCompletenessPct}%</div></div>
+          <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">P(win) × P(collect)</div><div class="font-semibold">${Math.round(d.breakdown.pWinJudgment*100)}% × ${Math.round(d.breakdown.pCollectGivenWin*100)}%</div></div>
+        </div>
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold text-slate-900 mb-2">Why this verdict</h4>
+          <ul class="space-y-1 text-sm text-slate-700">${d.reasoning.map(r => `<li>• ${escapeHtml(r)}</li>`).join('')}</ul>
+        </div>
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold text-slate-900 mb-2">Recommended actions</h4>
+          <ul class="space-y-1 text-sm text-slate-700">${d.recommendedActions.map(a => `<li>→ ${escapeHtml(a)}</li>`).join('')}</ul>
+        </div>
+        ${d.breakdown.sonarFlags.length > 0 ? `
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-slate-900 mb-2">Sonar signals</h4>
+            <ul class="space-y-1 text-sm text-slate-700">${d.breakdown.sonarFlags.map(f => `<li class="text-xs">• ${escapeHtml(f)}</li>`).join('')}</ul>
+          </div>` : ''}
+        <div class="mt-4 pt-4 border-t border-slate-200">
+          <h4 class="text-sm font-semibold text-slate-900 mb-2">Pressure stack — even when court won't work</h4>
+          <p class="text-xs text-slate-600 mb-2">Non-judgment enforcement paths against this defendant. Fire as many as apply — most are free.</p>
+          <div id="pressure-stack-list" class="text-sm text-slate-500">Loading…</div>
+        </div>
+      `;
+      // Async: load and render the pressure stack inline at the bottom
+      try {
+        const r = await fetch(apiBase() + `/api/cases/${encodeURIComponent(normalizedNumber)}/pressure-stack`);
+        if (r.ok) {
+          const stack = await r.json();
+          const psl = document.getElementById('pressure-stack-list');
+          if (psl) psl.innerHTML = stack.items.map(item => {
+            const blockedClass = item.available ? '' : 'opacity-60';
+            const colorMap = { regulatory:'violet', carrier:'cyan', industry:'fuchsia', civil:'emerald', media:'amber' };
+            const color = colorMap[item.category] || 'slate';
+            return `
+              <div class="border border-slate-200 rounded p-2 mb-2 ${blockedClass}">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-semibold text-${color}-700 uppercase">${item.category}</span>
+                  <span class="font-medium text-sm">${escapeHtml(item.title)}</span>
+                  ${!item.available ? '<span class="text-xs text-amber-700 ml-auto">⏸ blocked</span>' : ''}
+                </div>
+                <div class="text-xs text-slate-600 mt-1">${escapeHtml(item.why.slice(0, 200))}${item.why.length > 200 ? '…' : ''}</div>
+                ${item.url && item.available ? `<a href="${item.url}" target="_blank" rel="noopener" class="text-xs text-blue-700 underline hover:text-blue-900 mt-1 inline-block">Open →</a>` : ''}
+                ${!item.available && item.blockedBy ? `<div class="text-xs text-amber-700 mt-1">Blocked by: ${escapeHtml(item.blockedBy)}</div>` : ''}
+              </div>`;
+          }).join('');
+        }
+      } catch (e) { console.warn('pressure-stack fetch failed', e); }
+    }
+
+    document.getElementById('verdict-modal-close').addEventListener('click', () => {
+      document.getElementById('verdict-modal').classList.add('hidden');
+      document.getElementById('verdict-modal').classList.remove('flex');
+    });
+    document.getElementById('verdict-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'verdict-modal') {
+        document.getElementById('verdict-modal').classList.add('hidden');
+        document.getElementById('verdict-modal').classList.remove('flex');
+      }
+    });
+
+    document.getElementById('reload-btn').addEventListener('click', reload);
+    document.getElementById('api-base').addEventListener('change', reload);
+
+    reload();
+    // Auto-refresh every 60s. Pauses when tab is hidden so we're not noisy.
+    setInterval(() => { if (!document.hidden) reload(); }, 60_000);
+  </script>
+</body>
+</html>

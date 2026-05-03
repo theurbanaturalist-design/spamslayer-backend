@@ -1,0 +1,206 @@
+═══════════════════════════════════════════════════════════════════════
+                     PRESSURE STACK
+         Non-judgment enforcement paths against this defendant
+═══════════════════════════════════════════════════════════════════════
+Offender:  +15555550101
+Company:   Acme Roofing LLC
+Generated: 2026-05-03T14:29:08.710Z
+
+Even when the filing-decision verdict says DON'T FILE (uncollectable
+defendant, weak case), the spammer is still breaking the law. These are
+the parallel-enforcement paths that create operational pressure WITHOUT
+requiring a judgment-collection win. Fire as many as apply — most are
+free, all add to the public record.
+
+═══════════════════════════════════════════════════════════════════════
+  AVAILABLE NOW (5 actions)
+═══════════════════════════════════════════════════════════════════════
+
+  ▶  USTelecom escalation (industry-wide enforcement)  [industry]
+
+     WHY:
+       USTelecom (parent of ITG) tracks repeat-offender originating
+       carriers and can escalate to the FCC's Enforcement Bureau. If ITG's
+       traceback identifies a carrier that's been previously flagged,
+       USTelecom may directly contact them.
+
+     URL: https://ustelecom.org/contact/
+
+     COPY-PASTE TEMPLATE:
+     ──────────────────────
+       Subject: Repeat TCPA violator — request for industry escalation
+       
+       To USTelecom Industry Enforcement Team,
+       
+       I am submitting a repeat-offender escalation request for telephone number +15555550101, which has placed 2 unsolicited telemarketing calls to my DNC-registered residential number +13375550100 between 2026-05-03 and 2026-05-03.
+       
+       I have already filed an ITG traceback request and will reference the traceback case number in this complaint once received. The caller identifies as Acme Roofing LLC.
+       
+       Please consider this number for inclusion in the next FCC enforcement-bureau referral.
+       
+       Marcus Test
+     ──────────────────────
+
+───────────────────────────────────────────────────────────────────────
+
+  ▶  Louisiana Public Service Commission complaint  [regulatory]
+
+     WHY:
+       The Louisiana PSC regulates intra-state telecommunications carriers.
+       A complaint to the PSC can trigger a carrier audit, and carriers who
+       fail audits face fines, license suspension, or required network
+       changes. Less famous than the FCC but often more responsive for
+       in-state issues.
+
+     URL: https://lpsc.louisiana.gov/CitizenComplaints.aspx
+
+     COPY-PASTE TEMPLATE:
+     ──────────────────────
+       Complainant: Marcus Test
+       Residential phone: +13375550100
+       Nature: Telephone Consumer Protection Act / Do Not Call violations
+       
+       Caller phone: +15555550101
+       Identified as: Acme Roofing LLC
+       2 call(s) between 2026-05-03 and 2026-05-03.
+       
+       Calls placed to a DNC-registered residential number; recordings on file. Requesting that the LPSC investigate the originating carrier (identifiable via ITG traceback) for potential violations of LPSC General Order 5 on telemarketing and the carrier's obligations under 47 USC § 227.
+     ──────────────────────
+
+───────────────────────────────────────────────────────────────────────
+
+  ▶  TCPA class-action firm referral  [civil]
+
+     WHY:
+       TCPA-specialist firms take cases on contingency. Even when YOUR
+       pro-se small-claims filing is uneconomic, a class-action firm may
+       spin the same evidence into a class action with thousands of
+       plaintiffs — outcomes range from $250k to $200M+ class settlements.
+       The firm does the work; you potentially share in the recovery as a
+       class representative.
+
+     URL: https://www.lemberglaw.com/contact-us/
+
+     COPY-PASTE TEMPLATE:
+     ──────────────────────
+       Subject: TCPA case referral — Acme Roofing LLC — class potential
+       
+       Dear TCPA Litigation Team,
+       
+       I am a residential subscriber whose number is registered on the National Do Not Call Registry. I have been receiving unsolicited telemarketing calls from the operation described below and would like to refer this matter for class-action evaluation.
+       
+       DEFENDANT CALLER
+         Phone:           +15555550101
+         Stated company:  Acme Roofing LLC
+         Stated names:    Brad
+         Stated purpose:  solar quote
+         Line type:       not yet looked up
+       
+       VIOLATION SUMMARY
+         Number of calls: 2
+         Date range:      2026-05-03 to 2026-05-03
+         Each call:
+         2026-05-03 14:29  callSid=CAMP_1_001  recording=no
+         2026-05-03 14:29  callSid=CAMP_1_002  recording=no
+       
+         All calls placed to a DNC-registered residential number, in violation of
+         47 U.S.C. § 227(c)(5) and 47 C.F.R. § 64.1200(c). Each call was answered
+         by an automated TCPA compliance recording (one-party-consent recording
+         under La. R.S. 15:1303). Recordings, transcripts, and SHA-256 evidence
+         integrity certificates are available on request.
+       
+       PRIOR FEDERAL LITIGATION HISTORY
+         CourtListener / RECAP search returned unknown federal case(s)
+         involving the named defendant or related entities.
+       
+       WEB RESEARCH SUMMARY (Perplexity Sonar — verify before relying)
+         (none)
+       
+       CLASS-CERTIFICATION POTENTIAL
+         This defendant appears to be running a coordinated telemarketing
+         operation based on the call patterns observed. Per ITG traceback
+         practice, multiple downstream consumers are likely affected. The
+         defendant's business model implies a wide pool of potential class
+         members.
+       
+       PLAINTIFF (REFERRING PARTY)
+         Name:    Marcus Test
+         Address: 100 Test St
+         Phone:   +13375550100
+         Email:   test@example.invalid
+       
+       I have NOT yet filed a small-claims action — I am referring the case to
+       your firm for class-action evaluation first. If your firm is interested
+       in pursuing this matter, I am willing to serve as a class representative.
+       
+       Recordings, transcripts, evidence-integrity certificates, ITG traceback
+       correspondence, and FCC complaint receipts available on request.
+       
+       Sincerely,
+       
+       Marcus Test
+       test@example.invalid
+       +13375550100
+       
+       Sent via SpamSlayer (https://github.com/example/spamslayer) — automated
+       TCPA evidence-collection + class-referral system.
+     ──────────────────────
+
+───────────────────────────────────────────────────────────────────────
+
+  ▶  FTC Consumer Sentinel Network submission  [regulatory]
+
+     WHY:
+       Sentinel is the FTC's pattern-aggregation database. Multiple
+       consumer reports of the same defendant trigger automated alerts to
+       the FTC's enforcement staff and to state AGs. Your FTC DNC complaint
+       already auto-feeds Sentinel — this confirms you've done it.
+
+     URL: https://reportfraud.ftc.gov
+
+───────────────────────────────────────────────────────────────────────
+
+  ▶  Submit number to community robocall blacklists  [industry]
+
+     WHY:
+       Nomorobo, RoboKiller, and YouMail run community-sourced blacklists
+       that automatically block flagged numbers for millions of
+       subscribers. Submitting your offender to all three takes 5 minutes
+       and immediately reduces the operation's reach.
+
+     COPY-PASTE TEMPLATE:
+     ──────────────────────
+       Submit +15555550101 via the consumer-report links at:
+       
+         • Nomorobo:    https://www.nomorobo.com/lookup/15555550101
+         • YouMail:     https://directory.youmail.com/phone/15555550101
+         • RoboKiller:  https://lookup.robokiller.com/p/15555550101
+       
+       Most surface a "Report this number" button. Fill in: caller said they were Acme Roofing LLC, called my DNC number 2x.
+     ──────────────────────
+
+───────────────────────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════════════════════
+  BLOCKED — fires later (3)
+═══════════════════════════════════════════════════════════════════════
+
+  ⏸  Carrier-of-record abuse complaint  [carrier]
+     BLOCKED BY: ITG traceback response with originating carrier identified (typically 1-3 weeks after filing the traceback)
+     WHY: Once ITG's traceback identifies the originating carrier (the telecom that put the call onto the network), file an abuse 
+
+───────────────────────────────────────────────────────────────────────
+
+  ⏸  Domain registrar abuse complaint  [industry]
+     BLOCKED BY: Sonar didn't surface a defendant website. Re-run defendant research or manually identify their site.
+     WHY: If the spammer has a website (Sonar may have surfaced one), every domain registrar — Namecheap, GoDaddy, Tucows, etc. — 
+
+───────────────────────────────────────────────────────────────────────
+
+  ⏸  Identify upstream seller (TCPA seller liability — DISH 2013 ruling)  [civil]
+     BLOCKED BY: undefined
+     WHY: Per the FCC's 2013 DISH Network ruling and 47 CFR 64.1200(f)(15), the SELLER (the company whose products the telemarkete
+
+───────────────────────────────────────────────────────────────────────
+
+END OF PRESSURE STACK

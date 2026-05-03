@@ -31,6 +31,15 @@ export interface CallEntry {
   recordingUrl: string | null;
   transcriptSnippet: string;
   callType: string;
+  /** Optional per-call grade from conversationGrader. Backfilled lazily for
+   *  pre-grader call data; new calls get this populated at log time. */
+  grade?: {
+    letter: "A" | "B" | "C" | "D" | "F" | "INCOMPLETE";
+    score: number;
+    hangUpRisk: "low" | "medium" | "high";
+    missingInfo: string[];
+    summary: string;
+  };
 }
 
 export interface OffenderProfile {
@@ -51,6 +60,96 @@ export interface OffenderProfile {
   subscriberIds: string[];  // all users this offender has called
   filedAt?: string | null;       // ISO timestamp when filing package was generated
   filedCaseRef?: string | null;  // internal case reference of the filed package
+  /** P3.1: cached Twilio Lookup line-type result. Populated lazily after the
+   *  first call; used by the legal filing generator to pick the right TCPA
+   *  prong (§ 227(b)(1)(A)(iii) cellular vs § 227(b)(1)(B) residential). */
+  lineTypeLookup?: {
+    normalizedType: "landline" | "mobile" | "voip" | "unknown";
+    rawType: string | null;
+    carrierName: string | null;
+    countryCode: string | null;
+    lookedUpAt: string;
+  } | null;
+  /** AUDIT_ROUND_19: cached OpenCorporates entity-registry lookup. Fired
+   *  asynchronously when the offender becomes actionable (call #2). 90-day
+   *  TTL. Drives the "is this a real, in-good-standing entity?" signal in
+   *  defendantResearch's collectability score. Discriminated union matches
+   *  EntityLookupResult shape from openCorporatesClient.ts. */
+  entityLookup?: {
+    status: "match" | "no_match" | "skipped" | "error";
+    matchedName?: string;
+    companyNumber?: string;
+    jurisdictionCode?: string | null;
+    normalizedStatus?: "active" | "inactive" | "dissolved" | "unknown";
+    rawStatus?: string | null;
+    incorporationDate?: string | null;
+    registeredAddress?: string | null;
+    sourceUrl?: string;
+    matchConfidence?: "exact" | "high" | "low";
+    errorMessage?: string;
+    lookedUpAt: string;
+  } | null;
+  /** AUDIT_ROUND_19: cached CourtListener prior-litigation lookup. Fired
+   *  asynchronously when the offender becomes actionable. 30-day TTL. The
+   *  case count is the single strongest collectability predictor for TCPA
+   *  defendants (per courtListenerClient.ts). */
+  priorLitigation?: {
+    status: "match" | "no_match" | "skipped" | "error";
+    caseCount?: number;
+    sampleCases?: Array<{ caption: string; docketUrl: string | null; dateFiled: string | null; court: string | null }>;
+    searchUrl?: string;
+    errorMessage?: string;
+    lookedUpAt: string;
+  } | null;
+  /** Stage 2: Perplexity Sonar deep-research summary. Fired only when an
+   *  offender becomes actionable AND a filing is being prepared. Captures
+   *  recent FCC actions, regulatory complaints, news mentions, and current
+   *  case-law status that no single dedicated API exposes cleanly. */
+  defendantWebResearch?: {
+    status: "match" | "skipped" | "error";
+    summary?: string;
+    citations?: string[];
+    model?: string;
+    errorMessage?: string;
+    lookedUpAt: string;
+  } | null;
+  /** AUDIT_ROUND_20: per-case manual evidence-gathering checklist. Generated
+   *  when an offender becomes actionable. Each item has a deep-link or a
+   *  copy-paste template. Marcus checks items off via the dashboard; cadence
+   *  reminders fire in Discord at +24h/+72h on still-incomplete items. */
+  evidenceChecklist?: {
+    /** ISO timestamp when the checklist was generated */
+    generatedAt: string;
+    /** ISO timestamp of last Discord reminder fired (avoid double-pinging) */
+    lastReminderAt?: string | null;
+    items: Array<{
+      id: string;
+      title: string;
+      why: string;
+      /** "open external URL", "copy this template text", "send this email", "no action — informational" */
+      action: "url" | "copy" | "email" | "info";
+      url?: string;
+      template?: string;
+      mailto?: string;
+      /** Prep walkthrough — what you'll see, how long it takes, what to do.
+       *  Surfaced inline on the dashboard expansion AND in the printed
+       *  EVIDENCE_CHECKLIST.txt that lives in the saved filing package. */
+      whatToExpect?: string;
+      /** Optional escalation path. Only shown / mentioned when the primary
+       *  path fails (e.g., portal screenshot doesn't work, or defendant
+       *  contests the calls). Subpoena instructions live here, NOT in the
+       *  primary action — most cases never need this. */
+      escalation?: {
+        trigger: string;
+        title: string;
+        instructions: string;
+        url?: string;
+        template?: string;
+      };
+      completed: boolean;
+      completedAt?: string | null;
+    }>;
+  } | null;
 }
 
 type CasesDB = Record<string, OffenderProfile>;
@@ -61,8 +160,40 @@ type CasesDB = Record<string, OffenderProfile>;
 //  This prevents corruption from partial writes or crashes mid-write.
 //  Also detects and backs up corrupted files instead of silently losing data.
 
-/** Queue to serialize writes (Node is single-threaded but async I/O can interleave) */
-let writeQueue: Promise<void> = Promise.resolve();
+/**
+ * P2.1: write-queue infrastructure for any FUTURE code path that wants to
+ * mutate cases.json from inside an async context (i.e., one that contains an
+ * `await` between load and save). The current logCall/attachRecording/
+ * attachGrade paths are fully synchronous and run to completion within a
+ * single Node tick, so the race the audit warned about is not exploitable
+ * today — Node is single-threaded and fs.{readFileSync,writeFileSync} cannot
+ * interleave inside one tick.
+ *
+ * The risk this defends against is forward-looking: if anyone adds an
+ * `await` between loadCases() and saveCases() in a future change, two
+ * concurrent requests CAN interleave the read-modify-write cycle and the
+ * second write clobbers the first. Route any such code through
+ * mutateCases() instead of touching loadCases/saveCases directly.
+ */
+let writeQueue: Promise<unknown> = Promise.resolve();
+
+/**
+ * Serialize a load → mutate → save cycle through the write queue.
+ * Use this from any async path that mutates cases.json. Returns whatever
+ * the mutator returns.
+ */
+export function mutateCases<T>(mutator: (db: CasesDB) => T | Promise<T>): Promise<T> {
+  const next = writeQueue.then(async () => {
+    const db = loadCases();
+    const result = await mutator(db);
+    saveCases(db);
+    return result;
+  });
+  // Keep the chain alive even if this iteration throws — otherwise one
+  // failure poisons every subsequent write.
+  writeQueue = next.catch(() => undefined);
+  return next;
+}
 
 function loadCases(): CasesDB {
   if (!fs.existsSync(CASES_FILE)) return {};
@@ -402,6 +533,173 @@ export function markOffenderFiled(normalizedNumber: string, caseRef: string): bo
   profile.filedCaseRef = caseRef;
   saveCases(db);
   return true;
+}
+
+/**
+ * AUDIT_ROUND_19 helper: cache an OpenCorporates entity lookup on the
+ * offender profile. 90-day TTL. Use shouldRefreshEnrichment() below to
+ * decide whether to re-fetch.
+ */
+export function attachEntityLookup(
+  normalizedNumber: string,
+  result: NonNullable<OffenderProfile["entityLookup"]>
+): boolean {
+  if (!normalizedNumber) return false;
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile) return false;
+  profile.entityLookup = result;
+  saveCases(db);
+  return true;
+}
+
+/**
+ * AUDIT_ROUND_19 helper: cache a CourtListener prior-litigation result on
+ * the offender profile. 30-day TTL (federal litigation is filed weekly).
+ */
+export function attachPriorLitigation(
+  normalizedNumber: string,
+  result: NonNullable<OffenderProfile["priorLitigation"]>
+): boolean {
+  if (!normalizedNumber) return false;
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile) return false;
+  profile.priorLitigation = result;
+  saveCases(db);
+  return true;
+}
+
+/**
+ * Stage 2 helper: cache a Perplexity Sonar web-research summary on the
+ * offender profile. 30-day TTL because regulatory news moves fast.
+ */
+export function attachDefendantWebResearch(
+  normalizedNumber: string,
+  result: NonNullable<OffenderProfile["defendantWebResearch"]>
+): boolean {
+  if (!normalizedNumber) return false;
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile) return false;
+  profile.defendantWebResearch = result;
+  saveCases(db);
+  return true;
+}
+
+/**
+ * AUDIT_ROUND_20: persist the per-case evidence checklist on the offender.
+ * Idempotent — overwrites any existing checklist (Marcus may regenerate
+ * after editing his .env e.g., adding new carrier templates).
+ */
+export function attachEvidenceChecklist(
+  normalizedNumber: string,
+  checklist: NonNullable<OffenderProfile["evidenceChecklist"]>
+): boolean {
+  if (!normalizedNumber) return false;
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile) return false;
+  profile.evidenceChecklist = checklist;
+  saveCases(db);
+  return true;
+}
+
+/** Toggle a single checklist item completed/uncompleted. Returns the new state. */
+export function toggleChecklistItem(
+  normalizedNumber: string,
+  itemId: string,
+  forceState?: boolean
+): { found: boolean; completed?: boolean } {
+  if (!normalizedNumber || !itemId) return { found: false };
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile?.evidenceChecklist) return { found: false };
+  const item = profile.evidenceChecklist.items.find((i) => i.id === itemId);
+  if (!item) return { found: false };
+  const newState = typeof forceState === "boolean" ? forceState : !item.completed;
+  item.completed = newState;
+  item.completedAt = newState ? new Date().toISOString() : null;
+  saveCases(db);
+  return { found: true, completed: newState };
+}
+
+/** Update the lastReminderAt timestamp on a case's checklist (used by reminder pump). */
+export function markChecklistReminded(normalizedNumber: string): boolean {
+  if (!normalizedNumber) return false;
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile?.evidenceChecklist) return false;
+  profile.evidenceChecklist.lastReminderAt = new Date().toISOString();
+  saveCases(db);
+  return true;
+}
+
+/**
+ * Decide whether a cached lookup is fresh enough to skip a re-fetch. TTL
+ * varies by lookup type: line type rarely changes (90 days), entity status
+ * doesn't change much (90 days), litigation count and web news change
+ * faster (30 days).
+ */
+export function isFreshLookup(
+  lookedUpAt: string | undefined,
+  ttlDays: number
+): boolean {
+  if (!lookedUpAt) return false;
+  const t = new Date(lookedUpAt).getTime();
+  if (isNaN(t)) return false;
+  return Date.now() - t < ttlDays * 24 * 60 * 60 * 1000;
+}
+
+/**
+ * P3.1: cache the Twilio Lookup line-type result on the offender profile.
+ * Idempotent — only writes if there's no cached result OR the result is
+ * older than 90 days. Costs $0.005/lookup; we want to pay this fee at
+ * most once per number per quarter.
+ */
+export function attachLineTypeLookup(
+  normalizedNumber: string,
+  result: NonNullable<OffenderProfile["lineTypeLookup"]>
+): boolean {
+  if (!normalizedNumber) return false;
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile) return false;
+  // Don't re-cache if a fresh lookup is already there.
+  const NINETY_DAYS_MS = 90 * 24 * 60 * 60 * 1000;
+  if (profile.lineTypeLookup) {
+    const prev = new Date(profile.lineTypeLookup.lookedUpAt).getTime();
+    if (!isNaN(prev) && Date.now() - prev < NINETY_DAYS_MS) {
+      return false;
+    }
+  }
+  profile.lineTypeLookup = result;
+  saveCases(db);
+  return true;
+}
+
+/**
+ * Attach a conversation grade to a call entry by callSid. Used by
+ * /api/cases/log right after logCall to persist the grader's verdict
+ * onto the freshly-stored CallEntry.
+ *
+ * Returns true if the call was found and updated, false otherwise.
+ */
+export function attachGrade(
+  callSid: string,
+  grade: NonNullable<CallEntry["grade"]>
+): boolean {
+  if (!callSid) return false;
+  const db = loadCases();
+  for (const profile of Object.values(db)) {
+    const call = profile.calls.find((c) => c.callSid === callSid);
+    if (call) {
+      call.grade = grade;
+      saveCases(db);
+      return true;
+    }
+  }
+  return false;
 }
 
 /**

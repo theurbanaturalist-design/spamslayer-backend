@@ -1,0 +1,76 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+INDUSTRY TRACEBACK GROUP (ITG) — TRACEBACK REQUEST
+Submit at: https://tracebacks.org
+Legal basis: TRACED Act, Pub. L. 116-105; 47 C.F.R. § 64.1200(k)
+
+─── CONSUMER / RECIPIENT INFORMATION ─────────────────────────────────
+
+  Name:          Marcus Test
+  Email:         test@example.invalid
+  Phone called:  +1 (337) 555-0100
+  Address:       100 Test St, Lafayette, LA 70501
+
+─── OFFENDING CALLER-ID NUMBER ───────────────────────────────────────
+
+  Displayed number:   +1 (555) 555-0188
+  First call:         May 3, 2026
+  Most recent call:   May 3, 2026
+  Total calls:        2
+  Campaign span:      single-day or short burst
+
+─── CALLS (with recordings where available) ─────────────────────────
+
+  Call 1:
+    Date/time:     May 3, 2026 at 14:17 (local to the recipient, LA)
+    Recording:     (no recording captured)
+    Content:       "Caller: hi"
+
+  Call 2:
+    Date/time:     May 3, 2026 at 14:17 (local to the recipient, LA)
+    Recording:     (no recording captured)
+    Content:       "Caller: hi"
+
+─── REASON FOR TRACEBACK REQUEST ─────────────────────────────────────
+
+The number above has placed unsolicited telemarketing calls to my
+residential/cellular line. The displayed caller ID appears to be
+spoofed — my carrier has not been able to identify the originating
+carrier without an upstream trace. I am requesting a STIR/SHAKEN
+traceback to identify the downstream provider and the subscribing
+customer so that:
+
+  1. The responsible originating carrier can be held accountable
+     under 47 C.F.R. § 64.1200(n)(1) (Know Your Customer).
+  2. The number can be blocked at the network level if the
+     originating carrier cannot lawfully attest to the caller's
+     identity.
+  3. The subscribing customer can be identified for consumer
+     enforcement action under 47 U.S.C. § 227(b) and (c).
+
+I have attached the call evidence above. Recordings are available
+at the URLs listed; I can provide direct downloads on request.
+
+I understand that ITG will share this request with the terminating
+carrier and applicable upstream providers. I consent to that sharing
+for the purpose of tracing these calls.
+
+─── SIGNATURE ────────────────────────────────────────────────────────
+
+  Submitted by:  Marcus Test
+  Date:          May 3, 2026

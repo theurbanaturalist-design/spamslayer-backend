@@ -1,0 +1,10 @@
+{
+  "cachedAt": 1777813566678,
+  "result": {
+    "status": "no_match",
+    "query": "party_name:\"National Auto Protection\" AND (TCPA OR \"Telephone Consumer Protection Act\")",
+    "searchUrl": "https://www.courtlistener.com/?q=party_name%3A%22National+Auto+Protection%22+AND+%28TCPA+OR+%22Telephone+Consumer+Protection+Act%22%29&type=r",
+    "lookedUpAt": "2026-05-03T13:06:06.674Z",
+    "fromCache": false
+  }
+}

@@ -1,0 +1,75 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+FCC CONSUMER COMPLAINT — UNWANTED CALLS / TCPA VIOLATION
+Submit at: https://consumercomplaints.fcc.gov/hc/en-us/requests/new
+Form category: "Phone" → "Unwanted Calls" → "Robocalls" (select what matches your evidence)
+
+─── CONSUMER / RECIPIENT ─────────────────────────────────────────────
+
+  Name:                Marcus Test
+  Email:               test@example.invalid
+  Phone called:        +1 (337) 555-0100
+  Address:             100 Test St, Lafayette, LA 70501
+  Line type (self-reported):  residential
+  DNC-registered since:       June 15, 2020 (2148 days before first offending call)
+
+─── OFFENDING CALLER ─────────────────────────────────────────────────
+
+  Displayed caller ID: +1 (555) 555-0101
+  Total calls:         2
+  First call:          May 3, 2026
+  Most recent call:    May 3, 2026
+  Recordings on file:  no recordings captured
+
+  The caller identified themselves as or on behalf of: "Acme Roofing LLC". I have not independently verified this identification.
+
+─── APPLICABLE TCPA / FCC RULES ──────────────────────────────────────
+
+I am reporting violations of one or more of the following provisions:
+
+  • 47 U.S.C. § 227(b)(1)(B) — prerecorded voice calls to a
+    residential telephone without prior express consent.
+  • 47 U.S.C. § 227(c)(5) — calls to a number on the National Do
+    Not Call Registry more than 31 days after registration.
+
+─── CALL LOG (partial — full log available on request) ──────────────
+
+  1. May 3, 2026 at 14:29
+  2. May 3, 2026 at 14:29
+
+─── RELIEF REQUESTED ─────────────────────────────────────────────────
+
+I request that the FCC:
+  1. Investigate the originating carrier of these calls and, if the
+     carrier cannot attest to the caller's identity under STIR/SHAKEN,
+     pursue enforcement under 47 C.F.R. § 64.6305.
+  2. Add this number to the Commission's robocall-enforcement queue.
+  3. Share this complaint with the Industry Traceback Group if a
+     traceback has not already been initiated.
+
+I am not requesting individual compensation from the FCC; I am
+reporting this pattern so the Commission can act against the
+originating provider.
+
+─── DECLARATION ──────────────────────────────────────────────────────
+
+The facts above are true to the best of my knowledge and are derived
+from call records and recordings in my possession.
+
+  Marcus Test
+  May 3, 2026

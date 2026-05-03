@@ -1,0 +1,19 @@
+{
+  "caseNumber": "SS-20260418-9999-ce7a17",
+  "generatedDate": "2026-04-18T13:36:12.100Z",
+  "offenderNumber": "+15550009999",
+  "damagesRequested": 1000,
+  "warnings": [
+    "CASE STRENGTH WARNING: The SpamSlayer case assessment rates this case as \"WEAK\" (score: 47/100) and recommends NOT filing yet. Reason: This case needs more work before filing. A weak case wastes your filing fee and court time. Focus on: Call transcripts available, Demand letter sent via certified mail, Willful violation (post-demand calls). Build your evidence, then reassess.. Proceeding to generate documents anyway, but review the warnings carefully before filing.",
+    "UNSIGNED RECORDINGS: You have 1 recording(s) but none have been cryptographically signed. The Evidence Integrity Certificate will show \"0 signed calls\" which weakens the tamper-proof claim. This may happen if recordings were captured before the signing feature was enabled. The recordings are still valid evidence, but the hash-based integrity verification will not be available.",
+    "VERIFY DEFENDANT IDENTITY — SPOOFED NUMBERS: Most spam calls use spoofed caller IDs. The phone number +15550009999 may NOT belong to the actual caller. Before filing, verify the defendant's identity through multiple sources: (1) Listen to the recordings — did the caller identify a company name? (2) Search the number on TrueCaller, Whitepages, or the FCC complaint database. (3) Check if the number is a VoIP/disposable number (services like FreeCarrierLookup.com can tell you). If the number appears to be spoofed or disposable, you may be suing the wrong entity. DO NOT file until you can connect the phone number to an actual business entity.",
+    "CHECK FOR BURIED CONSENT: Before filing, make sure you never gave consent to receive calls from this company — even indirectly. Data brokers sell \"lead lists\" with phone numbers attached to Terms of Service agreements you may have clicked years ago on unrelated websites. If the defendant produces a consent form or TOS agreement with your name on it, your case collapses. Search your email for any correspondence from the defendant's company name. If you find ANYTHING, consult an attorney before filing.",
+    "COLLECTABILITY CHECK: Even if you win, a judgment is only valuable if you can collect. If the defendant is an overseas company, a shell entity with no assets, or uses only disposable VoIP numbers, you may win a judgment worth nothing in practice. Before investing time and filing fees, consider whether the defendant is a real, reachable business with assets in the United States. Search the company name in your state's Secretary of State business registry and verify they have a registered agent for service."
+  ],
+  "files": [
+    "SS-20260418-9999-ce7a17_petition.txt",
+    "SS-20260418-9999-ce7a17_exhibits.txt",
+    "SS-20260418-9999-ce7a17_certificate_of_service.txt",
+    "SS-20260418-9999-ce7a17_filing_guide.txt"
+  ]
+}

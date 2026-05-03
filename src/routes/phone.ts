@@ -14,9 +14,86 @@ import { handleSpamTurn, classifyCallType } from "../services/spamOrchestrator";
 import * as CaseBuilder from "../services/caseBuilder";
 import * as UserManager from "../services/userManager";
 import * as Notify from "../services/notifications";
+import { signEvidence } from "../services/evidenceIntegrity";
+// updateRecordingHash is intentionally not imported here — it's needed when
+// we eventually download the audio bytes and want to upgrade the hash from
+// PENDING_RECORDING_DOWNLOAD to a real SHA-256 of the bytes. That requires
+// an authenticated GET against the Twilio recording URL plus a buffer-based
+// hash update path; tracked as a follow-up.
 
 const router = Router();
 const { VoiceResponse } = twilio.twiml;
+
+// ── Recording polling fallback (P1.3) ──────────────────────────────────────
+// Twilio's recording-status webhook is best-effort. Network blips, retry
+// exhaustion, and free-tier outages can prevent it from ever firing. If the
+// petition is generated based on missing recordings, the case is unwinnable.
+// As a backstop, schedule a poll against Twilio's REST API at 30s/2min/5min
+// after a call's recording is started. If we already have a recording URL
+// for the callSid (because the webhook DID fire), we no-op.
+
+const POLL_DELAYS_MS = [30_000, 120_000, 300_000];
+const inFlightPolls = new Set<string>();  // callSids we've already scheduled
+
+function schedulePollForRecording(callSid: string): void {
+  if (!callSid || inFlightPolls.has(callSid)) return;
+  inFlightPolls.add(callSid);
+
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  if (!accountSid || !authToken) {
+    console.warn(`[Phone] Recording-poll skipped for ${callSid}: TWILIO_ACCOUNT_SID/AUTH_TOKEN not set.`);
+    return;
+  }
+  const client = twilio(accountSid, authToken);
+
+  POLL_DELAYS_MS.forEach((delay) => {
+    setTimeout(async () => {
+      try {
+        // Fast bail if we already attached a recording (the webhook fired).
+        const session = Session.get(callSid);
+        if (session?.recordingUrl) return;
+
+        const recs = await client.recordings.list({ callSid, limit: 1 });
+        if (recs.length === 0) return;
+
+        const rec = recs[0];
+        const url = `https://api.twilio.com${rec.uri.replace(/\.json$/, "")}.mp3`;
+        const found = CaseBuilder.attachRecording(callSid, url);
+        if (session) Session.setRecording(callSid, url, rec.sid);
+        if (found) {
+          console.log(`[Phone] Polling backfill: attached recording ${rec.sid} to ${callSid} (Twilio webhook never fired)`);
+          // Best-effort metadata signature so the chain-of-custody record exists.
+          // updateRecordingHash with downloaded bytes is left for a future pass —
+          // requires authenticated GET against the recording URL.
+          try {
+            const sess = Session.get(callSid);
+            signEvidence(callSid, null, {
+              callSid,
+              callerPhone: sess?.callerPhone ?? "unknown",
+              subscriberPhone: sess?.subscriberPhone ?? "unknown",
+              callDate: new Date().toISOString().split("T")[0],
+              callTime: new Date().toTimeString().slice(0, 5),
+              recordingUrl: url,
+              recordingSid: rec.sid,
+              transcriptSnippet: (sess?.turns ?? []).map((t) => `${t.role}:${t.text}`).join("|").slice(0, 300),
+              capturedAt: new Date().toISOString(),
+            });
+          } catch (signErr) {
+            console.warn(`[Phone] signEvidence failed for ${callSid} during poll backfill:`, signErr);
+          }
+          // Don't run the remaining polls.
+          inFlightPolls.delete(callSid);
+        }
+      } catch (err) {
+        console.warn(`[Phone] Recording poll failed for ${callSid}:`, (err as Error)?.message ?? err);
+      }
+    }, delay).unref?.();
+  });
+
+  // Stop tracking after the longest delay so the Set doesn't grow unbounded.
+  setTimeout(() => inFlightPolls.delete(callSid), POLL_DELAYS_MS[POLL_DELAYS_MS.length - 1] + 5_000).unref?.();
+}
 
 /** Pick a voice that matches the subscriber's gender. Falls back to female. */
 function getVoice(sex: "M" | "F" | null): string {
@@ -106,6 +183,11 @@ router.post("/inbound", (req: Request, res: Response) => {
     playBeep: false,
     transcribe: false,
   });
+
+  // P1.3: schedule polling fallback in case the recording-status webhook
+  // never fires. This is fire-and-forget — it'll silently no-op if the
+  // webhook DID fire and beat us to attaching the URL.
+  schedulePollForRecording(CallSid);
 
   const gather = twiml.gather({
     input: ["speech"],
@@ -208,6 +290,30 @@ router.post("/recording", async (req: Request, res: Response) => {
     .map((t) => `${t.role === "caller" ? "Caller" : "Sam"}: ${t.text}`)
     .join(" | ")
     .slice(0, 300);
+
+  // P1.4: cryptographically sign the call as it's captured. This is what
+  // populates the Evidence Integrity Certificate in the filing exhibit list.
+  // Without this call, every petition reads "0 signed calls" which weakens
+  // the chain-of-custody claim. We sign with null buffer (PENDING_RECORDING_DOWNLOAD)
+  // because we have the URL, not the audio bytes; updateRecordingHash can be
+  // called later after a separate downloader fetches the audio from Twilio.
+  try {
+    signEvidence(CallSid, null, {
+      callSid: CallSid,
+      callerPhone: session.callerPhone,
+      subscriberPhone: session.subscriberPhone,
+      callDate: new Date().toISOString().split("T")[0],
+      callTime: new Date().toTimeString().slice(0, 5),
+      recordingUrl: RecordingUrl,
+      recordingSid: RecordingSid ?? null,
+      transcriptSnippet: snippet,
+      capturedAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.warn(`[Phone] signEvidence failed for ${CallSid}:`, (err as Error)?.message ?? err);
+    // Don't block the rest of the recording flow — better to log the call
+    // without a signature than to drop it on the floor.
+  }
 
   // Classify the call type
   const callType = await classifyCallType(snippet);

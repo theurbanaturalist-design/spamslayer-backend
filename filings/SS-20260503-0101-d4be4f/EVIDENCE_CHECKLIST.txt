@@ -1,0 +1,344 @@
+═══════════════════════════════════════════════════════════════════════
+                 EVIDENCE-GATHERING CHECKLIST
+═══════════════════════════════════════════════════════════════════════
+Offender:        +15555550101
+Company:         Acme Roofing LLC
+Calls so far:    2
+Generated:       2026-05-03T14:29:06.050Z
+
+These are the third-party-evidence steps to do BEFORE filing your
+petition. None are legally required to file — but each one strengthens
+the evidence stack from a pro-se filing into something defense counsel
+cannot easily impeach. Work them top-to-bottom; each item shows what
+you'll see, how long it takes, and what to watch out for.
+
+Each item defaults to the EASY/FREE path (portal screenshot, web form).
+Hard / expensive escalations (subpoenas) are listed under each item
+but only needed if the defendant actually contests the case in court.
+
+═══════════════════════════════════════════════════════════════════════
+
+  [   ]  1. File ITG traceback request
+
+        WHY:
+          ITG (Industry Traceback Group, FCC-designated U.S. Traceback
+          Consortium) traces the call back through the carrier chain to its
+          origin carrier. Their report is a quasi-governmental third-party
+          record that's been admitted in TCPA cases. File within ~5 days of
+          the most recent call for best traceback success — older calls have a
+          much lower trace-completion rate.
+
+        URL: https://tracebacks.org/traceback-requests/
+
+        COPY-PASTE TEMPLATE:
+        ──────────────────────
+          Originating call number: +15555550101
+          Called number (recipient): [YOUR PHONE]
+          Number of calls: 2
+          Date range: 2026-05-03 to 2026-05-03
+          All call timestamps: 2026-05-03 14:29, 2026-05-03 14:29
+          Recipient's status on DNC Registry: registered
+          Caller's stated company: Acme Roofing LLC
+          Caller's stated name: Brad
+          Stated purpose: solar quote
+          
+          These calls were answered by an automated TCPA compliance recording on a residential telephone number registered with the National Do Not Call Registry. Each call was recorded under one-party consent. Recording URLs and transcripts are available on request.
+        ──────────────────────
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL SEE: a single-page web form titled 'Traceback Request'. Fields: your name, your email, the originating phone number, the called number, the date(s) and time(s), and a description box.
+          
+          WHAT TO DO: paste the template above into the description field — it's pre-formatted with everything ITG asks for. Use your real name and email. Submit.
+          
+          HOW LONG: ~3 min to fill out, no account needed.
+          
+          WHAT HAPPENS NEXT: ITG emails an acknowledgment within 24 hours with a tracking number. Save that email. They'll work the traceback through participating carriers (~1-3 weeks). If successful, you'll get a follow-up email naming the originating carrier. If unsuccessful (call too old, or unparticipating carrier in the chain), they'll tell you so — that itself is useful evidence.
+          
+          WHAT TO WATCH FOR: don't include profanity or threats in the description — ITG will reject the request. Also don't claim damages amounts here; that's for the petition, not the traceback request.
+
+───────────────────────────────────────────────────────────────────────
+
+  [   ]  2. Screenshot AT&T usage detail for the call dates
+
+        WHY:
+          Your carrier's call records are independent third-party evidence
+          that the spam call hit the network at the timestamps you claim.
+          Defense can't credibly dispute what AT&T's billing system recorded.
+          As the account holder, you can authenticate a portal screenshot
+          yourself in court under FRE 901(b)(1).
+
+        URL: https://www.att.com/my/#/profile/usage
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL SEE: after logging in, click 'My Account' → 'Usage' → 'View Past Usage'. Pick the billing cycle that contains the call date(s). The page lists every inbound and outbound call with date, time, duration, and the calling number.
+          
+          WHAT TO DO:
+            1. Filter or scroll to the row(s) showing calls from +15555550101.
+            2. Take a full-page screenshot showing the carrier's URL bar, the offending row(s) highlighted, and the date filter visible (so the screenshot is self-authenticating).
+            3. ALSO click the 'Download as PDF/CSV' button — AT&T offers both. Save as 'Exhibit_C_ATT_Usage_Detail_2026-05-03.pdf'.
+            4. Drop the file in your case folder; reference it as Exhibit C in the petition.
+          
+          HOW LONG: ~5 minutes if you're already logged in, ~10 min if you have to do MFA.
+          
+          WHAT TO WATCH FOR: AT&T's portal sometimes only shows the last 6 billing cycles. If your call is older, you'll need to use the escalation path below.
+
+        ⬇  ESCALATION (only if needed):
+          TRIGGER: Use this ONLY if: (a) the call is older than 6 months and not in the portal, OR (b) the defendant actually shows up in court and contests that the calls happened. For the typical default-judgment case, the portal screenshot is enough.
+          Subpoena AT&T for certified Call Detail Records
+
+          Cost: ~$15 (clerk's filing fee + service). Time: ~1 hour at the clerk's office. Response time from AT&T: 30-90 days.
+          
+          Step-by-step:
+            1. File your small-claims petition first to get a docket number.
+            2. Walk to the Lafayette City Court clerk's office. Ask for a 'subpoena duces tecum' form for AT&T (or a generic third-party records subpoena).
+            3. Fill in: case number, defendant name, the records you want (described in the template below), the date range, and where to serve AT&T (their registered agent for service in Louisiana is CT Corporation System, 3867 Plaza Tower Dr., Baton Rouge, LA 70816).
+            4. Clerk seals + signs. Pay ~$5-10 issuance fee.
+            5. Serve via certified mail to AT&T's CT Corporation registered agent. Or pay a process server (~$30) for faster service.
+            6. Save the certified-mail green card as proof of service.
+          
+          AT&T Legal Compliance will respond with a Rule 902(11) certification + the records, OR a written objection (rare for routine CDR subpoenas).
+
+          ESCALATION TEMPLATE (subpoena/letter):
+          ──────────────────────
+            [YOUR ADDRESS]
+            [YOUR PHONE]
+            [YOUR EMAIL]
+            
+            2026-05-03
+            
+            AT&T Subpoena Compliance / Legal Department
+            [Look up current address at AT&T's legal page]
+            
+            Re: Subpoena Duces Tecum — Call Detail Records
+            Account: [YOUR PHONE]
+            Subject calls from: +15555550101
+            
+            To Whom It May Concern:
+            
+            Pursuant to a small-claims TCPA action I am filing against the operator of telephone number +15555550101, I respectfully request the following Call Detail Records (CDR) from your records:
+            
+              1. All inbound calls to [YOUR PHONE] from +15555550101
+                 between 2026-05-03 and 2026-05-03.
+              2. For each such call: date, time (with timezone), duration, and any
+                 STIR/SHAKEN attestation level recorded by the originating carrier.
+              3. Any tower/cell-site information or routing metadata you maintain in
+                 the regular course of business for these calls.
+            
+            These records will be offered into evidence under FRE 803(6) (business records exception) and FRE 902(11) (self-authentication via custodian declaration). I respectfully request a Rule 902(11) certification accompany the production.
+            
+            The specific call timestamps to verify are: 2026-05-03 14:29, 2026-05-03 14:29
+            
+            If you require a court-issued subpoena before producing these records, please notify me at the above address within 14 days and I will promptly obtain one through the small-claims court.
+            
+            Thank you for your cooperation.
+            
+            Respectfully,
+            
+            ____________________________
+            [YOUR NAME]
+            Pro Se
+          ──────────────────────
+
+───────────────────────────────────────────────────────────────────────
+
+  [   ]  3. Screenshot Red Pocket usage detail (if Red Pocket is the line)
+
+        WHY:
+          If the spammed line is on Red Pocket, pull their usage detail too.
+          Red Pocket is an MVNO that resells AT&T/Verizon/T-Mobile capacity,
+          so the underlying network record may also be reachable via the host
+          carrier — but for routine evidence, the Red Pocket portal screenshot
+          is sufficient.
+
+        URL: https://www.redpocket.com/account/login
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL SEE: after logging in, navigate to 'My Account' → 'Usage History' or 'Call Logs'. The Red Pocket portal is more limited than AT&T's — it usually only shows the current and previous billing cycle. Format varies depending on which underlying network (GSMA / GSMT / CDMA) your line uses.
+          
+          WHAT TO DO:
+            1. Filter to the date range that contains the spam calls.
+            2. Screenshot the call log page, including the URL bar and your account number visible.
+            3. If Red Pocket offers PDF/CSV export, use it. If not, the screenshot alone is fine — you can authenticate as the account holder.
+            4. Save as 'Exhibit_C2_RedPocket_Usage_Detail_2026-05-03.png/.pdf'.
+          
+          HOW LONG: ~5 min.
+          
+          SKIP THIS ITEM IF: the spammed line isn't on Red Pocket (i.e., this is your AT&T-only number). Just check the box and move on.
+
+        ⬇  ESCALATION (only if needed):
+          TRIGGER: Use this ONLY if: defendant contests the calls AND Red Pocket's portal data is too sparse for court. Subpoenas to MVNOs sometimes get redirected to the host carrier (AT&T/Verizon/T-Mobile) — be prepared for that.
+          Subpoena Red Pocket Mobile for certified Call Detail Records
+
+          Same general process as the AT&T subpoena above. Red Pocket's registered agent for service of process: look up at https://opencorporates.com or your state's SoS database. Their corporate parent is Red Pocket Mobile / RPM Group based in Los Angeles, CA — service may need to go to California.
+          
+          If Red Pocket says 'records held by host carrier', re-issue the subpoena to the host carrier identified in their response.
+
+          ESCALATION TEMPLATE (subpoena/letter):
+          ──────────────────────
+            [YOUR ADDRESS]
+            [YOUR PHONE]
+            [YOUR EMAIL]
+            
+            2026-05-03
+            
+            Red Pocket Mobile Subpoena Compliance / Legal Department
+            [Look up current address at Red Pocket Mobile's legal page]
+            
+            Re: Subpoena Duces Tecum — Call Detail Records
+            Account: [YOUR PHONE]
+            Subject calls from: +15555550101
+            
+            To Whom It May Concern:
+            
+            Pursuant to a small-claims TCPA action I am filing against the operator of telephone number +15555550101, I respectfully request the following Call Detail Records (CDR) from your records:
+            
+              1. All inbound calls to [YOUR PHONE] from +15555550101
+                 between 2026-05-03 and 2026-05-03.
+              2. For each such call: date, time (with timezone), duration, and any
+                 STIR/SHAKEN attestation level recorded by the originating carrier.
+              3. Any tower/cell-site information or routing metadata you maintain in
+                 the regular course of business for these calls.
+            
+            These records will be offered into evidence under FRE 803(6) (business records exception) and FRE 902(11) (self-authentication via custodian declaration). I respectfully request a Rule 902(11) certification accompany the production.
+            
+            The specific call timestamps to verify are: 2026-05-03 14:29, 2026-05-03 14:29
+            
+            If you require a court-issued subpoena before producing these records, please notify me at the above address within 14 days and I will promptly obtain one through the small-claims court.
+            
+            Thank you for your cooperation.
+            
+            Respectfully,
+            
+            ____________________________
+            [YOUR NAME]
+            Pro Se
+          ──────────────────────
+
+───────────────────────────────────────────────────────────────────────
+
+  [   ]  4. File FCC consumer complaint (form 1088)
+
+        WHY:
+          Parallel enforcement pressure. The FCC complaint generates a docket
+          number that goes into the Robocall Mitigation Database — both a
+          third-party record AND a signal to the defendant's carrier that the
+          calls are flagged. Doesn't compete with your civil suit; it
+          complements it.
+
+        URL: https://consumercomplaints.fcc.gov/hc/en-us/requests/new
+
+        COPY-PASTE TEMPLATE:
+        ──────────────────────
+          Use these exact field values in the FCC form:
+          
+            Type of complaint:        Unwanted calls (telemarketing/robocalls)
+            Phone number that was called: [YOUR PHONE]
+            Caller phone number:      +15555550101
+            Caller name (if known):   Acme Roofing LLC
+            Date(s) of call(s):       2026-05-03 14:29, 2026-05-03 14:29
+            On DNC Registry:          Yes
+            Description: I received 2 unsolicited telemarketing calls from +15555550101 between 2026-05-03 and 2026-05-03. My number is registered on the National Do Not Call Registry. Each call was recorded under one-party consent (La. R.S. 15:1303); audio and transcripts are available on request. The calls violated 47 U.S.C. § 227(c) and 47 C.F.R. § 64.1200.
+        ──────────────────────
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL SEE: the FCC's Zendesk-styled complaint portal. You'll create a free account (or log in via Google) before submitting. The form is split into 'About you', 'About the call', and 'Description'.
+          
+          WHAT TO DO: paste the field values above into the matching form fields. The Description field accepts ~2000 characters — you have room to mention recordings exist.
+          
+          HOW LONG: ~5 min including account creation.
+          
+          WHAT HAPPENS NEXT: FCC sends a confirmation email with a complaint number (format: 25NNNNNN). Save that email — the complaint number is your third-party docket reference. The complaint goes into the FCC's public Robocall Mitigation Database; some defendants' carriers (Twilio, Bandwidth, etc.) actively monitor that DB and may suspend the offender's outbound calling.
+          
+          WHAT NOT TO DO: don't claim a specific damages amount in the FCC form. The FCC doesn't award damages; that's for your civil suit. Stating amounts here can box you in later.
+
+───────────────────────────────────────────────────────────────────────
+
+  [   ]  5. File Louisiana AG consumer protection complaint
+
+        WHY:
+          Louisiana's Attorney General accepts TCPA / unwanted-call complaints
+          through their Consumer Protection Section. Adds another enforcement
+          vector AND another third-party docket reference for your evidence
+          file. State AGs occasionally aggregate consumer complaints into
+          class actions — having a docket number on file means you'd be
+          included.
+
+        URL: https://www.ag.state.la.us/Complaints
+
+        COPY-PASTE TEMPLATE:
+        ──────────────────────
+          Complainant: [YOUR NAME]
+          Phone called: [YOUR PHONE]
+          Caller phone: +15555550101
+          Caller company: Acme Roofing LLC
+          Date(s): 2026-05-03 14:29, 2026-05-03 14:29
+          
+          Brief: I received 2 unsolicited telemarketing call(s) from +15555550101 between 2026-05-03 and 2026-05-03. My number is registered on the National Do Not Call Registry. The caller(s) violated 47 U.S.C. § 227 and the FCC's implementing regulations at 47 C.F.R. § 64.1200. I respectfully request that the Louisiana Attorney General investigate and pursue any appropriate enforcement action.
+        ──────────────────────
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL SEE: the Louisiana AG's complaint intake page (or your state's equivalent). Most state AG portals are clunky — expect a multi-step form with fields for your address, the defendant's address (use 'Unknown — spoofed' if you don't have it), and a description.
+          
+          WHAT TO DO: paste the brief above. If they ask for an 'amount in dispute', enter your estimated TCPA statutory damages ($1000 for this case). If they ask whether you've filed in court yet, say 'considering' if you haven't filed, 'yes' if you have.
+          
+          HOW LONG: ~10 min.
+          
+          WHAT HAPPENS NEXT: AG's office sends a written confirmation (sometimes by mail, sometimes email) with a complaint number. They may forward your complaint to the defendant for response — that response (or silence) becomes more evidence. Most state AGs don't take individual TCPA cases to court but they DO track patterns; multiple complaints against the same defendant can trigger an investigation.
+          
+          WHAT TO WATCH FOR: some state AG portals require you to upload supporting documents. If asked, attach the AT&T usage screenshot you grabbed in step 2.
+
+───────────────────────────────────────────────────────────────────────
+
+  [   ]  6. Set 14-day calendar reminder to follow up on ITG + carrier records
+
+        WHY:
+          ITG tracebacks come back in 1-3 weeks. FCC and state-AG
+          acknowledgments arrive within ~5 business days. Without a reminder
+          these often slip and you forget to attach them to the petition.
+
+        URL: https://calendar.google.com/calendar/u/0/r/eventedit?text=SpamSlayer%20follow-up%3A%20Acme%20Roofing%20LLC&dates=20260517T140000Z/20260517T150000Z&details=Check%3A%20ITG%20traceback%20received%3F%20Carrier%20portal%20screenshot%20saved%3F%20FCC%20complaint%20acknowledged%3F%0A%0AIf%20all%20third-party%20evidence%20is%20in%20hand%2C%20generate%20the%20filing%20packet%20and%20review%20before%20signing.%0A%0ACaller%3A%20%2B15555550101%0ACalls%3A%202%0ADamages%3A%20%241000
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL SEE: clicking the link above opens Google Calendar's event-creation page with the title, date (14 days out), and description pre-filled. If you use Apple Calendar or Outlook, the link won't work — set a manual reminder titled 'SpamSlayer follow-up: Acme Roofing LLC' for 14 days from today.
+          
+          WHAT TO DO: just click 'Save' once Google Calendar opens. Done.
+          
+          HOW LONG: 30 seconds.
+
+───────────────────────────────────────────────────────────────────────
+
+  [   ]  7. Send demand letter via certified mail (return receipt requested)
+
+        WHY:
+          The demand letter starts the 30-day clock and converts post-demand
+          calls into willful/treble damages ($1,500 per call instead of $500).
+          Even if the defendant ignores it, you've created a legal record that
+          puts them on notice — that record itself becomes Exhibit B in your
+          petition.
+
+        COPY-PASTE TEMPLATE:
+        ──────────────────────
+          The demand letter is auto-generated. Pull it via:
+          
+            curl -X POST http://localhost:3003/api/cases/demand-letter \
+              -H 'Content-Type: application/json' \
+              -d '{"number":"+15555550101","userName":"[YOUR NAME]","userAddress":"[YOUR ADDRESS]","userPhone":"[YOUR PHONE]","dncSince":"YYYY-MM-DD"}'
+          
+          Or pull it from the dashboard if you've added a UI button.
+        ──────────────────────
+
+        WHAT TO EXPECT:
+          WHAT YOU'LL DO:
+            1. Generate the demand letter (the API call above produces a fully-formatted certified-mail-ready letter).
+            2. Print it. Sign + date the bottom.
+            3. Walk to USPS. Buy a Certified Mail label (~$4.85) AND a Return Receipt — the GREEN CARD (~$3.65). Total ~$8.50.
+            4. Mail to the defendant's address. If you don't have an address, mail to their registered agent (use the OpenCorporates or state SoS lookup; for spoofed-caller-ID cases this might not be possible).
+            5. When the green card comes back ~2 weeks later, scan it. That's Exhibit B.
+          
+          WHAT YOU'RE WAITING FOR: 30 days from delivery date (per the green card). Calls that arrive AFTER that date are 'willful' under § 227(c)(5), trebling damages. Track those calls — they're worth $1500 each instead of $500.
+          
+          WHAT NOT TO DO: don't email the demand letter — the legal weight of certified mail is its delivery proof, which only certified-mail green cards provide. Email is too easy to deny receipt. Don't threaten criminal prosecution in the demand letter — TCPA is purely civil.
+
+───────────────────────────────────────────────────────────────────────
+
+END OF EVIDENCE CHECKLIST

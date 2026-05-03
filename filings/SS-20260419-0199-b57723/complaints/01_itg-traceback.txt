@@ -1,0 +1,96 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+INDUSTRY TRACEBACK GROUP (ITG) — TRACEBACK REQUEST
+Submit at: https://tracebacks.org
+Legal basis: TRACED Act, Pub. L. 116-105; 47 C.F.R. § 64.1200(k)
+
+─── CONSUMER / RECIPIENT INFORMATION ─────────────────────────────────
+
+  Name:          Jane Demo [DEMO PLAINTIFF]
+  Email:         demo@example.invalid
+  Phone called:  +1 (337) 555-0100
+  Address:       123 Demo Lane, Lafayette, LA 70501
+
+─── OFFENDING CALLER-ID NUMBER ───────────────────────────────────────
+
+  Displayed number:   +1 (555) 555-0199
+  First call:         January 7, 2026
+  Most recent call:   April 9, 2026
+  Total calls:        6
+  Campaign span:      92 day(s)
+
+─── CALLS (with recordings where available) ─────────────────────────
+
+  Call 1:
+    Date/time:     January 7, 2026 at 10:42 (local to the recipient, LA)
+    Recording:     https://example.invalid/demo-recording-001.mp3
+    Content:       "[DEMO] This is your final notice regarding your vehicle's extended warranty. Press 1 now to speak with a specialist about lowering your rate."
+
+  Call 2:
+    Date/time:     January 19, 2026 at 14:08 (local to the recipient, LA)
+    Recording:     https://example.invalid/demo-recording-002.mp3
+    Content:       "[DEMO] Hi, this is Mike from Preferred Auto Protection. I'm calling about the warranty on your vehicle. Can I confirm your year and make?"
+
+  Call 3:
+    Date/time:     February 3, 2026 at 07:15 (local to the recipient, LA)
+    Recording:     https://example.invalid/demo-recording-003.mp3
+    Content:       "[DEMO] Good morning, this is Preferred Auto Protection calling about your vehicle warranty which is about to expire. Press 1 to renew."
+
+  Call 4:
+    Date/time:     February 21, 2026 at 11:30 (local to the recipient, LA)
+    Recording:     https://example.invalid/demo-recording-004.mp3
+    Content:       "[DEMO] This is Jessica with Preferred Auto Protection. Our records show you haven't renewed your vehicle service contract. Please call us back at this number."
+
+  Call 5:
+    Date/time:     March 14, 2026 at 09:55 (local to the recipient, LA)
+    Recording:     https://example.invalid/demo-recording-005.mp3
+    Content:       "[DEMO] Final warning — your auto warranty coverage will lapse unless you call Preferred Auto Protection at the callback number. Press 1 to speak with an agent."
+
+  Call 6:
+    Date/time:     April 9, 2026 at 15:22 (local to the recipient, LA)
+    Recording:     https://example.invalid/demo-recording-006.mp3
+    Content:       "[DEMO] This is Mike from Preferred Auto Protection calling for one last time about the extended warranty on your vehicle. Press 1 or call us back."
+
+─── REASON FOR TRACEBACK REQUEST ─────────────────────────────────────
+
+The number above has placed unsolicited telemarketing calls to my
+residential/cellular line. The displayed caller ID appears to be
+spoofed — my carrier has not been able to identify the originating
+carrier without an upstream trace. I am requesting a STIR/SHAKEN
+traceback to identify the downstream provider and the subscribing
+customer so that:
+
+  1. The responsible originating carrier can be held accountable
+     under 47 C.F.R. § 64.1200(n)(1) (Know Your Customer).
+  2. The number can be blocked at the network level if the
+     originating carrier cannot lawfully attest to the caller's
+     identity.
+  3. The subscribing customer can be identified for consumer
+     enforcement action under 47 U.S.C. § 227(b) and (c).
+
+I have attached the call evidence above. Recordings are available
+at the URLs listed; I can provide direct downloads on request.
+
+I understand that ITG will share this request with the terminating
+carrier and applicable upstream providers. I consent to that sharing
+for the purpose of tracing these calls.
+
+─── SIGNATURE ────────────────────────────────────────────────────────
+
+  Submitted by:  Jane Demo [DEMO PLAINTIFF]
+  Date:          April 19, 2026

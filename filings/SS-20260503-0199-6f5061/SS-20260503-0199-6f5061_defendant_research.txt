@@ -1,0 +1,384 @@
+═══════════════════════════════════════════════════════════════════════
+                    DEFENDANT RESEARCH & COLLECTABILITY
+═══════════════════════════════════════════════════════════════════════
+Case reference:        SS-20260503-0199-6f5061
+Offender number:       +1 (555) 555-0199
+Generated:             2026-05-03T02:49:19.097Z
+Preliminary score:     24 / 100  [LOW]
+
+PURPOSE:
+  This document walks you through the research that MUST happen before
+  you file your petition. Winning a TCPA case on the merits is useless
+  if the defendant is a shell LLC, an offshore boiler room, or a spoofed
+  caller ID with no traceable origin. Complete every checklist item
+  below BEFORE you sign the petition's sworn verification.
+
+DISCLAIMER:
+  The automated heuristics below are preliminary signals, not proof.
+  They are computed from data in your SpamSlayer records only. The
+  manual checklist is what actually establishes reachability. You, the
+  plaintiff, are responsible for the accuracy of every factual claim
+  in your petition — this report does not substitute for your own
+  diligence.
+
+═══════════════════════════════════════════════════════════════════════
+  EXECUTIVE SUMMARY (read this first)
+═══════════════════════════════════════════════════════════════════════
+
+  Collectability score:  24 / 100  [LOW]
+  Recommendation:        DO NOT FILE YET — research first.
+
+  Candidate defendant:   Preferred Auto Protection [DEMO]
+  Originating number:    +1 (555) 555-0199
+
+  Biggest collectability risks:
+  • Scam-script phrase(s) in call transcripts (2 patterns)
+  • Repeating-digit exchange or subscriber block
+  • Mixed time-of-day pattern
+
+  Positive collectability signals:
+  • Specific entity name(s) captured
+  • Persistent campaign (>=90 days, >=3 calls)
+
+  NEXT STEPS:
+    1. Read the ALTERNATIVES section (end of this document) before
+       spending any more time on a small-claims filing.
+    2. Try to identify the SELLER (the company whose product is being
+       pitched) from the recordings — that seller is the real
+       defendant under FCC 2013 DISH Network seller-liability doctrine.
+    3. File administrative complaints (FCC, FTC, state AG) in parallel
+       — they are free and create the paper trail a class-action firm
+       will ultimately use.
+
+───────────────────────────────────────────────────────────────────────
+AUTOMATED HEURISTIC FINDINGS (preliminary only)
+───────────────────────────────────────────────────────────────────────
+
+Preliminary collectability score: 24 / 100  [LOW]
+
+These signals are computed from the offender's phone number, caller
+names captured during calls, transcript content, and call pattern.
+They are NOT proof — they are priors to weight your manual research.
+
+  [ -11] Scam-script phrase(s) in call transcripts (2 patterns)
+         Transcript snippets contain language that matches known robocall scam scripts: final-notice urgency scam; press-1 robocall hook. This is a content-based signal that the caller is an auto-dialer running a scripted pitch rather than a real-business outreach. Transcripts should still be reviewed manually before verifying.
+
+  [ -10] Repeating-digit exchange or subscriber block
+         Repeating digits (e.g. 555, 1111, 0000) are common in spoofed or disposable numbers. Memorable numbers ARE sold legitimately for high premiums, so verify rather than assume — but weight collectability down.
+
+  [  -3] Mixed time-of-day pattern
+         1 of 6 calls fell outside 8 AM–9 PM local. Some calls in-window, some out. Pattern is consistent with a US-based auto-dialer that occasionally misfires — collectability signal is mildly negative, but the out-of-window calls are separately actionable.
+
+  [  +8] Persistent campaign (>=90 days, >=3 calls)
+         Originating number has been active for 92 days across 6 calls. Long-running campaigns are more often backed by established (and therefore reachable) operations than one-shot disposables.
+
+  [ +10] Specific entity name(s) captured
+         Observed identifier(s): Jessica. Run each through the manual-research checklist below — a company that identifies itself over the phone is usually in state Secretary-of-State registries under that name or a DBA.
+
+INTERPRETATION GUIDE:
+  LOW    (score 0–29)  — defendant is likely unreachable or a shell.
+                         Read ALTERNATIVES before spending a filing fee.
+  MEDIUM (score 30–59) — defendant may be reachable with diligence.
+                         Complete the manual checklist before filing.
+  HIGH   (score 60+)   — defendant shows signs of reachability.
+                         Still complete the manual checklist.
+
+───────────────────────────────────────────────────────────────────────
+MANUAL RESEARCH CHECKLIST
+───────────────────────────────────────────────────────────────────────
+
+Complete every step below BEFORE signing the petition verification.
+Record findings in the [ ] boxes. A missing step = unverified claim =
+risk of dismissal, sanctions, or an uncollectable default judgment.
+
+[ ] STEP 1 — SECRETARY OF STATE ENTITY LOOKUP (DEFINITIVE)
+    Search the suspected defendant name in the state of its principal
+    place of business. If the caller did NOT identify a business name,
+    skip to Step 2 and return after you have a candidate name.
+
+    Your state (Louisiana):
+      Louisiana SoS — geauxBIZ
+      https://coraweb.sos.la.gov/CommercialSearch/CommercialSearch.aspx
+
+    Other common states for telemarketing operations:
+      Delaware:   https://icis.corp.delaware.gov/ecorp/entitysearch/namesearch.aspx
+      Florida:    https://search.sunbiz.org/Inquiry/CorporationSearch/ByName
+      Texas:      https://mycpa.cpa.state.tx.us/coa/
+      Nevada:     https://esos.nv.gov/EntitySearch/OnlineEntitySearch
+      California: https://bizfileonline.sos.ca.gov/search/business
+
+    Multi-state at once:
+      OpenCorporates: https://opencorporates.com/companies?q=Preferred%20Auto%20Protection%20%5BDEMO%5D
+
+    Record the findings:
+      Entity name (exact):       ___________________________________
+      State of registration:     ___________________________________
+      Status (active/dissolved): ___________________________________
+      Registered agent name:     ___________________________________
+      Registered agent address:  ___________________________________
+      Filing number:             ___________________________________
+
+    GATING RULE: if the entity is DISSOLVED or NOT FOUND, you cannot
+    recover from it. Either identify the correct entity (is this a DBA
+    of a parent company?), sue up the chain (ALTERNATIVES play 1), or
+    do not file.
+
+[ ] STEP 2 — FCC CONSUMER COMPLAINT DATABASE
+    Search the phone number to see if other consumers have complained
+    about this number and whether the FCC has identified an operator.
+
+      https://consumercomplaints.fcc.gov/hc/en-us/search?query=15555550199
+      https://opendata.fcc.gov/resource/sr6c-syda (raw complaint data)
+
+    Record the findings:
+      Number of complaints filed: _________
+      Associated company names:   ___________________________________
+      Date range of complaints:   ___________________________________
+
+[ ] STEP 3 — SPAM-CALL DATABASES (COMMUNITY REPORTS)
+    These sites aggregate consumer reports and frequently name the
+    underlying operation before the FCC or state AG does.
+
+      YouMail:    https://directory.youmail.com/phone/15555550199
+      Nomorobo:   https://www.nomorobo.com/lookup/15555550199
+      800notes:   https://800notes.com/Phone.aspx/15555550199
+      Whitepages: https://www.whitepages.com/phone/15555550199
+      Google:     https://www.google.com/search?q=%22Preferred%20Auto%20Protection%20%5BDEMO%5D%22%20telemarketer%20complaints%2015555550199
+
+    Record the findings:
+      Most-reported company name: ___________________________________
+      Consistent across sources?: [ ] Yes   [ ] No
+
+[ ] STEP 4 — CARRIER / VOIP TRACEBACK (IF NUMBER APPEARS SPOOFED)
+    If Steps 1–3 return no real entity, the number is likely VoIP-
+    resold or spoofed. Identify the originating carrier:
+
+      FCC LERG / Number Administration:
+        https://www.telcodata.us/telco-prefix-lookup-area-code-155
+        https://www.atis.org/01_strategic/sso_docs/nrua/ (official lookup)
+
+      STIR/SHAKEN traceback (Industry Traceback Group):
+        https://tracebacks.org — file a traceback request
+
+      Your own carrier's fraud team (faster path):
+        Call *611 or your carrier's fraud/abuse line and request a
+        STIR/SHAKEN trace for the dates in your evidence log.
+
+    Record the findings:
+      Originating carrier:   ___________________________________
+      Originating state:     ___________________________________
+      Attestation level:     [ ] A   [ ] B   [ ] C   [ ] unknown
+
+[ ] STEP 5 — LITIGATION HISTORY (PRIOR SUITS AGAINST DEFENDANT)
+    A defendant who has been sued for TCPA violations before is
+    (a) reachable, (b) has a litigation posture on file, and
+    (c) may already be in a settlement program you can join.
+
+      PACER (federal courts, $0.10/page):
+        https://pcl.uscourts.gov/pcl/index.jsf
+
+      CourtListener (free federal search):
+        https://www.courtlistener.com/
+
+      RECAP Archive (free federal docket cache):
+        https://www.courtlistener.com/recap/
+
+      State court records (search '[your state] court case search'):
+        Louisiana uses separate clerk-of-court portals
+        per parish/county; the SoS business record lists litigation
+        history for some entities.
+
+    Record the findings:
+      Prior TCPA cases filed:  _______________
+      Defendant counsel firm:  ___________________________________
+      Outcome pattern:         [ ] settles    [ ] defaults    [ ] fights
+
+[ ] STEP 6 — ASSET AND COLLECTABILITY CHECK
+    Verify the defendant has actual assets or licensure you can
+    garnish or levy if you win.
+
+      State licensure databases (varies by industry):
+        Auto-warranty/insurance:  https://naic.org/state_contacts/sid_websites.htm
+        Securities:               https://brokercheck.finra.org/
+        Debt collect/financial:   state financial-regulator registry
+        Solar installer:          https://www.nabcep.org/certified-locator/
+
+      Business financial signals:
+        [ ] Entity has a physical address a process server can reach
+        [ ] Active website at a custom domain (not just a Facebook page)
+        [ ] Listed phone number at published address matches caller ID
+        [ ] Recent reviews on Google Business / Yelp / BBB
+        [ ] Registered with the Better Business Bureau
+        [ ] Industry licensure on file with state regulator
+
+    Record the findings:
+      Physical address:       ___________________________________
+      Industry regulator:     ___________________________________
+      Active licensure #:     ___________________________________
+      Est. enforceability:    [ ] High  [ ] Medium  [ ] Low  [ ] None
+
+[ ] STEP 6.5 — CALL-TYPE-SPECIFIC REGULATOR (based on transcript content)
+    AUTO-WARRANTY CALLS — The issuer is usually a vehicle service contract
+    (VSC) company regulated by your state insurance commissioner (VSCs are
+    classified as motor-club-service or mechanical-breakdown insurance in
+    most states). Lookup:
+      https://naic.org/state_contacts/sid_websites.htm
+    Known VSC issuers to check for: CarShield, Endurance, Omega Auto Care,
+    Olive, Toco Warranty, Palmer Administrative, Protect My Car, American
+    Auto Shield. Any of these named in the recordings IS the defendant.
+
+[ ] STEP 7 — STATE-AG PARALLEL COMPLAINT
+    File a consumer-protection complaint with your state AG in parallel
+    with the small-claims action. It's free, it creates a record, and
+    in a subpoena-ready format it's admissible under FRE 803(8).
+
+      Louisiana AG — Consumer Protection (File a Complaint)
+      https://www.ag.state.la.us/Complaints
+
+[ ] STEP 8 — FINAL GO/NO-GO GATE
+    BEFORE signing the petition verification, confirm ALL of the
+    following are TRUE. If ANY is false, read the ALTERNATIVES
+    section below before filing.
+
+      [ ] I have identified a specific legal entity to sue
+      [ ] That entity is ACTIVE in a state business registry
+      [ ] I have the registered agent's name and service address
+      [ ] The entity is reachable — physical address or agent exists
+      [ ] I have reasonable evidence the entity has assets or
+          licensure I could levy against if I win
+      [ ] The collectability score above is MEDIUM or HIGH
+          (if LOW, either raise the score with new evidence or don't file)
+
+    If any box is unchecked, DO NOT file this petition yet. Either
+    continue research, pursue the seller up the chain (ALTERNATIVES
+    play 1), or redirect effort to administrative complaints.
+
+───────────────────────────────────────────────────────────────────────
+ALTERNATIVES IF YOU CANNOT REACH THIS DEFENDANT
+───────────────────────────────────────────────────────────────────────
+
+Your preliminary collectability score is LOW. Read this section
+carefully BEFORE spending a filing fee. A judgment you cannot
+collect is worse than no judgment at all — it costs money, time,
+and hope, and buys you nothing.
+
+1. SUE UP THE CHAIN (seller liability)
+   ───────────────────────────────────
+   The TCPA makes the SELLER — the company on whose behalf the calls
+   were placed — liable for calls made by their agents, even offshore
+   agents. This was settled by the FCC's 2013 DISH Network ruling
+   (In re Joint Petition, 28 FCC Rcd 6574) and has been affirmed by
+   multiple circuits.
+
+   WHAT TO DO: listen to the recordings and identify the PRODUCT or
+   the ISSUER. Auto-warranty calls ultimately pitch a named company's
+   contract (CarShield, Endurance, Omega Auto Care, etc.). Solar calls
+   pitch a named installer. Medicare calls pitch a named insurer.
+   That named company IS the defendant — not the offshore call center,
+   not the spoofed number.
+
+   Look for phrases like 'on behalf of ___', 'we work with ___', or
+   'your policy would be with ___'. Those fill-in-the-blanks name
+   the real defendant.
+
+2. FILE ADMINISTRATIVE COMPLAINTS IN PARALLEL
+   ──────────────────────────────────────────
+   These do not pay you directly, but they (a) create a public paper
+   trail that class-action firms actively mine, (b) give carriers the
+   leverage to block the number at network level under the TRACED Act
+   and STIR/SHAKEN rules, and (c) occasionally trigger an enforcement
+   action that results in consumer-restitution funds.
+
+       1. FCC TCPA Complaint: https://consumercomplaints.fcc.gov/
+       2. FTC Do Not Call: https://www.donotcall.gov/report.html
+       3. State Attorney General consumer-protection complaint
+          (search '[your state] attorney general consumer complaint')
+       4. Better Business Bureau: https://www.bbb.org/file-a-complaint
+       5. CFPB (for debt-relief / financial pitches):
+          https://www.consumerfinance.gov/complaint/
+
+   File all five for each offender. It takes about 20 minutes total.
+   Include the specific dates/times of calls and attach your evidence
+   if the form allows uploads.
+
+3. REQUEST AN ORIGINATING-CARRIER TRACE
+   ────────────────────────────────────
+   Under the TRACED Act and FCC rules (47 CFR § 64.1200(k)), carriers
+   must cooperate to trace the originating carrier of spoofed calls.
+   Your own carrier's fraud/abuse team can initiate this trace on your
+   behalf. The originating carrier then has records of the customer
+   who bought the number — that customer is usually a US-based VoIP
+   reseller whose agreements with their downstream customer (the
+   telemarketer) are discoverable.
+
+   WHAT TO DO: call your carrier, ask for the fraud department,
+   explicitly request a 'STIR/SHAKEN traceback' for calls from
+   +1 (555) 555-0199 on the specific dates in your evidence log. Some
+   carriers route this through the Industry Traceback Group (ITG)
+   at https://tracebacks.org — you can also file directly with the ITG.
+
+4. CLASS-ACTION REFERRAL
+   ─────────────────────
+   If the number has been calling many people, a TCPA plaintiff's
+   firm will take the case on contingency against the US principal
+   (the seller) — you do not have to lead the class, you just have to
+   be documented evidence on their docket. Your SpamSlayer package is
+   exactly what they want.
+
+   Firms with active TCPA class-action dockets include (non-exhaustive,
+   not an endorsement): Edelson PC (edelson.com), Lieff Cabraser
+   (lieffcabraser.com), Kazerouni Law Group (kazlg.com), Parasmo Lieberman
+   (parasmolaw.com). Search each firm's 'current cases' page for your
+   defendant's name or product, and submit a contact form with your
+   evidence. Referrals are free.
+
+   You can also post your number and dates to community threads like
+   r/tcpa on Reddit — other victims have often already identified the
+   seller.
+
+5. CROSS-REFERENCE SPAM-CALL DATABASES
+   ───────────────────────────────────
+   Third-party spam databases aggregate consumer reports on bad
+   numbers and often have already identified the underlying operation:
+
+       • YouMail Directory:   https://directory.youmail.com/phone/15555550199
+       • Nomorobo Lookup:     https://www.nomorobo.com/lookup/15555550199
+       • Hiya reports:        https://www.hiya.com/identity (lookup by number)
+       • 800notes community:  https://800notes.com/Phone.aspx/15555550199
+       • Reverse lookup:      https://www.whitepages.com/phone/15555550199
+
+   If multiple reports name the same company, that confirms the seller
+   and is admissible as evidence of pattern (under FRE 404(b) and LA
+   C.E. Art. 404(B)) when combined with your own recordings.
+
+6. BLOCK AT THE CARRIER LEVEL AND MOVE ON
+   ──────────────────────────────────────
+   Not every number is worth litigating. If (a) collectability is LOW,
+   (b) the seller cannot be identified from the recordings, and
+   (c) the administrative complaints above have been filed, the most
+   rational play is often to block the number at the network level
+   and redirect your effort to the next actionable offender.
+
+   Enable enhanced spam blocking with your carrier (each carrier has
+   a free tier as required by TRACED). For numbers that slip through,
+   use Nomorobo, RoboKiller, or the native blocking in iOS/Android.
+   Keep the evidence package — if a class action later emerges, your
+   data is ready.
+
+7. LEAD-GENERATOR / DATA-BROKER LIABILITY
+   ──────────────────────────────────────
+   Under TCPA, a lead-generator or data broker who sold your number
+   to a telemarketer can be liable under § 227(c) if you did not
+   provide lawful prior express written consent. Lead generators are
+   almost always US-based and almost always have assets.
+
+   WHAT TO DO: during any call where the caller claims consent, ask
+   'WHICH website / form / offer did I fill out?' Write down the
+   answer. Then research whether that site is a known lead-generator
+   (CPA-networks like MediaAlpha, QuoteWizard, SmartFinancial, etc.)
+   and whether their consent flow would have been TCPA-compliant for
+   calls to DNC-registered numbers. Often it is not.
+
+───────────────────────────────────────────────────────────────────────
+END OF DEFENDANT RESEARCH REPORT
+───────────────────────────────────────────────────────────────────────

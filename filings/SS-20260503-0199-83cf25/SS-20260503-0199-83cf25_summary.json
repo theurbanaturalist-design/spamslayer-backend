@@ -1,0 +1,67 @@
+{
+  "caseNumber": "SS-20260503-0199-83cf25",
+  "generatedDate": "2026-05-03T14:04:37.204Z",
+  "offenderNumber": "+15555550199",
+  "damagesRequested": 3000,
+  "collectabilityScore": 24,
+  "collectabilityBand": "LOW",
+  "warnings": [
+    "Citation review pending: 99 citation(s) in your filing are known to SpamSlayer but have not yet been personally verified against the government source by a human reviewer. This does not mean the citations are wrong — it means no one on this project has personally confirmed them in writing yet. If this filing will be sworn under oath, have a paralegal or lawyer double-check each citation against eCFR / uscode.house.gov before you sign. See CITATION_AUDIT_REPORT.txt for the full list.",
+    "COLLECTABILITY — LOW SCORE (24/100): SpamSlayer's automated heuristics flag this defendant as likely UNCOLLECTABLE based on number prefix, caller-identification capture, and call-pattern persistence. A judgment you cannot collect costs filing fees and time for nothing. BEFORE filing, open the companion document \"defendant_research.txt\" in this package, complete every step of the MANUAL RESEARCH CHECKLIST (Secretary of State lookup, FCC complaint database, carrier traceback, litigation history, asset check), and read the ALTERNATIVES section. If you cannot identify a real, reachable US entity with assets, the right play is usually to sue the seller up the chain (TCPA seller liability, FCC 2013 DISH Network ruling), file FCC/FTC/state-AG complaints in parallel, or refer the case to a TCPA class-action firm — not to file in small claims against a spoofed number.",
+    "UNSIGNED RECORDINGS: You have 6 recording(s) but none have been cryptographically signed. The Evidence Integrity Certificate will show \"0 signed calls\" which weakens the tamper-proof claim. This may happen if recordings were captured before the signing feature was enabled. The recordings are still valid evidence, but the hash-based integrity verification will not be available.",
+    "VERIFY DEFENDANT IDENTITY — SPOOFED NUMBERS: Most spam calls use spoofed caller IDs. The phone number +15555550199 may NOT belong to the actual caller. Before filing, verify the defendant's identity through multiple sources: (1) Listen to the recordings — did the caller identify a company name? (2) Search the number on TrueCaller, Whitepages, or the FCC complaint database. (3) Check if the number is a VoIP/disposable number (services like FreeCarrierLookup.com can tell you). If the number appears to be spoofed or disposable, you may be suing the wrong entity. DO NOT file until you can connect the phone number to an actual business entity.",
+    "CHECK FOR BURIED CONSENT: Before filing, make sure you never gave consent to receive calls from this company — even indirectly. Data brokers sell \"lead lists\" with phone numbers attached to Terms of Service agreements you may have clicked years ago on unrelated websites. If the defendant produces a consent form or TOS agreement with your name on it, your case collapses. Search your email for any correspondence from the defendant's company name. If you find ANYTHING, consult an attorney before filing."
+  ],
+  "complaintDrafts": [
+    {
+      "slug": "itg-traceback",
+      "label": "ITG Traceback Request (tracebacks.org)",
+      "submitUrl": "https://tracebacks.org",
+      "priority": 1
+    },
+    {
+      "slug": "fcc-tcpa",
+      "label": "FCC TCPA / Unwanted-Calls Complaint",
+      "submitUrl": "https://consumercomplaints.fcc.gov/hc/en-us/requests/new",
+      "priority": 2
+    },
+    {
+      "slug": "ftc-dnc",
+      "label": "FTC Do-Not-Call Registry Complaint",
+      "submitUrl": "https://www.donotcall.gov/report.html",
+      "priority": 3
+    },
+    {
+      "slug": "state-ag",
+      "label": "State AG Complaint — Louisiana AG — Consumer Protection (File a Complaint)",
+      "submitUrl": "https://www.ag.state.la.us/Complaints",
+      "priority": 4
+    },
+    {
+      "slug": "bbb",
+      "label": "BBB Complaint — Preferred Auto Protection [DEMO]",
+      "submitUrl": "https://www.bbb.org/file-a-complaint",
+      "priority": 5
+    }
+  ],
+  "complaintSkipped": [
+    {
+      "slug": "cfpb",
+      "reason": "No financial-product pitch detected in call transcripts. CFPB jurisdiction covers debt collection, student loans, credit cards, mortgages, and related consumer-financial products only. Skipped."
+    }
+  ],
+  "files": [
+    "SS-20260503-0199-83cf25_petition.txt",
+    "SS-20260503-0199-83cf25_exhibits.txt",
+    "SS-20260503-0199-83cf25_certificate_of_service.txt",
+    "SS-20260503-0199-83cf25_filing_guide.txt",
+    "SS-20260503-0199-83cf25_defendant_research.txt",
+    "CASE_STAGES_GUIDE.txt",
+    "README.txt",
+    "01_itg-traceback.txt",
+    "02_fcc-tcpa.txt",
+    "03_ftc-dnc.txt",
+    "04_state-ag.txt",
+    "05_bbb.txt"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "cachedAt": 1777815319358,
+  "result": {
+    "status": "match",
+    "summary": "**DISH Network L.L.C.** is a Colorado-based single-member LLC, incorporated on March 26, 1987, operating as a disregarded entity of its parent **DISH DBS Corporation** (EIN 84-1328967), with principal offices at 9601 S. Meridian Blvd., Englewood, CO 80112, and a remit-to address at PO Box 94063, Palatine, IL 60094-4063.[1][4][5] Its registered agent for civil service is **Corporation Service Company (CSC)**, with courtesy copies directed to Subpoenas@dish.com; an affiliated entity, DISH Holding L.L.C., lists R. Stanton Dodge as registered agent in Colorado.[4][6] The company, formerly EchoStar Satellite L.L.C., provides satellite TV services under the DISH brand.[1][3][5]\n\nDISH Network L.L.C. faced significant telemarketing enforcement in 2009 when the FTC and DOJ sued it in the Northern District of Illinois (Case 3:09-cv-03073) for National Do Not Call Registry violations and Telemarketing Sales Rule breaches via robocalls by authorized dealers.[3] No additional FCC, state-AG, or recent TCPA suits are detailed in available sources, though related entities like DISH Holding appear in FCC complaints; BBB complaint volume is not specified.[6] **Reachable.**",
+    "citations": [
+      "https://www.dish.com/content/dam/dish-business/pdfs/DISH-Company-Profile.pdf",
+      "https://ir.echostar.com/static-files/8016c592-fb9e-4f23-b4cd-6444eb5bcb98",
+      "https://www.ftc.gov/legal-library/browse/cases-proceedings/052-3167-x090039-dish-network-llc",
+      "https://www.dish.com/content/dam/dish/pdfs/service-agreements/ServingCivilRequestsonDISHandSling.pdf",
+      "https://www.dish.com/content/dam/dish-business/pdfs/Commercial-Customer-Agreement.pdf",
+      "https://www.wiley.law/assets/htmldocuments/FCA%20DISH%20Complaint.pdf",
+      "https://www.sec.gov/Archives/edgar/data/1001082/000104746919006465/a2240151z424b5.htm",
+      "https://www.sec.gov/Archives/edgar/data/1001082/000110465919066428/a19-21818_88a12b.htm",
+      "https://www.sec.gov/Archives/edgar/data/1001082/000110465913011967/a13-1215_110k.htm"
+    ],
+    "searchResults": [
+      {
+        "title": "[PDF] Name: DISH Network L.L.C. • Incorporation Date: March 26, 1987",
+        "url": "https://www.dish.com/content/dam/dish-business/pdfs/DISH-Company-Profile.pdf",
+        "date": "2025-11-19"
+      },
+      {
+        "title": "[PDF] DISH NETWORK CORPORATION",
+        "url": "https://ir.echostar.com/static-files/8016c592-fb9e-4f23-b4cd-6444eb5bcb98",
+        "date": "2026-03-30"
+      },
+      {
+        "title": "Dish Network L.L.C. | Federal Trade Commission",
+        "url": "https://www.ftc.gov/legal-library/browse/cases-proceedings/052-3167-x090039-dish-network-llc",
+        "date": "2009-03-25"
+      },
+      {
+        "title": "[PDF] Serving Civil Requests on DISH Network L.L.C. and Sling TV L.L.C.",
+        "url": "https://www.dish.com/content/dam/dish/pdfs/service-agreements/ServingCivilRequestsonDISHandSling.pdf",
+        "date": "2021-10-06"
+      },
+      {
+        "title": "[PDF] Commercial Customer Agreement - Dish Network",
+        "url": "https://www.dish.com/content/dam/dish-business/pdfs/Commercial-Customer-Agreement.pdf",
+        "date": "2023-12-10"
+      },
+      {
+        "title": "[PDF] MAY 1 3 2015",
+        "url": "https://www.wiley.law/assets/htmldocuments/FCA%20DISH%20Complaint.pdf",
+        "date": null
+      },
+      {
+        "title": "DISH Network Corporation - SEC.gov",
+        "url": "https://www.sec.gov/Archives/edgar/data/1001082/000104746919006465/a2240151z424b5.htm",
+        "date": null
+      },
+      {
+        "title": "dish network corporation - SEC.gov",
+        "url": "https://www.sec.gov/Archives/edgar/data/1001082/000110465919066428/a19-21818_88a12b.htm",
+        "date": "2024-07-25"
+      },
+      {
+        "title": "DISH Network Corporation - SEC.gov",
+        "url": "https://www.sec.gov/Archives/edgar/data/1001082/000110465913011967/a13-1215_110k.htm",
+        "date": "2024-07-15"
+      }
+    ],
+    "model": "sonar",
+    "costUsd": 0.0055,
+    "lookedUpAt": "2026-05-03T13:35:19.354Z",
+    "fromCache": false
+  }
+}

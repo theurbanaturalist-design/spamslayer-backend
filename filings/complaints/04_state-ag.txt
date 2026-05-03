@@ -1,0 +1,69 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+STATE ATTORNEY GENERAL — CONSUMER COMPLAINT
+Louisiana AG — Consumer Protection (File a Complaint)
+Submit at: https://www.ag.state.la.us/Complaints
+
+─── CONSUMER ─────────────────────────────────────────────────────────
+
+  Name:     Jane Demo [DEMO PLAINTIFF]
+  Address:  123 Demo Lane, Lafayette, LA 70501
+  Phone:    +1 (337) 555-0100
+  Email:    demo@example.invalid
+
+─── BUSINESS COMPLAINED ABOUT ────────────────────────────────────────
+
+  Displayed caller ID:  +1 (555) 555-0199
+  Total calls:          6
+  Date range:           January 7, 2026 – April 9, 2026
+  Recordings on file:   yes
+
+  The caller identified themselves as or on behalf of "Preferred Auto Protection [DEMO]". I have not independently verified this identification.
+
+─── NATURE OF COMPLAINT ──────────────────────────────────────────────
+
+I am reporting unlawful telemarketing calls to my telephone in
+LA. I believe these calls violate:
+
+  • 47 U.S.C. § 227 (federal TCPA)
+  • La. R.S. 45:844.14 (state Do-Not-Call / consumer-protection)
+  • La. R.S. 15:1303 (one-party consent)
+
+I am not in a business relationship with the caller and did not
+provide prior express written consent to receive telemarketing calls.
+My number is registered on the National Do Not Call Registry as of June 15, 2020.
+
+─── WHAT I AM ASKING ─────────────────────────────────────────────────
+
+  1. Investigation of the caller and the seller on whose behalf
+     the calls were placed (see FCC 2013 DISH Network ruling, 28 FCC
+     Rcd 6574, on seller liability for agent-placed telemarketing).
+  2. Coordination with other state AGs if this caller is active
+     across state lines (via NAAG's telemarketing working group).
+  3. Any action available under La. R.S. 45:844.14.
+
+I have parallel complaints pending with the FCC, FTC, and the
+Industry Traceback Group.
+
+─── DECLARATION ──────────────────────────────────────────────────────
+
+The facts above are true to the best of my knowledge and are derived
+from call records and recordings in my possession.
+
+  Jane Demo [DEMO PLAINTIFF]
+  April 18, 2026

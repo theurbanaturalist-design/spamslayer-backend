@@ -1,0 +1,354 @@
+═══════════════════════════════════════════════════════════════════════
+                         EXHIBIT LIST
+═══════════════════════════════════════════════════════════════════════
+
+Case:       Jane Demo [DEMO PLAINTIFF] v. Preferred Auto Protection [DEMO]
+Court:      Lafayette City Court
+Ref:        SS-20260418-0199-20d56d
+Date:       April 18, 2026
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT A: National Do Not Call Registry Confirmation
+
+    Printout from donotcall.gov confirming that telephone number
+    +13375550100 has been registered on the National Do Not Call
+    Registry since 2020-06-15.
+    → HOW TO GET THIS: Go to https://www.donotcall.gov/verify.html
+      and enter your phone number. Print or screenshot the result.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT B: SpamSlayer Call Log — All Calls from Defendant
+
+    Complete system-generated log of 6 call(s) from
+    (555) 555-0199, 555-555-0199 (Preferred Auto Protection [DEMO]):
+
+  #   Date          Time    Call SID                            Recording   Transcript Excerpt
+  ──  ──────────    ─────   ─────────────────────────────────   ─────────   ─────────────────────
+   1   2026-01-07    10:42   DEMO_CALL_001                       Yes         "[DEMO] This is your final notice regardi..."
+   2   2026-01-19    14:08   DEMO_CALL_002                       Yes         "[DEMO] Hi, this is Mike from Preferred A..."
+   3   2026-02-03    07:15   DEMO_CALL_003                       Yes         "[DEMO] Good morning, this is Preferred A..."
+   4   2026-02-21    11:30   DEMO_CALL_004                       Yes         "[DEMO] This is Jessica with Preferred Au..."
+   5   2026-03-14    09:55   DEMO_CALL_005                       Yes         "[DEMO] Final warning — your auto warrant..."
+   6   2026-04-09    15:22   DEMO_CALL_006                       Yes         "[DEMO] This is Mike from Preferred Auto ..."
+
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT C: Call Recording — January 7, 2026 at 10:42
+
+    Audio recording of call on January 7, 2026 at 10:42.
+    Call SID: DEMO_CALL_001
+    Recording URL: https://example.invalid/demo-recording-001.mp3
+    Recorded under La. R.S. 15:1303 (one-party consent).
+    → IMPORTANT: Download this recording to your computer and save
+      to USB drive. Twilio recording URLs may expire. Do NOT rely
+      on the URL being accessible at trial.
+    → Provide recordings to the court on USB drive or CD.
+    → Authentication: This recording was automatically captured by
+      SpamSlayer's compliance system at the time of the call.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT D: Call Recording — January 19, 2026 at 14:08
+
+    Audio recording of call on January 19, 2026 at 14:08.
+    Call SID: DEMO_CALL_002
+    Recording URL: https://example.invalid/demo-recording-002.mp3
+    Recorded under La. R.S. 15:1303 (one-party consent).
+    → IMPORTANT: Download this recording to your computer and save
+      to USB drive. Twilio recording URLs may expire. Do NOT rely
+      on the URL being accessible at trial.
+    → Provide recordings to the court on USB drive or CD.
+    → Authentication: This recording was automatically captured by
+      SpamSlayer's compliance system at the time of the call.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT E: Call Recording — February 3, 2026 at 07:15
+
+    Audio recording of call on February 3, 2026 at 07:15.
+    Call SID: DEMO_CALL_003
+    Recording URL: https://example.invalid/demo-recording-003.mp3
+    Recorded under La. R.S. 15:1303 (one-party consent).
+    → IMPORTANT: Download this recording to your computer and save
+      to USB drive. Twilio recording URLs may expire. Do NOT rely
+      on the URL being accessible at trial.
+    → Provide recordings to the court on USB drive or CD.
+    → Authentication: This recording was automatically captured by
+      SpamSlayer's compliance system at the time of the call.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT F: Call Recording — February 21, 2026 at 11:30
+
+    Audio recording of call on February 21, 2026 at 11:30.
+    Call SID: DEMO_CALL_004
+    Recording URL: https://example.invalid/demo-recording-004.mp3
+    Recorded under La. R.S. 15:1303 (one-party consent).
+    → IMPORTANT: Download this recording to your computer and save
+      to USB drive. Twilio recording URLs may expire. Do NOT rely
+      on the URL being accessible at trial.
+    → Provide recordings to the court on USB drive or CD.
+    → Authentication: This recording was automatically captured by
+      SpamSlayer's compliance system at the time of the call.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT G: Call Recording — March 14, 2026 at 09:55
+
+    Audio recording of call on March 14, 2026 at 09:55.
+    Call SID: DEMO_CALL_005
+    Recording URL: https://example.invalid/demo-recording-005.mp3
+    Recorded under La. R.S. 15:1303 (one-party consent).
+    → IMPORTANT: Download this recording to your computer and save
+      to USB drive. Twilio recording URLs may expire. Do NOT rely
+      on the URL being accessible at trial.
+    → Provide recordings to the court on USB drive or CD.
+    → Authentication: This recording was automatically captured by
+      SpamSlayer's compliance system at the time of the call.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT H: Call Recording — April 9, 2026 at 15:22
+
+    Audio recording of call on April 9, 2026 at 15:22.
+    Call SID: DEMO_CALL_006
+    Recording URL: https://example.invalid/demo-recording-006.mp3
+    Recorded under La. R.S. 15:1303 (one-party consent).
+    → IMPORTANT: Download this recording to your computer and save
+      to USB drive. Twilio recording URLs may expire. Do NOT rely
+      on the URL being accessible at trial.
+    → Provide recordings to the court on USB drive or CD.
+    → Authentication: This recording was automatically captured by
+      SpamSlayer's compliance system at the time of the call.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT I: Call Transcripts (Reference Only)
+
+    Transcripts of recorded calls with Defendant:
+
+    Call 1 (January 7, 2026 10:42):
+    "[DEMO] This is your final notice regarding your vehicle's extended warranty. Press 1 now to speak with a specialist about lowering your rate."
+
+    Call 2 (January 19, 2026 14:08):
+    "[DEMO] Hi, this is Mike from Preferred Auto Protection. I'm calling about the warranty on your vehicle. Can I confirm your year and make?"
+
+    Call 3 (February 3, 2026 07:15):
+    "[DEMO] Good morning, this is Preferred Auto Protection calling about your vehicle warranty which is about to expire. Press 1 to renew."
+
+    Call 4 (February 21, 2026 11:30):
+    "[DEMO] This is Jessica with Preferred Auto Protection. Our records show you haven't renewed your vehicle service contract. Please call us back at this number."
+
+    Call 5 (March 14, 2026 09:55):
+    "[DEMO] Final warning — your auto warranty coverage will lapse unless you call Preferred Auto Protection at the callback number. Press 1 to speak with an agent."
+
+    Call 6 (April 9, 2026 15:22):
+    "[DEMO] This is Mike from Preferred Auto Protection calling for one last time about the extended warranty on your vehicle. Press 1 or call us back."
+
+    TRANSCRIPT METHODOLOGY: These transcripts were generated by
+    automated speech-to-text processing and are provided as a
+    convenience reference only. They may contain minor transcription
+    errors. The court should rely on the original audio recordings
+    (attached as separate exhibits) for the authoritative record
+    of what was said during each call.
+
+    Sensitive information (account numbers, etc.) has been redacted.
+    Full unredacted recordings are available for in camera review
+    upon request.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT J: Carrier Call Detail Records (CDR)
+
+    Independent call records from Plaintiff's telephone carrier
+    corroborating incoming calls from:
+    (555) 555-0199, 555-555-0199
+    on the following dates: 2026-01-07, 2026-01-19, 2026-02-03, 2026-02-21, 2026-03-14, 2026-04-09.
+
+    Carrier CDRs are the STRONGEST corroborating evidence because
+    they are generated by a neutral third party (your phone company)
+    with no connection to your compliance system or Twilio.
+
+    → HOW TO GET YOUR CDRs:
+
+      OPTION 1 — ONLINE (fastest, free):
+        Most carriers let you download call history online:
+        • AT&T:     att.com → My AT&T → Usage → Call History
+        • T-Mobile:  t-mobile.com → Usage → Call Details
+        • Verizon:  verizonwireless.com → My Usage → View Usage
+        • Sprint:   sprint.com → My Sprint → My Usage
+        Download or screenshot the records showing the spam calls.
+        Print the pages with the matching dates highlighted.
+
+      OPTION 2 — REQUEST FORMAL CDRs (more authoritative):
+        Call your carrier's customer service and request:
+        "I need a formal Call Detail Record report for my number
+         +13375550100 covering 2026-01-07 through
+         2026-04-09. This is for use as evidence in a
+         court proceeding."
+        Carriers are required to provide customers access to their
+        own call records. Some carriers charge a small fee ($5-$25)
+        for formal CDRs. Formal CDRs typically include: originating
+        number, date, time, duration, and call type.
+
+        ⚠ RETENTION WARNING: Most carriers retain CDRs for only
+        18-24 months. If your earliest calls are older than 18
+        months, request CDRs IMMEDIATELY before they are purged.
+        If CDRs have already been purged, your phone bill
+        screenshots and Twilio logs still serve as evidence.
+
+      OPTION 3 — SUBPOENA DEFENDANT'S CARRIER (advanced):
+        If the defendant disputes making the calls, you can
+        subpoena the defendant's phone carrier to produce THEIR
+        outbound call records showing calls to your number.
+        Ask the clerk about issuing a subpoena duces tecum.
+        This is usually only needed if the defendant shows up
+        and denies making the calls.
+
+    → WHAT THE CDR PROVES:
+      • The calls actually happened (independent of your system)
+      • The exact dates and times match your petition
+      • The originating phone number matches the defendant
+      • The call duration confirms a connection was made
+      • Your carrier has no motive to fabricate records
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT K: Recording Authentication Declaration
+
+    Declaration of Plaintiff authenticating all call recordings:
+
+    I, Jane Demo [DEMO PLAINTIFF], declare under penalty of perjury:
+
+    1. I am the subscriber of telephone number +13375550100.
+    2. Each recording attached as an exhibit was automatically
+       captured at the time of the call by the telephone
+       compliance system (SpamSlayer) that I installed and
+       configured to answer and record calls placed to my
+       number, and was stored on the Twilio telecommunications
+       platform.
+    3. To the best of my knowledge, I have not edited, spliced,
+       altered, or manipulated any recording file since capture,
+       nor directed anyone else to do so.
+    4. Each recording's SHA-256 hash was computed at the time of
+       capture and can be independently verified against the
+       accompanying Evidence Integrity Certificate. Any party
+       may recompute the hash from the audio file and confirm
+       it matches the value recorded in the certificate.
+    5. I have had a full opportunity to review each recording
+       after capture and have personally reviewed representative
+       samples. The recordings I have reviewed match the audio
+       files as stored on the Twilio platform and faithfully
+       capture the audio as received at my telephone number.
+       I am not aware of any recording that has been altered.
+    6. The recordings comply with La. R.S. 15:1303
+       (one-party consent state law) and 18 U.S.C. § 2511(2)(d)
+       (federal one-party consent).
+
+    → BEFORE SIGNING: If any statement above is not accurate for
+      your situation (for example, if you have not yet reviewed
+      the recording(s), or if you know of any file that has been
+      altered), STOP and correct the statement before signing.
+      Signing a false declaration is perjury.
+    → SIGN AND DATE this declaration before filing.
+    → This exhibit authenticates your recordings under La. Code
+      of Evidence Art. 901(A) and Fed. R. Evid. 901(a).
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT L: Third-Party Corroborating Evidence
+
+    Corroborating records from Plaintiff's telecommunications
+    service provider verifying the calls at issue:
+
+    1. TWILIO CALL RECORDS: Each call was routed through Twilio,
+       a publicly traded telecommunications platform (NYSE: TWLO)
+       that independently logs all calls processed through its
+       system. Twilio assigns a unique Call SID to each call.
+       These records are available via discovery or subpoena to
+       Twilio, Inc. if Defendant disputes authenticity. Call SIDs
+       for this case:
+         1. DEMO_CALL_001 (2026-01-07 10:42)
+         2. DEMO_CALL_002 (2026-01-19 14:08)
+         3. DEMO_CALL_003 (2026-02-03 07:15)
+         4. DEMO_CALL_004 (2026-02-21 11:30)
+         5. DEMO_CALL_005 (2026-03-14 09:55)
+         6. DEMO_CALL_006 (2026-04-09 15:22)
+
+    2. CARRIER CALL DETAIL RECORDS (CDRs): Plaintiff's telephone
+       carrier independently logged each incoming call from
+       (555) 555-0199, 555-555-0199. Carrier CDRs are generated
+       by a neutral third party with no connection to Plaintiff's
+       compliance system. CDRs are attached as a separate exhibit
+       and are independently verifiable through the carrier.
+
+    3. CRYPTOGRAPHIC HASHES: Each recording was signed with a
+       SHA-256 hash at the time of capture, providing tamper-proof
+       verification. See Evidence Integrity Certificate.
+
+    These three corroborating sources — Twilio platform records
+    (available via subpoena), carrier Call Detail Records
+    (obtainable by Plaintiff from their own carrier),
+    and cryptographic signatures — independently corroborate
+    the SpamSlayer system logs. Each source is generated by a
+    different entity with no shared motive to fabricate,
+    establishing the authenticity of the digital evidence
+    beyond reasonable dispute.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT M: Evidence Integrity Certificate (SHA-256 Hashes)
+
+    Cryptographic integrity certificate for all call recordings.
+
+    WHAT THIS IS: At the time each call was recorded, the
+    SpamSlayer compliance system computed a SHA-256 hash (a
+    unique digital fingerprint) of the recording file. If the
+    recording were altered in any way — even a single second of
+    audio — the fingerprint would be completely different.
+
+    SHA-256 is a federal standard (FIPS 180-4) used by the U.S.
+    government for securing classified documents and is widely
+    accepted in federal and state courts for digital evidence
+    authentication.
+
+    → Attach the Evidence Integrity Certificate generated by
+      SpamSlayer (generated automatically with this filing).
+    → The certificate lists each recording's hash, the date it
+      was computed, and a master hash of the complete evidence set.
+    → To verify: run "sha256sum <recording_file>" on any computer
+      and compare the output to the hash in the certificate.
+
+    NOTE: These hashes were generated by Plaintiff's own system
+    and stored locally. They prove the recordings have not been
+    altered SINCE capture, but do not independently verify the
+    source of the recordings. The recordings' authenticity is
+    corroborated by the separate carrier CDRs and Twilio
+    platform records listed in other exhibits.
+
+───────────────────────────────────────────────────────────────────────
+
+EXHIBIT N: Damages Calculation
+
+    Statutory damages under 47 U.S.C. § 227(c)(5):
+
+    Violations:              6
+    Rate per violation:      $500 (standard)
+    Calculated damages:      $3,000
+    Amount requested:        $3,000
+
+    Calculation: 6 calls × $500/violation = $3,000
+
+
+───────────────────────────────────────────────────────────────────────
+
+Total Exhibits: 14
+
+I certify that the above exhibits are true and accurate records.
+
+____________________________________
+Jane Demo [DEMO PLAINTIFF]
+April 18, 2026

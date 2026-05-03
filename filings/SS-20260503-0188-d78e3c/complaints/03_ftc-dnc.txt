@@ -1,0 +1,57 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DRAFT COMPLAINT — REVIEW BEFORE SUBMITTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SpamSlayer prepared this draft from your call recordings and the
+information you've entered in Settings. EVERY factual claim below must
+be independently verified by you before you submit.
+
+Knowingly false statements to a federal agency violate 18 U.S.C. § 1001
+(max 5 years imprisonment). State-AG false-complaint statutes carry
+similar penalties. If you are not certain a claim is true, DELETE IT
+before submitting. Complaints are more effective when every sentence
+is defensible — not when every possible allegation is included.
+
+You are the submitter. Review, edit, and file each complaint yourself.
+
+
+FTC DO-NOT-CALL COMPLAINT
+Submit at: https://www.donotcall.gov/report.html
+Legal basis: FTC Telemarketing Sales Rule, 16 C.F.R. § 310; 47 U.S.C. § 227(c)
+
+─── REQUIRED FORM FIELDS ─────────────────────────────────────────────
+
+  Number that was called (yours):   +1 (337) 555-0100
+  Date of call:                      May 3, 2026
+                                     (most recent; file a separate complaint
+                                     per call for pattern weighting — the
+                                     form permits one date per submission)
+  Type of call:                      [ ] Robocall    [ ] Live caller
+                                     (select what matches this specific call)
+  Phone number of caller:            +1 (555) 555-0188
+  Subject of the call (optional):    (describe the product pitched, per your recording)
+  Company name (optional):           (leave blank unless the caller clearly identified a company)
+
+─── ELIGIBILITY NOTE ─────────────────────────────────────────────────
+
+  My number +1 (337) 555-0100 has been continuously registered on the
+  National Do Not Call Registry since June 15, 2020 —
+  2148 days before the first offending call on May 3, 2026.
+  This exceeds the 31-day waiting period in 47 U.S.C. § 227(c)(5) and
+  16 C.F.R. § 310.4(b)(1)(iii)(B).
+
+─── ADDITIONAL NOTES (paste into "tell us more" field) ──────────────
+
+  I have 2 call(s) from
+  this number on file, spanning May 3, 2026
+  to May 3, 2026. Recordings are available
+  on request. The displayed caller ID may be spoofed; a STIR/SHAKEN
+  traceback has been
+  requested from the Industry Traceback Group.
+
+─── REMINDER ─────────────────────────────────────────────────────────
+
+  If you received MULTIPLE calls from this number, the FTC DNC form
+  accepts one complaint per call date. File separately for each call
+  to maximize pattern weighting. This draft reflects your most recent
+  call; duplicate and update the "Date of call" field for each one.
