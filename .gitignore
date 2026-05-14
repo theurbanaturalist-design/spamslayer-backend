@@ -3,3 +3,19 @@ dist/
 .env
 .env.local
 *.log
+
+# Round 26.0b (P-approved JJ260b): transient API response caches must not
+# be committed — they're disposable runtime artifacts, not source.
+cache/
+
+# Round 26.0b (P-approved II260b): GitHub Actions workflows are deferred
+# until Marcus confirms he wants Render API-driven deploys AND adds the
+# RENDER_API_KEY secret. Until then, keep .github/ out of the index so a
+# stray draft workflow can't sneak into a commit.
+.github/
+
+# Round 26.0b (P-approved HH260b): dormant contact-router skeleton was
+# never wired into production (see top-of-file banner in each). Kept on
+# disk for a future explicit wiring round but excluded from this push.
+src/services/contactRouter.ts
+src/services/vcardParser.ts

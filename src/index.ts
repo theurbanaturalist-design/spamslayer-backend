@@ -43,6 +43,9 @@ import { researchTcpaDefendant } from "./services/sonarClient";
 import { buildEvidenceChecklist, buildCaseStagesGuide } from "./services/evidenceChecklist";
 import { decideFiling } from "./services/filingDecision";
 import { buildPressureStack, detectCampaigns, autoFirePressureStack, autoFireUnlockedItems } from "./services/pressureStack";
+import { evaluateCaseStrength } from "./services/caseStrengthMeter";
+import { scoreCollectability } from "./services/defendantResearch";
+import { generateFilingPackage } from "./services/legalFilingGenerator";
 import { runMonitor, triggerRenderRedeploy, BOTS_TO_MONITOR } from "./services/healthMonitor";
 
 const app = express();
@@ -107,6 +110,11 @@ app.get("/api/health", (_req, res) => {
     users: UserManager.getUserCount(),
   });
 });
+
+// Round 26.0 (P-approved P26 / V260): compat alias for external health checks
+// that hit the bare /health path instead of /api/health. Body is intentionally
+// minimal — monitors only check the 200 status code.
+app.get("/health", (_req, res) => res.json({ status: "ok" }));
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Evidence-checklist helpers + endpoints
@@ -346,6 +354,330 @@ app.get("/api/cases/:number/should-file", (req, res) => {
   }
 });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /api/cases/:number/case-file
+//
+// One-shot "everything we know about this caller" payload that powers the
+// Case File drawer in the dashboard. Combines:
+//   - Full offender profile (calls, recordings, transcripts, identity)
+//   - Case strength meter (10-factor breakdown, 0-100)
+//   - Collectability scorecard (per-signal breakdown, 0-100)
+//   - Filing decision (GO / WAIT / DON'T FILE + EV math)
+//   - Evidence checklist progress
+//   - Pressure stack
+//   - Defendant research (Sonar summary, OpenCorporates, CourtListener)
+//   - Filing-readiness composite score 0-100 (the "how close to suing" meter)
+//   - Draft petition preview (live-generated; falls back to placeholder text
+//     if phone.json isn't filled in)
+//
+// Designed so the dashboard can show the entire case file in one drawer
+// without N round-trips.
+// ─────────────────────────────────────────────────────────────────────────────
+app.get("/api/cases/:number/case-file", (req, res) => {
+  const num = CaseBuilder.normalizePhone(req.params.number);
+  const offender = CaseBuilder.getOffender(num);
+  if (!offender) {
+    res.status(404).json({ error: "offender not found" });
+    return;
+  }
+
+  // Case strength (always available, even pre-actionable)
+  let strength: ReturnType<typeof evaluateCaseStrength> = null;
+  try { strength = evaluateCaseStrength(num); } catch (err) {
+    console.warn(`[case-file] strength failed for ${num}:`, (err as Error).message);
+  }
+
+  // Collectability — pull cached enrichment off the offender so we don't make
+  // network calls inside the dashboard request path.
+  let collect: ReturnType<typeof scoreCollectability> | null = null;
+  try {
+    const enrichment: any = {};
+    if (offender.lineTypeLookup?.normalizedType) {
+      enrichment.lineType = {
+        type: offender.lineTypeLookup.normalizedType,
+        carrier: offender.lineTypeLookup.carrierName ?? undefined,
+        countryCode: offender.lineTypeLookup.countryCode ?? undefined,
+      };
+    }
+    if (offender.priorLitigation?.status === "match" && typeof offender.priorLitigation.caseCount === "number") {
+      enrichment.priorLitigationCount = offender.priorLitigation.caseCount;
+    } else if (offender.priorLitigation?.status === "no_match") {
+      enrichment.priorLitigationCount = 0;
+    }
+    if (offender.entityLookup) {
+      const e = offender.entityLookup;
+      if (e.status === "match" && e.matchedName && e.normalizedStatus) {
+        enrichment.entity = {
+          status: "match",
+          matchedName: e.matchedName,
+          companyNumber: e.companyNumber,
+          jurisdictionCode: e.jurisdictionCode ?? undefined,
+          normalizedStatus: e.normalizedStatus,
+          rawStatus: e.rawStatus ?? null,
+          incorporationDate: e.incorporationDate ?? null,
+          registeredAddress: e.registeredAddress ?? null,
+          sourceUrl: e.sourceUrl,
+          lookedUpAt: e.lookedUpAt,
+          matchConfidence: e.matchConfidence,
+        };
+      } else if (e.status === "no_match") {
+        enrichment.entity = { status: "no_match", lookedUpAt: e.lookedUpAt };
+      }
+    }
+    collect = scoreCollectability(offender, { enrichment: Object.keys(enrichment).length > 0 ? enrichment : undefined });
+  } catch (err) {
+    console.warn(`[case-file] collectability failed for ${num}:`, (err as Error).message);
+  }
+
+  // Filing decision — only meaningful for actionable cases
+  let decision = null;
+  if (offender.actionable) {
+    try { decision = decideFiling(offender); } catch (err) {
+      console.warn(`[case-file] decision failed for ${num}:`, (err as Error).message);
+    }
+  }
+
+  // Evidence checklist — auto-build on first read for actionable cases
+  let checklist = offender.evidenceChecklist ?? null;
+  if (!checklist && offender.actionable) {
+    try {
+      const ctx = loadUserContextForChecklist();
+      checklist = buildEvidenceChecklist(offender, ctx);
+      CaseBuilder.attachEvidenceChecklist(num, checklist);
+    } catch (err) {
+      console.warn(`[case-file] checklist build failed for ${num}:`, (err as Error).message);
+    }
+  }
+
+  // Pressure stack
+  let pressureStack = null;
+  try { pressureStack = buildPressureStack(offender, loadUserContextForChecklist()); } catch (err) {
+    console.warn(`[case-file] pressure-stack failed for ${num}:`, (err as Error).message);
+  }
+
+  // Draft petition preview — call the real generator. If phone.json isn't
+  // filled in (validateFilingConfig throws) or the case isn't ready, fall
+  // back to a placeholder string with the diagnostic.
+  let petitionPreview: { available: boolean; text: string; caseRef?: string; warnings?: string[]; reason?: string } =
+    { available: false, text: "", reason: "Petition not yet drafted." };
+  if (offender.actionable) {
+    try {
+      const pkg = generateFilingPackage(num);
+      if (pkg) {
+        petitionPreview = {
+          available: true,
+          text: pkg.petition,
+          caseRef: pkg.caseNumber,
+          warnings: pkg.warnings,
+        };
+      } else {
+        petitionPreview = {
+          available: false,
+          text: "",
+          reason: "Filing generator declined to produce a draft (case not actionable, all calls past SOL, or self-suit guard tripped). See server logs for details.",
+        };
+      }
+    } catch (err) {
+      petitionPreview = {
+        available: false,
+        text: "",
+        reason: `Petition generator threw: ${(err as Error).message}. Most commonly this means phone.json is missing required filing-config fields.`,
+      };
+    }
+  } else {
+    petitionPreview = {
+      available: false,
+      text: "",
+      reason: `Case is not yet actionable. The TCPA private right of action requires 2+ calls within 12 months — this caller has ${offender.callCount}. The petition will become available the moment the threshold is crossed.`,
+    };
+  }
+
+  // ── Filing-readiness composite score ───────────────────────────────────
+  // 0-100 indicator of how close the case is to being file-ready.
+  //   30% case strength
+  //   30% collectability (50 if not yet known)
+  //   30% evidence checklist completeness
+  //   10% defendant identified (binary)
+  //
+  // Round 26.0b (P-approved BB260b): defendant-ID is a HARD filing
+  // prerequisite — you can't sue a defendant you can't name. Without it
+  // the composite would otherwise look "almost ready" while missing the
+  // condition that actually blocks filing. Cap the composite at 80 when
+  // defendant-ID is missing so the bar visibly stalls until you have a
+  // name. The cap is intentionally above "obviously not ready" but below
+  // "ready to file" so it reads as a yellow/amber state in the UI.
+  const evidencePct = checklist && checklist.items.length > 0
+    ? Math.round((checklist.items.filter((i) => i.completed).length / checklist.items.length) * 100)
+    : 0;
+  const collectScore = collect?.score ?? 50;
+  const strengthScore = strength?.score ?? 0;
+  const defendantId = offender.companyName ? 100 : 0;
+  const rawReadiness = Math.round(
+    (strengthScore * 0.30) + (collectScore * 0.30) + (evidencePct * 0.30) + (defendantId * 0.10)
+  );
+  // P-approved BB260b: hard gate at 80 when defendant is unidentified.
+  const filingReadinessPct = defendantId === 0 ? Math.min(rawReadiness, 80) : rawReadiness;
+
+  // ── Per-case statute coverage — count citations the petition will use
+  // and how many are in the verified registry. Cheap heuristic by scanning
+  // the verified citation registry and matching by simple substring on the
+  // petition text. If the petition didn't generate, fall back to global.
+  let statuteCoverage: { citedTotal: number; citedVerified: number; citedUnverified: number } | null = null;
+  if (petitionPreview.available && petitionPreview.text) {
+    let cited = 0, verified = 0;
+    for (const e of (require("./services/statuteRegistry").CITATION_REGISTRY as any[])) {
+      const needle = e.citationText ?? e.label ?? e.id;
+      if (needle && petitionPreview.text.includes(needle)) {
+        cited++;
+        if (e.verification?.status === "verified") verified++;
+      }
+    }
+    statuteCoverage = { citedTotal: cited, citedVerified: verified, citedUnverified: cited - verified };
+  }
+
+  res.json({
+    generatedAt: new Date().toISOString(),
+    offender,
+    strength,
+    collectability: collect,
+    decision,
+    checklist,
+    pressureStack,
+    petitionPreview,
+    filingReadinessPct,
+    filingReadinessBreakdown: {
+      caseStrengthPct: strengthScore,
+      collectabilityPct: collectScore,
+      evidencePct,
+      defendantIdentified: !!offender.companyName,
+    },
+    statuteCoverage,
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /api/recordings/:callSid
+//
+// Audio proxy so the dashboard can play recordings inline. Twilio recording
+// URLs require HTTP basic auth (account SID + auth token), which we obviously
+// can't expose to the browser. This route looks the recording up by callSid,
+// fetches it server-side with the right credentials, and streams the audio
+// back. The browser sees a plain audio file it can put in <audio src="...">.
+//
+// Range-aware so the audio scrubber works (browsers do partial-content GETs
+// when seeking).
+//
+// Security: only callSids we already have in our cases.json get proxied —
+// no SSRF surface for arbitrary URLs.
+// ─────────────────────────────────────────────────────────────────────────────
+app.get("/api/recordings/:callSid", async (req, res) => {
+  const callSid = String(req.params.callSid || "").trim();
+  if (!callSid) { res.status(400).json({ error: "callSid required" }); return; }
+
+  // Find the recording URL for this callSid by scanning known offenders
+  const offenders = CaseBuilder.getAllOffenders();
+  let recordingUrl: string | null = null;
+  for (const o of offenders) {
+    for (const c of o.calls ?? []) {
+      if (c.callSid === callSid && c.recordingUrl) {
+        recordingUrl = c.recordingUrl;
+        break;
+      }
+    }
+    if (recordingUrl) break;
+  }
+  if (!recordingUrl) {
+    res.status(404).json({ error: "no recording found for that callSid" });
+    return;
+  }
+
+  // Twilio recording URLs from the API don't include .mp3 — appending it
+  // tells Twilio to serve audio rather than the JSON metadata wrapper.
+  let upstream = recordingUrl;
+  const isTwilio = /api\.twilio\.com/i.test(upstream);
+  if (isTwilio && !/\.(mp3|wav)$/i.test(upstream)) upstream = upstream + ".mp3";
+
+  // Round 26.0b (P-approved CC260b): upstream-host allowlist in ADDITION
+  // to the stored-URL SSRF guard above. Even though cases.json should
+  // only ever contain Twilio recording URLs, defense-in-depth: parse the
+  // URL and refuse to proxy any host not on the allowlist. Prevents a
+  // future bug or data-migration mishap that lands a non-Twilio URL in
+  // cases.json from turning this endpoint into an open proxy.
+  const RECORDING_HOST_ALLOWLIST = new Set([
+    "api.twilio.com",
+  ]);
+  let upstreamHost = "";
+  try { upstreamHost = new URL(upstream).hostname.toLowerCase(); } catch { upstreamHost = ""; }
+  if (!upstreamHost || !RECORDING_HOST_ALLOWLIST.has(upstreamHost)) {
+    console.warn(`[recordings] host-allowlist deny callSid=${callSid} host=${upstreamHost || "?"}`);
+    res.status(400).json({ error: "recording URL host not on allowlist" });
+    return;
+  }
+
+  const headers: Record<string, string> = {};
+  // Forward Range requests so audio scrubbing works
+  if (req.headers.range) headers["Range"] = String(req.headers.range);
+
+  // Auth — only when going to Twilio. For arbitrary URLs (test fixtures,
+  // S3 links, etc.) we pass through unauthenticated.
+  if (isTwilio) {
+    const sid = process.env.TWILIO_ACCOUNT_SID;
+    const token = process.env.TWILIO_AUTH_TOKEN;
+    if (!sid || !token) {
+      res.status(500).json({ error: "Twilio recording URL but TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN not configured on the server" });
+      return;
+    }
+    headers["Authorization"] = "Basic " + Buffer.from(`${sid}:${token}`).toString("base64");
+  }
+
+  try {
+    const upstreamResp = await fetch(upstream, { headers });
+    // Mirror status (200 OK or 206 Partial Content) and useful headers
+    res.status(upstreamResp.status);
+    const passThrough = ["content-type", "content-length", "content-range", "accept-ranges", "cache-control", "etag"];
+    for (const h of passThrough) {
+      const v = upstreamResp.headers.get(h);
+      if (v) res.setHeader(h, v);
+    }
+    if (!upstreamResp.headers.get("content-type")) {
+      res.setHeader("Content-Type", "audio/mpeg");  // sane default for Twilio .mp3
+    }
+    // Stream the body
+    if (!upstreamResp.body) { res.end(); return; }
+    const reader = upstreamResp.body.getReader();
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value) res.write(Buffer.from(value));
+    }
+    res.end();
+  } catch (err) {
+    console.warn(`[recordings] proxy failed for ${callSid}:`, (err as Error).message);
+    res.status(502).json({ error: `upstream fetch failed: ${(err as Error).message}` });
+  }
+});
+
+// POST /api/cases/:number/flag-test  body: { isTest: boolean }
+// Manually mark an offender as test data (or unmark). Test offenders are
+// hidden from headline metrics, get a TEST badge in the UI, and skip Sonar
+// research on subsequent calls.
+app.post("/api/cases/:number/flag-test", (req, res) => {
+  const num = CaseBuilder.normalizePhone(req.params.number);
+  const isTest = req.body?.isTest === true;
+  const ok = CaseBuilder.setOffenderTestFlag(num, isTest);
+  if (!ok) { res.status(404).json({ error: "offender not found" }); return; }
+  res.json({ ok: true, normalizedNumber: num, isTest });
+});
+
+// DELETE /api/cases/:number — permanently remove an offender (typically used
+// to clean up after test seeding).
+app.delete("/api/cases/:number", (req, res) => {
+  const num = CaseBuilder.normalizePhone(req.params.number);
+  const ok = CaseBuilder.deleteOffender(num);
+  if (!ok) { res.status(404).json({ error: "offender not found" }); return; }
+  res.json({ ok: true, normalizedNumber: num });
+});
+
 // POST /api/cases/:number/checklist/regenerate — rebuild checklist (e.g., after editing phone.json)
 app.post("/api/cases/:number/checklist/regenerate", (req, res) => {
   const num = CaseBuilder.normalizePhone(req.params.number);
@@ -444,7 +776,7 @@ app.post("/api/cases/log", (req, res) => {
   const {
     callSid, callerPhone, subscriberId,
     extractedCompany, extractedCallerName, extractedPurpose,
-    turns,
+    turns, isTest,
   } = req.body as {
     callSid?: string;
     callerPhone?: string;
@@ -453,6 +785,7 @@ app.post("/api/cases/log", (req, res) => {
     extractedCallerName?: string;
     extractedPurpose?: string;
     turns?: Array<{ role: string; text: string }>;
+    isTest?: boolean;
   };
 
   if (!callerPhone) {
@@ -465,7 +798,7 @@ app.post("/api/cases/log", (req, res) => {
     .join(" | ")
     .slice(0, 300);
 
-  const { offender, isNewlyActionable } = CaseBuilder.logCall(
+  const { offender, isNewlyActionable, isTest: offenderIsTest } = CaseBuilder.logCall(
     subscriberId ?? "unknown",
     callerPhone,
     extractedCompany ?? null,
@@ -474,7 +807,8 @@ app.post("/api/cases/log", (req, res) => {
     callSid ?? "unknown",
     null,
     snippet,
-    "telemarketing"
+    "telemarketing",
+    { isTest: isTest === true }
   );
 
   // ── Grade the conversation and persist the verdict on the CallEntry ────
@@ -506,8 +840,57 @@ app.post("/api/cases/log", (req, res) => {
   console.log(
     `[API] /cases/log — caller=${callerPhone} company=${extractedCompany ?? "?"} ` +
     `callCount=${offender.callCount} actionable=${offender.actionable} newlyActionable=${isNewlyActionable} ` +
-    `grade=${grade.grade}/${grade.score} hangUp=${grade.hangUpRisk}`
+    `grade=${grade.grade}/${grade.score} hangUp=${grade.hangUpRisk}` +
+    (offenderIsTest ? " TEST" : "")
   );
+
+  // ── Test data: short-circuit ALL paid-API research (Twilio Lookup,
+  //    OpenCorporates, CourtListener, Sonar). No point burning real credits
+  //    on synthetic offenders, and the dashboard will hide them from the
+  //    headline metrics anyway.
+  if (offenderIsTest) {
+    res.json({
+      ok: true,
+      callCount: offender.callCount,
+      actionable: offender.actionable,
+      isNewlyActionable,
+      isTest: true,
+      damagesEstimate: offender.damagesEstimate,
+      grade: { letter: grade.grade, score: grade.score, hangUpRisk: grade.hangUpRisk, missingInfo: grade.missingInfo },
+    });
+    return;
+  }
+
+  // ── Sonar identification on FIRST call for real callers ──────────────
+  //    Per Marcus: "i have lots of credit, half a cent is fine to see who's
+  //    calling". Was previously gated on isNewlyActionable (call #2), which
+  //    meant a single-time caller never got identified. Now fires on call #1
+  //    too — still cached + 30-day TTL'd so the cost ceiling holds.
+  //    Skipped if: no company name extracted yet (Sonar can't research a
+  //    blank name), no PERPLEXITY_API_KEY, or already cached fresh.
+  if (offender.companyName && offender.callCount === 1 && !offenderIsTest) {
+    const needSonarFirst = !offender.defendantWebResearch
+      || !CaseBuilder.isFreshLookup(offender.defendantWebResearch.lookedUpAt, 30);
+    if (needSonarFirst) {
+      const company = offender.companyName;
+      const numberKey = offender.normalizedNumber;
+      researchTcpaDefendant(company)
+        .then((r) => {
+          const lookedUpAt = ("lookedUpAt" in r && r.lookedUpAt) ? r.lookedUpAt : new Date().toISOString();
+          if (r.status === "match") {
+            CaseBuilder.attachDefendantWebResearch(numberKey, {
+              status: "match", summary: r.summary, citations: r.citations, model: r.model, lookedUpAt,
+            });
+            console.log(`[Research:firstCall] Sonar (${r.model}) match for "${company}" — ${r.summary.length} chars, ${r.citations.length} citations, $${r.costUsd.toFixed(4)}`);
+          } else if (r.status === "error") {
+            CaseBuilder.attachDefendantWebResearch(numberKey, { status: "error", errorMessage: r.errorMessage, lookedUpAt });
+          } else {
+            CaseBuilder.attachDefendantWebResearch(numberKey, { status: "skipped", errorMessage: r.reason, lookedUpAt });
+          }
+        })
+        .catch((err) => console.warn(`[Research:firstCall] Sonar threw for "${company}":`, err?.message ?? err));
+    }
+  }
 
   // ── P3.1: kick off Twilio Lookup so the legal filing generator picks
   //          the right TCPA prong. Fire-and-forget; never blocks the response.
@@ -770,9 +1153,16 @@ import * as path_ from "path";
 import { verificationSummary } from "./services/statuteRegistry";
 
 app.get("/api/dashboard/stats", (_req, res) => {
-  const offenders = CaseBuilder.getAllOffenders();
+  const allOffenders = CaseBuilder.getAllOffenders();
   const now = Date.now();
   const ONE_DAY = 24 * 60 * 60 * 1000;
+
+  // ── Test data partitioning ────────────────────────────────────────────
+  // Hide isTest offenders from the headline metrics so synthetic seed data
+  // doesn't inflate the damages / verdict-mix / readiness tiles. They still
+  // appear in their own sidebar so test runs are visible.
+  const offenders = allOffenders.filter((o) => o.isTest !== true);
+  const testOffenders = allOffenders.filter((o) => o.isTest === true);
 
   // ── Bucket offenders for the "potential cases" section ─────────────────
   const readyToFile = offenders.filter((o) => o.actionable && !o.filedAt);
@@ -924,6 +1314,87 @@ app.get("/api/dashboard/stats", (_req, res) => {
         totalDamagesAvailable: totalDamages,
       },
     },
+    pipeline: (() => {
+      // Composite per-case readiness numbers + headline aggregates that the
+      // dashboard surfaces as tiles. Cheap — runs over already-loaded offenders.
+      const willfulCount = readyToFile.filter((o) => o.willful).length;
+      const identifiedCount = readyToFile.filter((o) => !!o.companyName).length;
+      const identifiedPct = readyToFile.length > 0
+        ? Math.round((identifiedCount / readyToFile.length) * 100)
+        : 0;
+      const recordingsTotal = allCalls.filter((c) => !!c.recordingUrl).length;
+      // GO / WAIT / DON'T FILE roll-up (recompute from cached profile state)
+      let goCount = 0, waitCount = 0, dontCount = 0;
+      let readinessSum = 0;
+      let readinessN = 0;
+      let strengthSum = 0;
+      let strengthN = 0;
+      let collectSum = 0;
+      let collectN = 0;
+      let evidencePctSum = 0;
+      let evidenceN = 0;
+      let evNetSum = 0;          // sum of net EV across all ready cases
+      const topDamages: Array<{ normalizedNumber: string; companyName: string | null; damagesEstimate: number; callCount: number }> = [];
+      for (const o of readyToFile) {
+        try {
+          const d = decideFiling(o);
+          if (d.verdict === "GO") goCount++;
+          else if (d.verdict === "WAIT") waitCount++;
+          else dontCount++;
+          evNetSum += (d.expectedValueUsd - d.costEstimateUsd);
+          if (typeof d.breakdown.caseStrengthScore === "number") {
+            strengthSum += d.breakdown.caseStrengthScore;
+            strengthN++;
+          }
+          if (typeof d.breakdown.collectabilityScore === "number") {
+            collectSum += d.breakdown.collectabilityScore;
+            collectN++;
+          }
+          if (typeof d.breakdown.evidenceCompletenessPct === "number") {
+            evidencePctSum += d.breakdown.evidenceCompletenessPct;
+            evidenceN++;
+          }
+          // Composite filing-readiness — same formula as case-file endpoint.
+          // Round 26.0b (P-approved BB260b): apply the same defendant-ID
+          // gate (cap at 80 when companyName is missing) so the dashboard
+          // headline tile matches per-case readiness shown in the drawer.
+          const sScore = d.breakdown.caseStrengthScore ?? 0;
+          const cScore = d.breakdown.collectabilityScore ?? 50;
+          const ePct = d.breakdown.evidenceCompletenessPct ?? 0;
+          const idScore = o.companyName ? 100 : 0;
+          const rawCase = Math.round((sScore * 0.30) + (cScore * 0.30) + (ePct * 0.30) + (idScore * 0.10));
+          readinessSum += idScore === 0 ? Math.min(rawCase, 80) : rawCase;
+          readinessN++;
+        } catch { /* ignore per-case decision errors */ }
+        topDamages.push({
+          normalizedNumber: o.normalizedNumber,
+          companyName: o.companyName,
+          damagesEstimate: o.damagesEstimate ?? 0,
+          callCount: o.callCount,
+        });
+      }
+      topDamages.sort((a, b) => b.damagesEstimate - a.damagesEstimate);
+      // Calls today / 7d (count of CallEntries, not graded count)
+      const callsToday = allCalls.filter((c) => {
+        const t = new Date(c.date + "T00:00:00Z").getTime();
+        return !isNaN(t) && (now - t) < ONE_DAY;
+      }).length;
+      const calls7d = callsInWindow(7).length;
+      return {
+        verdictMix: { go: goCount, wait: waitCount, dontFile: dontCount },
+        avgFilingReadinessPct: readinessN > 0 ? Math.round(readinessSum / readinessN) : 0,
+        avgCaseStrength: strengthN > 0 ? Math.round(strengthSum / strengthN) : 0,
+        avgCollectability: collectN > 0 ? Math.round(collectSum / collectN) : 0,
+        avgEvidencePct: evidenceN > 0 ? Math.round(evidencePctSum / evidenceN) : 0,
+        defendantIdRate: identifiedPct,
+        willfulCount,
+        netExpectedReturnUsd: Math.round(evNetSum),
+        recordingsTotal,
+        callsToday,
+        calls7d,
+        topByDamages: topDamages.slice(0, 5),
+      };
+    })(),
     research: {
       offendersTotal: offenders.length,
       actionableTotal: actionable.length,
@@ -952,6 +1423,15 @@ app.get("/api/dashboard/stats", (_req, res) => {
       last30,
       dailySeries,
     },
+    testCases: testOffenders.map((o) => ({
+      normalizedNumber: o.normalizedNumber,
+      companyName: o.companyName,
+      callCount: o.callCount,
+      actionable: o.actionable,
+      damagesEstimate: o.damagesEstimate,
+      lastCallDate: o.lastCallDate,
+      markedTestAt: o.markedTestAt,
+    })),
   });
 });
 

@@ -58,6 +58,22 @@ export interface OffenderProfile {
   demandLetterSent: boolean;
   demandLetterDate: string | null;
   subscriberIds: string[];  // all users this offender has called
+  /**
+   * True if this offender is synthetic seed data (test fixtures, smoke-test
+   * POSTs, demo data) rather than a real spam call. Auto-detected for any
+   * number in the NANP fictional range (555-0100 to 555-0199, per RFC 5228 +
+   * NANP rules) and for explicit `isTest: true` calls to /api/cases/log.
+   *
+   * Test offenders:
+   *   - get a "TEST" badge on the dashboard
+   *   - are excluded from headline damages, EV, and verdict-mix tiles
+   *   - skip Sonar / OpenCorporates / CourtListener research (no point burning
+   *     real API credits researching "Acme Window Replacement LLC")
+   *   - still appear in their own table so test runs are visible
+   */
+  isTest?: boolean;
+  /** ISO timestamp when the test flag was set. Undefined if never marked. */
+  markedTestAt?: string;
   filedAt?: string | null;       // ISO timestamp when filing package was generated
   filedCaseRef?: string | null;  // internal case reference of the filed package
   /** P3.1: cached Twilio Lookup line-type result. Populated lazily after the
@@ -337,6 +353,20 @@ function validateProfile(profile: OffenderProfile, key: string): void {
 
 // ── Core: log a call and update the offender profile ─────────────────────
 
+/**
+ * NANP fictional-number range auto-detect. North American Numbering Plan reserves
+ * 555-0100 through 555-0199 for fiction (movies, examples, training data).
+ * Anything in this range cannot be a real spam call — auto-flag as test so we
+ * don't burn API credits or pollute filing metrics.
+ *
+ * Pattern: +1NPA-555-01XX  (i.e., the NXX is 555 and the line is 01XX).
+ * Excludes +1NPA-555-0000 through 0099 (those are reserved but not "fictional"
+ * per NANP usage — some are valid directory-assistance / network test numbers).
+ */
+export function isFictionalNumber(normalized: string): boolean {
+  return /^\+1\d{3}55501\d\d$/.test(normalized);
+}
+
 export function logCall(
   subscriberId: string,
   callerPhone: string,
@@ -346,8 +376,9 @@ export function logCall(
   callSid: string,
   recordingUrl: string | null,
   transcriptSnippet: string = "",
-  callType: string = "unknown"
-): { offender: OffenderProfile; isNewlyActionable: boolean } {
+  callType: string = "unknown",
+  options: { isTest?: boolean } = {}
+): { offender: OffenderProfile; isNewlyActionable: boolean; isTest: boolean } {
   const db = loadCases();
   const key = normalizePhone(callerPhone);
   const now = new Date();
@@ -355,6 +386,15 @@ export function logCall(
   const timeStr = now.toTimeString().slice(0, 5);
 
   const wasActionable = db[key]?.actionable ?? false;
+
+  // Compute test flag: explicit override wins, then auto-detect 555-01XX.
+  // Once flagged, sticky — a number doesn't un-test itself just because a
+  // later call omits the flag.
+  const detectedTest = isFictionalNumber(key);
+  const explicitTest = options.isTest === true;
+  const incomingTest = explicitTest || detectedTest;
+  const alreadyTest = db[key]?.isTest === true;
+  const isTest = incomingTest || alreadyTest;
 
   if (!db[key]) {
     db[key] = {
@@ -373,7 +413,13 @@ export function logCall(
       demandLetterSent: false,
       demandLetterDate: null,
       subscriberIds: [],
+      isTest,
+      markedTestAt: isTest ? now.toISOString() : undefined,
     };
+  } else if (isTest && !db[key].isTest) {
+    // Promote to test on a later call (e.g., admin endpoint flagged it)
+    db[key].isTest = true;
+    db[key].markedTestAt = now.toISOString();
   }
 
   const profile = db[key];
@@ -456,7 +502,57 @@ export function logCall(
     );
   }
 
-  return { offender: profile, isNewlyActionable };
+  return { offender: profile, isNewlyActionable, isTest: profile.isTest === true };
+}
+
+/**
+ * Manually flip the isTest flag on an existing offender. Used by the dashboard
+ * "mark as test" button. Sets markedTestAt on transition; clearing the flag
+ * does NOT clear markedTestAt (audit trail).
+ *
+ * Round 26.0b (P-approved AA260b): emits an audit log line on every mutation
+ * so a flag flip is never silent. Distinguishes mark-test, unmark-test, and
+ * no-op (idempotent re-set) so log readers can see intent.
+ */
+export function setOffenderTestFlag(normalizedNumber: string, isTest: boolean): boolean {
+  const db = loadCases();
+  const profile = db[normalizedNumber];
+  if (!profile) {
+    console.warn(`[case-builder/audit] setOffenderTestFlag(${normalizedNumber}, ${isTest}) — offender not found, no-op`);
+    return false;
+  }
+  const wasTest = profile.isTest === true;
+  profile.isTest = isTest;
+  if (isTest && !wasTest) profile.markedTestAt = new Date().toISOString();
+  saveCases(db);
+  const transition = isTest === wasTest ? "no-change" : (isTest ? "mark-test" : "unmark-test");
+  console.log(`[case-builder/audit] setOffenderTestFlag(${normalizedNumber}, ${isTest}) wasTest=${wasTest} transition=${transition}`);
+  return true;
+}
+
+/**
+ * Permanently delete an offender from the database. Used by the dashboard
+ * "delete test data" button. Returns true if removed, false if not found.
+ *
+ * Round 26.0b (P-approved AA260b): emits an audit log line including the
+ * call count, isTest flag, and company name so the deleted record is
+ * recoverable from logs alone if needed.
+ */
+export function deleteOffender(normalizedNumber: string): boolean {
+  const db = loadCases();
+  const existing = db[normalizedNumber];
+  if (!existing) {
+    console.warn(`[case-builder/audit] deleteOffender(${normalizedNumber}) — offender not found, no-op`);
+    return false;
+  }
+  delete db[normalizedNumber];
+  saveCases(db);
+  console.log(
+    `[case-builder/audit] deleteOffender(${normalizedNumber}) ` +
+    `callCount=${existing.callCount} isTest=${existing.isTest === true} ` +
+    `company=${existing.companyName ?? "?"}`
+  );
+  return true;
 }
 
 // ── Query functions ──────────────────────────────────────────────────────

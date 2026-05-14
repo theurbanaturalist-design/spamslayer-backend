@@ -21,7 +21,7 @@
   </style>
 </head>
 <body class="bg-slate-100 min-h-screen">
-  <div class="max-w-7xl mx-auto p-6 space-y-6">
+  <div class="max-w-[1400px] mx-auto p-6 space-y-6">
 
     <!-- Header -->
     <header class="flex items-center justify-between flex-wrap gap-2">
@@ -36,7 +36,22 @@
       </div>
     </header>
 
-    <!-- Headline numbers -->
+    <!-- Test-data banner (only shown when seeded test offenders exist) -->
+    <section id="test-banner" class="hidden card border-amber-300 bg-amber-50 p-3 text-sm">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <div>
+          <strong class="text-amber-800">⚠ Test data present:</strong>
+          <span class="text-amber-700"><span id="test-banner-count">0</span> synthetic offender(s) hidden from headline metrics.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="test-banner-toggle" class="text-xs px-2 py-1 border border-amber-300 rounded hover:bg-amber-100">Show / hide list</button>
+          <button id="test-banner-purge" class="text-xs px-2 py-1 bg-rose-600 text-white rounded hover:bg-rose-700">Delete all test data</button>
+        </div>
+      </div>
+      <div id="test-banner-list" class="hidden mt-2 text-xs space-y-1"></div>
+    </section>
+
+    <!-- Headline numbers (top row: case pipeline) -->
     <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="card p-4">
         <div class="text-xs uppercase tracking-wide text-slate-500">Ready to file</div>
@@ -49,6 +64,21 @@
         <div class="text-xs text-slate-500 mt-1">across all unfiled actionable cases</div>
       </div>
       <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Net expected return</div>
+        <div class="text-3xl font-semibold num mt-1" id="hdr-net-ev">—</div>
+        <div class="text-xs text-slate-500 mt-1">P(win) × P(collect) × damages − costs</div>
+      </div>
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Avg filing readiness</div>
+        <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-readiness">—</div>
+        <div class="text-xs text-slate-500 mt-1">composite of strength + collect + evidence + ID</div>
+        <div class="w-full bg-slate-200 rounded-full h-1.5 mt-2"><div id="hdr-readiness-bar" class="bg-slate-900 h-1.5 rounded-full" style="width:0%"></div></div>
+      </div>
+    </section>
+
+    <!-- Headline numbers (second row: bot + research health) -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="card p-4">
         <div class="text-xs uppercase tracking-wide text-slate-500">Bot grade (last 7 days)</div>
         <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-grade">—</div>
         <div class="text-xs text-slate-500 mt-1" id="hdr-grade-sub">avg score / band</div>
@@ -56,7 +86,53 @@
       <div class="card p-4">
         <div class="text-xs uppercase tracking-wide text-slate-500">Recording coverage</div>
         <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-recording">—</div>
-        <div class="text-xs text-slate-500 mt-1">% of calls with audio captured</div>
+        <div class="text-xs text-slate-500 mt-1"><span id="hdr-recording-sub">— calls captured</span></div>
+      </div>
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Defendant identified</div>
+        <div class="text-3xl font-semibold text-slate-900 num mt-1" id="hdr-id-rate">—</div>
+        <div class="text-xs text-slate-500 mt-1">% of ready cases with company name</div>
+      </div>
+      <div class="card p-4">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Willful (treble damages)</div>
+        <div class="text-3xl font-semibold text-rose-700 num mt-1" id="hdr-willful">—</div>
+        <div class="text-xs text-slate-500 mt-1">cases with post-demand calls = $1,500/call</div>
+      </div>
+    </section>
+
+    <!-- Pipeline overview: verdict mix + top damages -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="card p-4 md:col-span-2">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-sm font-semibold text-slate-900">Pipeline at a glance</h2>
+          <div class="text-xs text-slate-500"><span id="pipeline-calls-today">0</span> calls today · <span id="pipeline-calls-7d">0</span> in 7d</div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-sm mb-3">
+          <div class="border border-emerald-200 bg-emerald-50 rounded p-2">
+            <div class="text-xs uppercase tracking-wide text-emerald-700">✅ GO</div>
+            <div class="text-2xl font-semibold text-emerald-900 num" id="verdict-go">—</div>
+            <div class="text-xs text-emerald-700">file these</div>
+          </div>
+          <div class="border border-amber-200 bg-amber-50 rounded p-2">
+            <div class="text-xs uppercase tracking-wide text-amber-700">⏸ WAIT</div>
+            <div class="text-2xl font-semibold text-amber-900 num" id="verdict-wait">—</div>
+            <div class="text-xs text-amber-700">close — gather more</div>
+          </div>
+          <div class="border border-rose-200 bg-rose-50 rounded p-2">
+            <div class="text-xs uppercase tracking-wide text-rose-700">🛑 DON'T</div>
+            <div class="text-2xl font-semibold text-rose-900 num" id="verdict-dont">—</div>
+            <div class="text-xs text-rose-700">EV negative — fire pressure stack</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-xs">
+          <div><div class="text-slate-500">Avg case strength</div><div class="font-semibold num" id="pipeline-avg-strength">—</div></div>
+          <div><div class="text-slate-500">Avg collectability</div><div class="font-semibold num" id="pipeline-avg-collect">—</div></div>
+          <div><div class="text-slate-500">Avg evidence done</div><div class="font-semibold num" id="pipeline-avg-evidence">—</div></div>
+        </div>
+      </div>
+      <div class="card p-4">
+        <h2 class="text-sm font-semibold text-slate-900 mb-2">Top 5 by damages claimable</h2>
+        <div id="top-damages-list" class="space-y-1 text-xs"></div>
       </div>
     </section>
 
@@ -72,12 +148,14 @@
         <table class="w-full text-sm">
           <thead class="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-200">
             <tr>
+              <th class="py-2 pr-2">Case file</th>
               <th class="py-2 pr-2">Verdict</th>
               <th class="py-2 pr-2">Caller</th>
               <th class="py-2 pr-2">Company</th>
               <th class="py-2 pr-2 text-right">Calls</th>
               <th class="py-2 pr-2 text-right">Damages</th>
               <th class="py-2 pr-2 text-right">Net EV</th>
+              <th class="py-2 pr-2">Readiness</th>
               <th class="py-2 pr-2">Line type</th>
               <th class="py-2 pr-2">Evidence</th>
               <th class="py-2 pr-2">Last call</th>
@@ -98,6 +176,23 @@
           <div class="p-4 space-y-3" id="checklist-modal-body"></div>
         </div>
       </div>
+      <!-- ─── CASE FILE drawer: full per-caller dossier + petition draft ─── -->
+      <div id="casefile-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 items-stretch justify-end">
+        <div class="bg-slate-50 shadow-2xl w-full max-w-5xl h-full overflow-y-auto">
+          <div class="sticky top-0 bg-white border-b border-slate-200 p-4 flex justify-between items-start z-10">
+            <div>
+              <div class="text-xs uppercase tracking-wide text-slate-500">Case file</div>
+              <h3 class="font-bold text-xl text-slate-900" id="casefile-title">—</h3>
+              <p class="text-xs text-slate-500" id="casefile-sub">—</p>
+            </div>
+            <button id="casefile-close" class="text-slate-500 hover:text-slate-900 text-3xl leading-none px-2">×</button>
+          </div>
+          <div class="p-5 space-y-5" id="casefile-body">
+            <div class="skeleton h-32 rounded"></div>
+          </div>
+        </div>
+      </div>
+
       <div id="verdict-modal" class="hidden fixed inset-0 bg-slate-900/50 z-40 items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           <div class="sticky top-0 bg-white border-b border-slate-200 p-4 flex justify-between items-center">
@@ -340,6 +435,45 @@
         ? `${last7.graded} call(s) graded · A:${last7.bands.A} B:${last7.bands.B} C:${last7.bands.C} D:${last7.bands.D} F:${last7.bands.F}`
         : 'no graded calls yet';
       document.getElementById('hdr-recording').textContent = (d.research.recordingCoverage ?? 0) + '%';
+      document.getElementById('hdr-recording-sub').textContent =
+        `${fmt(d.research.recordedCalls)} of ${fmt(d.research.callsTotal)} calls captured`;
+      const p = d.pipeline || {};
+      const netEv = p.netExpectedReturnUsd ?? 0;
+      const netEvEl = document.getElementById('hdr-net-ev');
+      netEvEl.textContent = (netEv >= 0 ? '+' : '') + dollars(netEv);
+      netEvEl.className = 'text-3xl font-semibold num mt-1 ' + (netEv >= 0 ? 'text-emerald-700' : 'text-rose-700');
+      document.getElementById('hdr-readiness').textContent = (p.avgFilingReadinessPct ?? 0) + '%';
+      document.getElementById('hdr-readiness-bar').style.width = (p.avgFilingReadinessPct ?? 0) + '%';
+      document.getElementById('hdr-id-rate').textContent = (p.defendantIdRate ?? 0) + '%';
+      document.getElementById('hdr-willful').textContent = fmt(p.willfulCount ?? 0);
+    }
+
+    function renderPipeline(d) {
+      const p = d.pipeline || {};
+      const v = p.verdictMix || { go: 0, wait: 0, dontFile: 0 };
+      document.getElementById('verdict-go').textContent = fmt(v.go);
+      document.getElementById('verdict-wait').textContent = fmt(v.wait);
+      document.getElementById('verdict-dont').textContent = fmt(v.dontFile);
+      document.getElementById('pipeline-avg-strength').textContent = (p.avgCaseStrength ?? 0) + '/100';
+      document.getElementById('pipeline-avg-collect').textContent = (p.avgCollectability ?? 0) + '/100';
+      document.getElementById('pipeline-avg-evidence').textContent = (p.avgEvidencePct ?? 0) + '%';
+      document.getElementById('pipeline-calls-today').textContent = fmt(p.callsToday ?? 0);
+      document.getElementById('pipeline-calls-7d').textContent = fmt(p.calls7d ?? 0);
+      const top = (p.topByDamages ?? []);
+      const ul = document.getElementById('top-damages-list');
+      if (top.length === 0) {
+        ul.innerHTML = '<div class="text-slate-400">No actionable cases yet.</div>';
+      } else {
+        ul.innerHTML = top.map((c, i) => `
+          <button class="casefile-open w-full text-left flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-100"
+                  data-num="${encodeURIComponent(c.normalizedNumber)}"
+                  data-name="${encodeURIComponent(c.companyName ?? c.normalizedNumber)}">
+            <span class="font-mono text-slate-400 w-4">${i + 1}.</span>
+            <span class="flex-1 truncate">${escapeHtml(c.companyName ?? c.normalizedNumber)}</span>
+            <span class="num text-emerald-700 font-semibold">${dollars(c.damagesEstimate)}</span>
+            <span class="text-slate-400">→</span>
+          </button>`).join('');
+      }
     }
 
     function renderPotentialCases(d) {
@@ -350,7 +484,7 @@
 
       const readyBody = document.getElementById('ready-tbody');
       readyBody.innerHTML = pc.readyToFile.length === 0
-        ? '<tr><td colspan="9" class="py-6 text-center text-slate-400 text-sm">No actionable cases yet. Spam callers need to call you twice within 12 months.</td></tr>'
+        ? '<tr><td colspan="11" class="py-6 text-center text-slate-400 text-sm">No actionable cases yet. Spam callers need to call you twice within 12 months.</td></tr>'
         : pc.readyToFile.map(c => {
             const cl = c.checklist;
             const checklistBadge = cl
@@ -358,7 +492,7 @@
                   ? `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800">✓ ${cl.done}/${cl.total}</span>`
                   : `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800">${cl.done}/${cl.total}</span>`)
               : '<span class="text-xs text-slate-400">—</span>';
-            const willfulBadge = c.willful ? '<span class="text-xs font-semibold text-rose-600">YES (3×)</span>' : '';
+            const willfulBadge = c.willful ? '<span class="text-xs font-semibold text-rose-600 ml-1">⚖ TREBLED</span>' : '';
             const v = c.verdict;
             const verdictBadge = !v
               ? '<span class="text-xs text-slate-400">computing…</span>'
@@ -370,33 +504,51 @@
             const netCell = v
               ? `<span class="text-xs num font-semibold ${v.netUsd >= 0 ? 'text-emerald-700' : 'text-rose-700'}">${v.netUsd >= 0 ? '+' : ''}${dollars(v.netUsd)}</span>`
               : '<span class="text-xs text-slate-400">—</span>';
+            // Composite filing-readiness — same formula as backend, computed
+            // from per-row signals so we don't need a second roundtrip.
+            const sScore = (v && v.caseStrengthScore != null) ? v.caseStrengthScore : 0;
+            // Best-effort approx (full breakdown lives behind the case file).
+            const evDone = cl ? Math.round((cl.done / Math.max(cl.total, 1)) * 100) : 0;
+            const idScore = c.companyName ? 100 : 0;
+            const readinessApprox = Math.round((sScore * 0.30) + (50 * 0.30) + (evDone * 0.30) + (idScore * 0.10));
+            const readinessColor = readinessApprox >= 70 ? 'bg-emerald-500' : readinessApprox >= 40 ? 'bg-amber-500' : 'bg-rose-500';
+            const numEnc = encodeURIComponent(c.normalizedNumber);
+            const nameEnc = encodeURIComponent(c.companyName ?? c.normalizedNumber);
             return `
               <tr class="hover:bg-slate-50">
+                <td class="py-2 pr-2"><button class="casefile-open inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-slate-900 text-white hover:bg-slate-700" data-num="${numEnc}" data-name="${nameEnc}">📂 Open</button></td>
                 <td class="py-2 pr-2">${verdictBadge}</td>
                 <td class="py-2 pr-2 font-mono text-xs">${c.normalizedNumber}</td>
-                <td class="py-2 pr-2">${c.companyName ?? '<span class="text-slate-400">unknown</span>'} ${willfulBadge}</td>
+                <td class="py-2 pr-2"><button class="casefile-open text-left text-blue-700 hover:text-blue-900 hover:underline" data-num="${numEnc}" data-name="${nameEnc}">${c.companyName ?? '<span class="text-slate-400 italic">unknown</span>'}</button>${willfulBadge}</td>
                 <td class="py-2 pr-2 text-right num">${c.callCount}</td>
                 <td class="py-2 pr-2 text-right num text-emerald-700 font-semibold">${dollars(c.damagesEstimate)}</td>
                 <td class="py-2 pr-2 text-right">${netCell}</td>
+                <td class="py-2 pr-2">
+                  <div class="flex items-center gap-2">
+                    <div class="w-16 bg-slate-200 rounded-full h-1.5"><div class="${readinessColor} h-1.5 rounded-full" style="width:${readinessApprox}%"></div></div>
+                    <span class="text-xs num text-slate-600">${readinessApprox}%</span>
+                  </div>
+                </td>
                 <td class="py-2 pr-2"><span class="text-xs ${c.lineType ? 'text-slate-700' : 'text-slate-400'}">${c.lineType ?? 'not looked up'}</span></td>
-                <td class="py-2 pr-2"><button class="checklist-open" data-num="${encodeURIComponent(c.normalizedNumber)}" data-name="${encodeURIComponent(c.companyName ?? c.normalizedNumber)}">${checklistBadge}</button></td>
+                <td class="py-2 pr-2"><button class="checklist-open" data-num="${numEnc}" data-name="${nameEnc}">${checklistBadge}</button></td>
                 <td class="py-2 pr-2 text-xs text-slate-500">${shortDate(c.lastCallDate)}</td>
               </tr>`;
           }).join('');
 
-      // Wire the new checklist buttons
+      // Wire all click handlers (case-file, checklist, verdict)
       document.querySelectorAll('.checklist-open').forEach(btn => {
         btn.addEventListener('click', () => {
-          const num = decodeURIComponent(btn.dataset.num);
-          const name = decodeURIComponent(btn.dataset.name);
-          openChecklistModal(num, name);
+          openChecklistModal(decodeURIComponent(btn.dataset.num), decodeURIComponent(btn.dataset.name));
         });
       });
       document.querySelectorAll('.verdict-open').forEach(btn => {
         btn.addEventListener('click', () => {
-          const num = decodeURIComponent(btn.dataset.num);
-          const name = decodeURIComponent(btn.dataset.name);
-          openVerdictModal(num, name);
+          openVerdictModal(decodeURIComponent(btn.dataset.num), decodeURIComponent(btn.dataset.name));
+        });
+      });
+      document.querySelectorAll('.casefile-open').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openCaseFileModal(decodeURIComponent(btn.dataset.num), decodeURIComponent(btn.dataset.name));
         });
       });
 
@@ -550,6 +702,8 @@
         return;
       }
       renderHeader(data);
+      renderPipeline(data);
+      renderTestBanner(data);
       renderPotentialCases(data);
       renderResearch(data);
       renderBotSelfImprovement(data);
@@ -812,6 +966,460 @@
       if (e.target.id === 'verdict-modal') {
         document.getElementById('verdict-modal').classList.add('hidden');
         document.getElementById('verdict-modal').classList.remove('flex');
+      }
+    });
+
+    // ───────────────────────────────────────────────────────────────────
+    //  Test-data banner: when synthetic offenders are present, surface them
+    //  separately so they don't pollute the headline tiles. Marcus can mark
+    //  any real offender as test from the case file drawer (good if a
+    //  family member or wrong-number test trips the system).
+    // ───────────────────────────────────────────────────────────────────
+    function renderTestBanner(data) {
+      const tests = data.testCases || [];
+      const banner = document.getElementById('test-banner');
+      const list = document.getElementById('test-banner-list');
+      document.getElementById('test-banner-count').textContent = tests.length;
+      if (tests.length === 0) {
+        banner.classList.add('hidden');
+        list.classList.add('hidden');
+        list.innerHTML = '';
+        return;
+      }
+      banner.classList.remove('hidden');
+      list.innerHTML = tests.map(t => `
+        <div class="flex items-center gap-2 border-t border-amber-200 pt-1">
+          <span class="font-mono text-amber-900">${escapeHtml(t.normalizedNumber)}</span>
+          <span class="flex-1 text-amber-800 truncate">${escapeHtml(t.companyName ?? '(no name)')}</span>
+          <span class="text-amber-700">${t.callCount} call(s)</span>
+          ${t.actionable ? '<span class="text-rose-700 text-[10px] uppercase font-semibold">actionable</span>' : ''}
+          <button class="test-promote text-[11px] text-blue-700 hover:underline" data-num="${encodeURIComponent(t.normalizedNumber)}">Mark as real</button>
+          <button class="test-delete text-[11px] text-rose-700 hover:underline" data-num="${encodeURIComponent(t.normalizedNumber)}">Delete</button>
+        </div>`).join('');
+      list.querySelectorAll('.test-promote').forEach(btn => btn.addEventListener('click', async () => {
+        const num = decodeURIComponent(btn.dataset.num);
+        await fetch(apiBase() + `/api/cases/${encodeURIComponent(num)}/flag-test`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ isTest: false }),
+        });
+        reload();
+      }));
+      list.querySelectorAll('.test-delete').forEach(btn => btn.addEventListener('click', async () => {
+        const num = decodeURIComponent(btn.dataset.num);
+        if (!confirm(`Permanently delete ${num} from cases.json? Cannot be undone.`)) return;
+        await fetch(apiBase() + `/api/cases/${encodeURIComponent(num)}`, { method: 'DELETE' });
+        reload();
+      }));
+    }
+
+    document.getElementById('test-banner-toggle').addEventListener('click', () => {
+      document.getElementById('test-banner-list').classList.toggle('hidden');
+    });
+    document.getElementById('test-banner-purge').addEventListener('click', async () => {
+      if (!confirm('Delete ALL test offenders? Real cases are not affected.')) return;
+      // Pull current stats, walk testCases array, DELETE each
+      const r = await fetch(apiBase() + '/api/dashboard/stats');
+      const d = await r.json();
+      for (const t of (d.testCases || [])) {
+        await fetch(apiBase() + `/api/cases/${encodeURIComponent(t.normalizedNumber)}`, { method: 'DELETE' });
+      }
+      reload();
+    });
+
+    // ───────────────────────────────────────────────────────────────────
+    //  Case File drawer — full per-caller dossier
+    //
+    //  One screen showing identity, research, filing readiness meter, the
+    //  draft petition being composed, evidence checklist progress, statute
+    //  coverage, calls timeline, and the pressure stack. Driven by the
+    //  /api/cases/:number/case-file endpoint.
+    // ───────────────────────────────────────────────────────────────────
+    function meterColor(pct) {
+      if (pct >= 70) return 'bg-emerald-500';
+      if (pct >= 40) return 'bg-amber-500';
+      return 'bg-rose-500';
+    }
+    function meterTextColor(pct) {
+      if (pct >= 70) return 'text-emerald-700';
+      if (pct >= 40) return 'text-amber-700';
+      return 'text-rose-700';
+    }
+
+    async function openCaseFileModal(normalizedNumber, displayName) {
+      const modal = document.getElementById('casefile-modal');
+      const title = document.getElementById('casefile-title');
+      const sub = document.getElementById('casefile-sub');
+      const body = document.getElementById('casefile-body');
+      title.textContent = displayName;
+      sub.textContent = 'Loading case file…';
+      body.innerHTML = '<div class="skeleton h-32 rounded"></div><div class="skeleton h-48 rounded mt-4"></div><div class="skeleton h-64 rounded mt-4"></div>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      let cf;
+      try {
+        const r = await fetch(apiBase() + `/api/cases/${encodeURIComponent(normalizedNumber)}/case-file`);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        cf = await r.json();
+      } catch (err) {
+        body.innerHTML = `<div class="text-rose-600 text-sm">Failed to load case file: ${escapeHtml(err.message)}</div>`;
+        return;
+      }
+
+      const o = cf.offender;
+      const r = cf.filingReadinessPct;
+      const rb = cf.filingReadinessBreakdown;
+      const dec = cf.decision;
+      const str = cf.strength;
+      const col = cf.collectability;
+      const cl = cf.checklist;
+      const sonar = o.defendantWebResearch;
+      const entity = o.entityLookup;
+      const lit = o.priorLitigation;
+      const line = o.lineTypeLookup;
+
+      sub.innerHTML = `<span class="font-mono">${o.normalizedNumber}</span> · ${o.callCount} call(s) · first ${shortDate(o.firstCallDate)} · last ${shortDate(o.lastCallDate)}` +
+        (o.actionable ? ' · <span class="text-rose-700 font-semibold">ACTIONABLE</span>' : ' · <span class="text-amber-700 font-semibold">WATCHING</span>') +
+        (o.willful ? ' · <span class="text-rose-700 font-semibold">⚖ WILLFUL</span>' : '') +
+        (o.isTest ? ' · <span class="bg-amber-200 text-amber-900 px-2 py-0.5 rounded text-xs font-semibold">🧪 TEST DATA</span>' : '');
+
+      // Test/delete toolbar (always shown — Marcus can demote a real-looking
+      // call he made for testing into "test" status, or wipe the record)
+      const numEnc = encodeURIComponent(o.normalizedNumber);
+      const toolbar = `
+        <div class="card border-slate-200 p-3 flex items-center gap-2 text-xs flex-wrap">
+          <span class="text-slate-600 mr-auto">Caller controls:</span>
+          ${o.isTest
+            ? `<button class="cf-mark-real px-2 py-1 border border-blue-300 text-blue-700 rounded hover:bg-blue-50" data-num="${numEnc}">↩ Mark as real spam call</button>`
+            : `<button class="cf-mark-test px-2 py-1 border border-amber-300 text-amber-700 rounded hover:bg-amber-50" data-num="${numEnc}">🧪 Mark as test data</button>`}
+          <button class="cf-delete px-2 py-1 border border-rose-300 text-rose-700 rounded hover:bg-rose-50" data-num="${numEnc}">🗑 Delete record</button>
+        </div>`;
+
+      // ── Build the case-file body in sections ───────────────────────
+      const sections = [];
+
+      // 0. Caller toolbar (mark/unmark test, delete)
+      sections.push(toolbar);
+
+      // 1. The big "How close to suing" meter
+      sections.push(`
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-sm font-semibold text-slate-900">How close to suing</h4>
+            <span class="text-2xl font-bold num ${meterTextColor(r)}">${r}%</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-3 mb-3">
+            <div class="${meterColor(r)} h-3 rounded-full transition-all" style="width:${r}%"></div>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+            <div class="border border-slate-200 rounded p-2">
+              <div class="text-slate-500">Case strength</div>
+              <div class="font-semibold num">${rb.caseStrengthPct}/100</div>
+              <div class="text-[10px] text-slate-500">30% weight</div>
+            </div>
+            <div class="border border-slate-200 rounded p-2">
+              <div class="text-slate-500">Collectability</div>
+              <div class="font-semibold num">${rb.collectabilityPct}/100</div>
+              <div class="text-[10px] text-slate-500">30% weight</div>
+            </div>
+            <div class="border border-slate-200 rounded p-2">
+              <div class="text-slate-500">Evidence done</div>
+              <div class="font-semibold num">${rb.evidencePct}%</div>
+              <div class="text-[10px] text-slate-500">30% weight</div>
+            </div>
+            <div class="border border-slate-200 rounded p-2">
+              <div class="text-slate-500">Defendant ID'd</div>
+              <div class="font-semibold ${rb.defendantIdentified ? 'text-emerald-700' : 'text-rose-700'}">${rb.defendantIdentified ? 'YES' : 'NO'}</div>
+              <div class="text-[10px] text-slate-500">10% weight</div>
+            </div>
+          </div>
+        </div>`);
+
+      // 2. Verdict + EV math (if decided)
+      if (dec) {
+        const verdictColor = dec.verdict === 'GO' ? 'emerald' : dec.verdict === 'WAIT' ? 'amber' : 'rose';
+        const verdictGlyph = dec.verdict === 'GO' ? '✅' : dec.verdict === 'WAIT' ? '⏸' : '🛑';
+        sections.push(`
+          <div class="card p-4">
+            <h4 class="text-sm font-semibold text-slate-900 mb-2">Filing decision</h4>
+            <div class="bg-${verdictColor}-50 border border-${verdictColor}-200 rounded-lg p-3 mb-3">
+              <div class="text-lg font-bold text-${verdictColor}-800">${verdictGlyph} ${dec.verdict} <span class="text-sm font-normal">· confidence ${dec.confidence}%</span></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs mb-3">
+              <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">Damages claimed</div><div class="font-semibold num">${dollars(dec.statutoryDamagesUsd)}</div></div>
+              <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">Filing costs</div><div class="font-semibold num text-rose-700">${dollars(dec.costEstimateUsd)}</div></div>
+              <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">Expected return</div><div class="font-semibold num">${dollars(dec.expectedValueUsd)}</div></div>
+              <div class="border border-slate-200 rounded p-2"><div class="text-slate-500">P(win) × P(collect)</div><div class="font-semibold num">${Math.round(dec.breakdown.pWinJudgment*100)}% × ${Math.round(dec.breakdown.pCollectGivenWin*100)}%</div></div>
+            </div>
+            <div class="text-xs">
+              <div class="font-semibold text-slate-700 mb-1">Why</div>
+              <ul class="space-y-0.5 text-slate-600">${dec.reasoning.map(x => `<li>• ${escapeHtml(x)}</li>`).join('')}</ul>
+              <div class="font-semibold text-slate-700 mb-1 mt-2">Recommended actions</div>
+              <ul class="space-y-0.5 text-slate-600">${dec.recommendedActions.map(x => `<li>→ ${escapeHtml(x)}</li>`).join('')}</ul>
+            </div>
+          </div>`);
+      }
+
+      // 3. Defendant identity card (research)
+      const idItems = [];
+      if (line) idItems.push(`<div><span class="text-slate-500">Line type:</span> <span class="font-semibold">${escapeHtml(line.normalizedType)}</span> ${line.carrierName ? '(' + escapeHtml(line.carrierName) + ')' : ''} ${line.countryCode ? '· ' + escapeHtml(line.countryCode) : ''}</div>`);
+      if (entity?.status === 'match') {
+        idItems.push(`<div><span class="text-slate-500">Entity:</span> <span class="font-semibold">${escapeHtml(entity.matchedName ?? '')}</span> ${entity.companyNumber ? '<span class="font-mono text-xs">(' + escapeHtml(entity.companyNumber) + ')</span>' : ''} ${entity.normalizedStatus ? '· <span class="' + (entity.normalizedStatus === 'active' ? 'text-emerald-700' : 'text-rose-700') + '">' + escapeHtml(entity.normalizedStatus.toUpperCase()) + '</span>' : ''}</div>`);
+        if (entity.jurisdictionCode) idItems.push(`<div><span class="text-slate-500">Jurisdiction:</span> ${escapeHtml(entity.jurisdictionCode)}</div>`);
+        if (entity.incorporationDate) idItems.push(`<div><span class="text-slate-500">Incorporated:</span> ${escapeHtml(entity.incorporationDate)}</div>`);
+        if (entity.registeredAddress) idItems.push(`<div><span class="text-slate-500">Registered address:</span> ${escapeHtml(entity.registeredAddress)}</div>`);
+        if (entity.sourceUrl) idItems.push(`<div><a href="${entity.sourceUrl}" target="_blank" class="text-blue-700 hover:underline">OpenCorporates record →</a></div>`);
+      } else if (entity?.status === 'no_match') {
+        idItems.push(`<div class="text-amber-700 text-xs">⚠ OpenCorporates: no match for "${escapeHtml(o.companyName ?? '')}". Sole proprietorships and unregistered DBA's won't appear here.</div>`);
+      } else if (entity?.status === 'skipped') {
+        idItems.push(`<div class="text-slate-500 text-xs">OpenCorporates skipped (not configured) — Sonar covers entity identity.</div>`);
+      }
+      if (lit?.status === 'match') {
+        idItems.push(`<div><span class="text-slate-500">Prior federal TCPA suits:</span> <span class="font-semibold ${lit.caseCount >= 5 ? 'text-emerald-700' : ''}">${lit.caseCount}</span> ${lit.caseCount >= 11 ? '<span class="text-emerald-700 text-xs">↑ strong collect signal</span>' : ''}</div>`);
+        if (Array.isArray(lit.sampleCases) && lit.sampleCases.length > 0) {
+          idItems.push(`<details class="text-xs mt-1"><summary class="cursor-pointer text-slate-600 hover:text-slate-900">Show ${lit.sampleCases.length} sample case(s)</summary><ul class="mt-1 space-y-0.5">${lit.sampleCases.slice(0, 5).map(s => `<li>• <a href="${s.docketUrl}" target="_blank" class="text-blue-700 hover:underline">${escapeHtml(s.caption)}</a> <span class="text-slate-500">(${escapeHtml(s.court)}, ${escapeHtml(s.dateFiled)})</span></li>`).join('')}</ul></details>`);
+        }
+        if (lit.searchUrl) idItems.push(`<div><a href="${lit.searchUrl}" target="_blank" class="text-blue-700 hover:underline text-xs">CourtListener search →</a></div>`);
+      } else if (lit?.status === 'no_match') {
+        idItems.push(`<div class="text-slate-500 text-xs">CourtListener: no prior federal TCPA suits found.</div>`);
+      }
+      sections.push(`
+        <div class="card p-4">
+          <h4 class="text-sm font-semibold text-slate-900 mb-2">Defendant research</h4>
+          <div class="space-y-1 text-sm">
+            ${idItems.length > 0 ? idItems.join('') : '<div class="text-slate-400 text-xs">No research data yet — runs automatically when the case becomes actionable.</div>'}
+          </div>
+          ${sonar?.status === 'match' && sonar.summary ? `
+            <details class="mt-3" open>
+              <summary class="text-sm font-semibold text-slate-700 cursor-pointer hover:text-slate-900">🔎 Sonar deep research <span class="text-xs text-slate-500 font-normal">(${escapeHtml(sonar.model ?? '')})</span></summary>
+              <pre class="bg-slate-50 border border-slate-200 rounded p-3 mt-2 text-xs whitespace-pre-wrap font-sans text-slate-700 max-h-64 overflow-y-auto">${escapeHtml(sonar.summary)}</pre>
+              ${Array.isArray(sonar.citations) && sonar.citations.length > 0 ? `
+                <div class="mt-2 text-xs">
+                  <div class="text-slate-500 mb-1">Citations (${sonar.citations.length})</div>
+                  <ul class="space-y-0.5">${sonar.citations.slice(0, 10).map(c => `<li>• <a href="${escapeHtml(typeof c === 'string' ? c : (c.url ?? ''))}" target="_blank" class="text-blue-700 hover:underline break-all">${escapeHtml(typeof c === 'string' ? c : (c.title ?? c.url ?? ''))}</a></li>`).join('')}</ul>
+                </div>` : ''}
+            </details>` : sonar?.status === 'error' ? `<div class="text-xs text-rose-700 mt-2">Sonar error: ${escapeHtml(sonar.errorMessage ?? '')}</div>`
+            : sonar?.status === 'skipped' ? `<div class="text-xs text-slate-500 mt-2">Sonar skipped: ${escapeHtml(sonar.errorMessage ?? 'no PERPLEXITY_API_KEY')}</div>`
+            : '<div class="text-xs text-slate-400 mt-2">Sonar deep research not yet run.</div>'}
+        </div>`);
+
+      // 4. Case strength factor breakdown
+      if (str) {
+        sections.push(`
+          <div class="card p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-sm font-semibold text-slate-900">Case strength: <span class="${meterTextColor(str.score)}">${str.rating}</span></h4>
+              <span class="text-lg font-bold num ${meterTextColor(str.score)}">${str.score}/100</span>
+            </div>
+            <div class="text-xs text-slate-600 mb-3">${escapeHtml(str.summary)}</div>
+            <div class="space-y-1.5">
+              ${str.factors.map(f => `
+                <div class="text-xs">
+                  <div class="flex justify-between">
+                    <span class="${f.met ? 'text-slate-700' : 'text-slate-400'}">${f.met ? '✓' : '○'} ${escapeHtml(f.name)}</span>
+                    <span class="num font-semibold text-slate-600">${f.points}/${f.maxPoints}</span>
+                  </div>
+                  <div class="w-full bg-slate-200 rounded-full h-1 mt-0.5"><div class="${f.met ? 'bg-emerald-500' : 'bg-slate-300'} h-1 rounded-full" style="width:${f.maxPoints > 0 ? (f.points / f.maxPoints * 100) : 0}%"></div></div>
+                  <div class="text-slate-500 text-[11px] mt-0.5">${escapeHtml(f.tip)}</div>
+                </div>`).join('')}
+            </div>
+          </div>`);
+      }
+
+      // 5. Collectability signals
+      if (col) {
+        sections.push(`
+          <div class="card p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-sm font-semibold text-slate-900">Collectability: <span class="${meterTextColor(col.score)}">${col.band}</span></h4>
+              <span class="text-lg font-bold num ${meterTextColor(col.score)}">${col.score}/100</span>
+            </div>
+            <div class="space-y-0.5 text-xs">
+              ${col.signals.map(s => {
+                const colorCls = s.delta > 0 ? 'text-emerald-700' : s.delta < 0 ? 'text-rose-700' : 'text-slate-600';
+                const sign = s.delta > 0 ? '+' : '';
+                return `<div class="flex justify-between gap-2 border-b border-slate-100 py-1">
+                  <span class="text-slate-700">${escapeHtml(s.label)}<div class="text-[11px] text-slate-500">${escapeHtml(s.note ?? '')}</div></span>
+                  <span class="num font-semibold ${colorCls} whitespace-nowrap">${sign}${s.delta}</span>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>`);
+      }
+
+      // 6. Calls timeline
+      sections.push(`
+        <div class="card p-4">
+          <h4 class="text-sm font-semibold text-slate-900 mb-2">Calls (${o.calls.length})</h4>
+          <div class="space-y-1 text-xs max-h-64 overflow-y-auto pr-2">
+            ${o.calls.length === 0 ? '<div class="text-slate-400">No calls yet.</div>' : o.calls.slice().reverse().map((c, i) => {
+              const proxyUrl = c.recordingUrl && c.callSid
+                ? apiBase() + '/api/recordings/' + encodeURIComponent(c.callSid)
+                : null;
+              return `
+              <div class="border border-slate-200 rounded p-2 flex items-start gap-2">
+                <div class="num font-mono text-slate-400 w-6">#${o.calls.length - i}</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-semibold">${escapeHtml(c.date)} ${escapeHtml(c.time ?? '')}</span>
+                    ${c.grade ? gradeChip(c.grade.letter, c.grade.score) : '<span class="text-slate-400">ungraded</span>'}
+                    ${c.callType ? `<span class="text-[10px] uppercase text-slate-500 border border-slate-200 px-1 rounded">${escapeHtml(c.callType)}</span>` : ''}
+                    ${!c.recordingUrl ? '<span class="text-slate-400 text-[11px]">· no recording captured</span>' : ''}
+                  </div>
+                  ${proxyUrl ? `
+                    <div class="mt-1 flex items-center gap-2">
+                      <audio controls preload="none" src="${proxyUrl}" class="h-8 flex-1 max-w-md"></audio>
+                      <a href="${proxyUrl}" download="${escapeHtml(c.callSid)}.mp3" class="text-[11px] text-blue-700 hover:underline">⬇ download</a>
+                    </div>` : ''}
+                  ${c.transcriptSnippet ? `<div class="text-slate-600 mt-1 truncate" title="${escapeHtml(c.transcriptSnippet)}">${escapeHtml(c.transcriptSnippet.slice(0, 200))}</div>` : ''}
+                  ${c.grade?.summary ? `<div class="text-slate-500 text-[11px] mt-0.5">Bot grade: ${escapeHtml(c.grade.summary)}</div>` : ''}
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`);
+
+      // 7. Evidence checklist progress (mini view + open-full button)
+      if (cl) {
+        const done = cl.items.filter(i => i.completed).length;
+        const total = cl.items.length;
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        sections.push(`
+          <div class="card p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-sm font-semibold text-slate-900">Evidence checklist</h4>
+              <button class="open-checklist-from-cf text-xs text-blue-700 hover:underline" data-num="${encodeURIComponent(o.normalizedNumber)}" data-name="${encodeURIComponent(displayName)}">Open full checklist →</button>
+            </div>
+            <div class="flex items-center gap-3 mb-2">
+              <div class="flex-1 bg-slate-200 rounded-full h-2"><div class="${meterColor(pct)} h-2 rounded-full" style="width:${pct}%"></div></div>
+              <span class="text-xs num font-semibold ${meterTextColor(pct)}">${done}/${total}</span>
+            </div>
+            <ul class="text-xs space-y-0.5">
+              ${cl.items.slice(0, 6).map(it => `<li class="${it.completed ? 'text-emerald-700 line-through' : 'text-slate-600'}">${it.completed ? '✓' : '○'} ${escapeHtml(it.title)}</li>`).join('')}
+              ${cl.items.length > 6 ? `<li class="text-slate-500 italic">+ ${cl.items.length - 6} more — open the full checklist</li>` : ''}
+            </ul>
+          </div>`);
+      }
+
+      // 8. Statute coverage (if petition was generated)
+      if (cf.statuteCoverage) {
+        const sc = cf.statuteCoverage;
+        const verPct = sc.citedTotal > 0 ? Math.round(sc.citedVerified / sc.citedTotal * 100) : 0;
+        sections.push(`
+          <div class="card p-4">
+            <h4 class="text-sm font-semibold text-slate-900 mb-2">Statute coverage in this petition</h4>
+            <div class="flex items-center gap-3 mb-2">
+              <div class="flex-1 bg-slate-200 rounded-full h-2"><div class="${meterColor(verPct)} h-2 rounded-full" style="width:${verPct}%"></div></div>
+              <span class="text-xs num font-semibold">${sc.citedVerified}/${sc.citedTotal} verified</span>
+            </div>
+            <div class="text-xs text-slate-600">${sc.citedUnverified > 0 ? `${sc.citedUnverified} citation(s) in this petition still need human verification before clean filing — see the morning task list.` : 'All citations used here are human-verified ✓'}</div>
+          </div>`);
+      }
+
+      // 9. Draft petition preview — the "file being composed"
+      const pp = cf.petitionPreview;
+      if (pp.available) {
+        sections.push(`
+          <div class="card p-4">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h4 class="text-sm font-semibold text-slate-900">📜 Draft petition</h4>
+                ${pp.caseRef ? `<div class="text-xs font-mono text-slate-500">${escapeHtml(pp.caseRef)}</div>` : ''}
+              </div>
+              <button class="copy-petition text-xs text-blue-700 hover:underline">Copy full text</button>
+            </div>
+            ${(pp.warnings && pp.warnings.length > 0) ? `<div class="mb-2 space-y-1">${pp.warnings.map(w => `<div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">⚠ ${escapeHtml(w)}</div>`).join('')}</div>` : ''}
+            <pre id="petition-preview-text" class="bg-slate-900 text-slate-100 rounded p-3 text-[11px] font-mono whitespace-pre-wrap max-h-[480px] overflow-y-auto">${escapeHtml(pp.text)}</pre>
+          </div>`);
+      } else {
+        sections.push(`
+          <div class="card p-4 border-dashed border-amber-300 bg-amber-50/40">
+            <h4 class="text-sm font-semibold text-amber-800 mb-1">📜 Draft petition not yet available</h4>
+            <p class="text-xs text-amber-700">${escapeHtml(pp.reason ?? 'Unknown reason')}</p>
+          </div>`);
+      }
+
+      // 10. Pressure stack
+      if (cf.pressureStack && Array.isArray(cf.pressureStack.items)) {
+        const items = cf.pressureStack.items;
+        const colorMap = { regulatory:'violet', carrier:'cyan', industry:'fuchsia', civil:'emerald', media:'amber' };
+        sections.push(`
+          <div class="card p-4">
+            <h4 class="text-sm font-semibold text-slate-900 mb-2">Pressure stack — non-court enforcement</h4>
+            <p class="text-xs text-slate-600 mb-2">Even when the math says DON'T FILE, these channels still apply pressure to the spammer at zero cost.</p>
+            <div class="space-y-1.5">
+              ${items.map(it => {
+                const color = colorMap[it.category] || 'slate';
+                return `
+                  <div class="border border-slate-200 rounded p-2 ${it.available ? '' : 'opacity-60'}">
+                    <div class="flex items-center gap-2">
+                      <span class="text-[10px] font-semibold text-${color}-700 uppercase">${escapeHtml(it.category ?? '')}</span>
+                      <span class="font-medium text-xs">${escapeHtml(it.title)}</span>
+                      ${!it.available ? `<span class="text-[10px] text-amber-700 ml-auto">⏸ blocked</span>` : ''}
+                    </div>
+                    <div class="text-[11px] text-slate-600 mt-1">${escapeHtml((it.why || '').slice(0, 220))}${(it.why || '').length > 220 ? '…' : ''}</div>
+                    ${it.url && it.available ? `<a href="${it.url}" target="_blank" class="text-[11px] text-blue-700 hover:underline">Open →</a>` : ''}
+                    ${!it.available && it.blockedBy ? `<div class="text-[11px] text-amber-700 mt-0.5">Blocked by: ${escapeHtml(it.blockedBy)}</div>` : ''}
+                  </div>`;
+              }).join('')}
+            </div>
+          </div>`);
+      }
+
+      body.innerHTML = sections.join('\n');
+
+      // Wire copy-petition
+      const copyBtn = body.querySelector('.copy-petition');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          const ta = document.getElementById('petition-preview-text');
+          if (!ta) return;
+          navigator.clipboard.writeText(ta.textContent || '').then(() => {
+            const orig = copyBtn.textContent;
+            copyBtn.textContent = '✓ Copied!';
+            setTimeout(() => (copyBtn.textContent = orig), 1500);
+          }).catch(() => alert('Copy failed — select the text manually'));
+        });
+      }
+      // Wire "open full checklist"
+      const openCl = body.querySelector('.open-checklist-from-cf');
+      if (openCl) {
+        openCl.addEventListener('click', () => {
+          openChecklistModal(decodeURIComponent(openCl.dataset.num), decodeURIComponent(openCl.dataset.name));
+        });
+      }
+      // Wire mark-test / mark-real / delete from the toolbar
+      const flagTest = async (asTest) => {
+        await fetch(apiBase() + `/api/cases/${encodeURIComponent(o.normalizedNumber)}/flag-test`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ isTest: asTest }),
+        });
+        // Refresh the drawer + the dashboard headline
+        await openCaseFileModal(o.normalizedNumber, displayName);
+        reload();
+      };
+      const markTestBtn = body.querySelector('.cf-mark-test');
+      if (markTestBtn) markTestBtn.addEventListener('click', () => flagTest(true));
+      const markRealBtn = body.querySelector('.cf-mark-real');
+      if (markRealBtn) markRealBtn.addEventListener('click', () => flagTest(false));
+      const deleteBtn = body.querySelector('.cf-delete');
+      if (deleteBtn) deleteBtn.addEventListener('click', async () => {
+        if (!confirm(`Permanently delete ${o.normalizedNumber} from cases.json?\nCannot be undone.`)) return;
+        await fetch(apiBase() + `/api/cases/${encodeURIComponent(o.normalizedNumber)}`, { method: 'DELETE' });
+        document.getElementById('casefile-modal').classList.add('hidden');
+        document.getElementById('casefile-modal').classList.remove('flex');
+        reload();
+      });
+    }
+
+    document.getElementById('casefile-close').addEventListener('click', () => {
+      document.getElementById('casefile-modal').classList.add('hidden');
+      document.getElementById('casefile-modal').classList.remove('flex');
+    });
+    document.getElementById('casefile-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'casefile-modal') {
+        document.getElementById('casefile-modal').classList.add('hidden');
+        document.getElementById('casefile-modal').classList.remove('flex');
       }
     });
 
