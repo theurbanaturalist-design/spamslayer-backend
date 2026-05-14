@@ -8,11 +8,10 @@ dist/
 # be committed — they're disposable runtime artifacts, not source.
 cache/
 
-# Round 26.0b (P-approved II260b): GitHub Actions workflows are deferred
-# until Marcus confirms he wants Render API-driven deploys AND adds the
-# RENDER_API_KEY secret. Until then, keep .github/ out of the index so a
-# stray draft workflow can't sneak into a commit.
-.github/
+# Round 26.0c (P-approved PP260c): .github/ now tracked — render-deploy.yml
+# is the only workflow file in scope and was reviewed in 26.0c. Native
+# Render git auto-deploy stays ON in parallel during the bake-in period
+# (per OO260c); Render dedupes identical-commit triggers.
 
 # Round 26.0b (P-approved HH260b): dormant contact-router skeleton was
 # never wired into production (see top-of-file banner in each). Kept on

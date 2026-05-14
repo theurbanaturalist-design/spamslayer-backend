@@ -1,0 +1,40 @@
+name: Deploy to Render
+# Auto-deploys this repo to Render's spamslayer-backend service on every push
+# to main. Replaces the GitHub-App-based auto-deploy that was broken.
+# Required GitHub repo secret: RENDER_API_KEY (set in repo Settings → Secrets)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}   # also allows manual trigger from GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: srv-d7go0ti8qa3s73cmktug
+        run: |
+          set -e
+          if [ -z "$RENDER_API_KEY" ]; then
+            echo "::error::RENDER_API_KEY secret not set on this repo. Add it in Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+          echo "Triggering deploy of $GITHUB_SHA on $RENDER_SERVICE_ID"
+          RESPONSE=$(curl -sS -X POST \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"clearCache":"do_not_clear"}' \
+            "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys")
+
+          DEPLOY_ID=$(echo "$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('id',''))")
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "::error::Render API did not return a deploy ID. Full response:"
+            echo "$RESPONSE"
+            exit 1
+          fi
+          echo "Deploy queued: $DEPLOY_ID"
+          echo "Watch: https://dashboard.render.com/web/${RENDER_SERVICE_ID}/deploys/${DEPLOY_ID}"
