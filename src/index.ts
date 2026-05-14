@@ -24,7 +24,10 @@ console.log("[SpamSlayer] TWILIO_PHONE_NUMBER:", process.env.TWILIO_PHONE_NUMBER
 
 import express from "express";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 import { validateTwilio } from "./middleware/validateTwilio";
+import { requireBackendApiKey } from "./middleware/requireBackendApiKey";
+import { requireDashboardAuth } from "./middleware/requireDashboardAuth";
 import phoneRouter from "./routes/phone";
 import smsRouter from "./routes/signup";
 import * as CaseBuilder from "./services/caseBuilder";
@@ -68,6 +71,25 @@ if (NODE_ENV === "production" && !process.env.BASE_URL) {
   process.exit(78); // sysexits(3) EX_CONFIG
 }
 
+// Round 26b (P-approved XX26b): refuse to boot in production without backend
+// API key + dashboard credentials. Same fail-loud-not-open pattern as the
+// BASE_URL guard above. Per P's SS26b refinement, DASHBOARD_USER must be
+// explicitly set (no silent "marcus" default in production).
+if (NODE_ENV === "production") {
+  const missing: string[] = [];
+  if (!process.env.BACKEND_API_KEY) missing.push("BACKEND_API_KEY");
+  if (!process.env.DASHBOARD_USER) missing.push("DASHBOARD_USER");
+  if (!process.env.DASHBOARD_PASSWORD) missing.push("DASHBOARD_PASSWORD");
+  if (missing.length > 0) {
+    console.error(
+      `[SpamSlayer] FATAL: NODE_ENV=production but these env vars are missing: ${missing.join(", ")}. ` +
+      "Round 26b requires these for backend API-key auth and dashboard Basic auth. " +
+      "Refusing to boot with authentication disabled."
+    );
+    process.exit(78);
+  }
+}
+
 // ── CORS allowlist (Audit Round 15 B3) ──────────────────────────────────────
 // Plain app.use(cors()) lets any origin POST to our routes — including
 // /api/cases/log, which would let an attacker forge call entries into the
@@ -96,9 +118,44 @@ app.use(cors({
 app.use(express.urlencoded({ extended: false, limit: "256kb" })); // Twilio sends form-encoded
 app.use(express.json({ limit: "256kb" }));
 
+// Round 26b (P-approved TT26b): generous rate limits — bound abuse without
+// biting normal traffic. Reed at 300/min for call-end + Layer 2 traffic;
+// dashboard at 120/min for one-user browsing + inline XHRs; public at 60/min
+// for health checks.
+const reedLimiter = rateLimit({ windowMs: 60_000, max: 300, standardHeaders: true, legacyHeaders: false });
+const dashboardLimiter = rateLimit({ windowMs: 60_000, max: 120, standardHeaders: true, legacyHeaders: false });
+const publicLimiter = rateLimit({ windowMs: 60_000, max: 60, standardHeaders: true, legacyHeaders: false });
+
 // ── Twilio webhook routes (signature-validated) ──────────────────────────
 app.use("/api/phone", validateTwilio, phoneRouter);
 app.use("/api/sms", validateTwilio, smsRouter);
+
+// Round 26b Tier B (P-approved UU26b): Reed→backend service-to-service
+// calls. MUST be defined BEFORE the Tier C bulk mount below — Express picks
+// the first matching handler, and bulk-mounted requireDashboardAuth would
+// otherwise trap Reed's outbound calls.
+//
+// The handler bodies for these four endpoints stay where they are later in
+// the file. These middlewares apply globally to any future definition of
+// the same method+path because Express runs route-level middleware in
+// registration order. To make the order explicit AND keep handlers near
+// their helpers, we wrap each Tier B route via app.use() with a path-prefix
+// matcher that fires *only* the limiter + key-check for those specific
+// path+method combinations.
+app.post("/api/cases/log",              reedLimiter, requireBackendApiKey, (_req, _res, next) => next());
+app.post("/api/cases/set-recording",    reedLimiter, requireBackendApiKey, (_req, _res, next) => next());
+app.get ("/api/cases/check",            reedLimiter, requireBackendApiKey, (_req, _res, next) => next());
+app.get ("/api/cases/offender/:number", reedLimiter, requireBackendApiKey, (_req, _res, next) => next());
+
+// Round 26b Tier C (P-approved UU26b): bulk-mount auth+rate-limit for every
+// other admin/dashboard/cases/users surface. Mounted AFTER Tier B so the
+// Tier B middlewares + the actual handlers later in the file fire first
+// for those specific paths.
+app.use(
+  ["/api/cases", "/api/admin", "/api/dashboard", "/api/users", "/api/recordings", "/dashboard"],
+  dashboardLimiter,
+  requireDashboardAuth,
+);
 
 // ── Public API routes (for frontend dashboard) ───────────────────────────
 
